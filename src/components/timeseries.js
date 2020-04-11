@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 import {
   preprocessTimeseries,
+  preprocessHospitalTimeseries,
   sliceTimeseriesFromEnd,
 } from '../utils/common-functions';
 import {useResizeObserver} from '../utils/hooks';
@@ -59,7 +60,8 @@ function TimeSeries(props) {
       const chartRight = width - margin.right;
       const chartBottom = height - margin.bottom;
 
-      const ts = preprocessTimeseries(timeseries);
+      console.log("Going to preprocess")
+      const ts = preprocessHospitalTimeseries(timeseries);
       const T = ts.length;
       const yBuffer = 1.1;
 
@@ -69,11 +71,13 @@ function TimeSeries(props) {
       const svg1 = d3.select(svgRef1.current);
       const svg2 = d3.select(svgRef2.current);
       const svg3 = d3.select(svgRef3.current);
-
+      console.log(ts[0]);
       const dateMin = new Date(ts[0]['date']);
       dateMin.setDate(dateMin.getDate() - 1);
       const dateMax = new Date(ts[T - 1]['date']);
       dateMax.setDate(dateMax.getDate() + 1);
+      console.log(dateMin);
+      console.log(dateMax)
 
       const xScale = d3
         .scaleTime()
@@ -100,14 +104,16 @@ function TimeSeries(props) {
       const svgArray = [svg1, svg2, svg3];
       const plotTotal = chartType === 1;
       const dataTypesTotal = [
-        'totalconfirmed',
-        'totalrecovered',
-        'totaldeceased',
+        'positive',
+        'hospitalised',
+        'hospitalisedGovt',
+        'hospitalisedPvt',
       ];
       const dataTypesDaily = [
-        'dailyconfirmed',
-        'dailyrecovered',
-        'dailydeceased',
+        'positive',
+        'hospitalised',
+        'hospitalisedGovt',
+        'hospitalisedPvt',
       ];
 
       const colors = ['#ff073a', '#28a745', '#6c757d'];
@@ -126,7 +132,7 @@ function TimeSeries(props) {
           .clamp(true)
           .domain([
             uniformScaleMin,
-            yBuffer * d3.max(ts, (d) => d.totalconfirmed),
+            yBuffer * d3.max(ts, (d) => d.positive),
           ])
           .nice()
           .range([chartBottom, margin.top]);
@@ -136,7 +142,7 @@ function TimeSeries(props) {
           .clamp(true)
           .domain([
             Math.max(1, uniformScaleMin),
-            Math.max(1, yBuffer * d3.max(ts, (d) => d.totalconfirmed)),
+            Math.max(1, yBuffer * d3.max(ts, (d) => d.positive)),
           ])
           .nice()
           .range([chartBottom, margin.top]);
@@ -170,7 +176,7 @@ function TimeSeries(props) {
         const yScaleDailyUniform = d3
           .scaleLinear()
           .clamp(true)
-          .domain([0, yBuffer * d3.max(ts, (d) => d.dailyconfirmed)])
+          .domain([0, yBuffer * d3.max(ts, (d) => d.positive)])
           .nice()
           .range([chartBottom, margin.top]);
 
@@ -350,6 +356,7 @@ function TimeSeries(props) {
   );
 
   useEffect(() => {
+    console.log(timeseries)
     if (timeseries.length > 1) {
       graphData(timeseries);
     }
@@ -362,9 +369,10 @@ function TimeSeries(props) {
     lastDate.getMonth() === yesterdayDate.getMonth() &&
     lastDate.getDate() === yesterdayDate.getDate();
 
-  const chartKey1 = chartType === 1 ? 'totalconfirmed' : 'dailyconfirmed';
-  const chartKey2 = chartType === 1 ? 'totalrecovered' : 'dailyrecovered';
-  const chartKey3 = chartType === 1 ? 'totaldeceased' : 'dailydeceased';
+  const chartKey1 = chartType === 1 ? 'positive' : 'hospitalised';
+  const chartKey2 = chartType === 1 ? 'hospitalised' : 'hospitalisedGovt';
+  const chartKey3 = chartType === 1 ? 'hospitalised' : 'hospitalisedPvt';
+ 
 
   return (
     <div
@@ -374,7 +382,7 @@ function TimeSeries(props) {
       <div className="timeseries">
         <div className="svg-parent" ref={wrapperRef}>
           <div className="stats">
-            <h5 className={`${!moving ? 'title' : ''}`}>Confirmed</h5>
+            <h5 className={`${!moving ? 'title' : ''}`}>Positive</h5>
             <h5 className={`${moving ? 'title' : ''}`}>
               {isYesterday
                 ? `${datapoint['date']} Yesterday`
@@ -383,7 +391,7 @@ function TimeSeries(props) {
             <div className="stats-bottom">
               <h2>{datapoint[chartKey1]}</h2>
               <h6>
-                {' '}
+                
                 {timeseries.length > 0 && index !== 0
                   ? timeseries[index][chartKey1] -
                       timeseries[index - 1][chartKey1] >=
@@ -402,7 +410,7 @@ function TimeSeries(props) {
 
         <div className="svg-parent is-green">
           <div className="stats is-green">
-            <h5 className={`${!moving ? 'title' : ''}`}>Recovered</h5>
+            <h5 className={`${!moving ? 'title' : ''}`}>Hospitalised</h5>
             <h5 className={`${moving ? 'title' : ''}`}>
               {isYesterday
                 ? `${datapoint['date']} Yesterday`
@@ -411,6 +419,7 @@ function TimeSeries(props) {
             <div className="stats-bottom">
               <h2>{datapoint[chartKey2]}</h2>
               <h6>
+                
                 {timeseries.length > 0 && index !== 0
                   ? timeseries[index][chartKey2] -
                       timeseries[index - 1][chartKey2] >=
@@ -429,7 +438,7 @@ function TimeSeries(props) {
 
         <div className="svg-parent is-gray">
           <div className="stats is-gray">
-            <h5 className={`${!moving ? 'title' : ''}`}>Deceased</h5>
+            <h5 className={`${!moving ? 'title' : ''}`}>Recovered</h5>
             <h5 className={`${moving ? 'title' : ''}`}>
               {isYesterday
                 ? `${datapoint['date']} Yesterday`

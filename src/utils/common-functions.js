@@ -62,7 +62,7 @@ export const formatDate = (unformattedDate) => {
   const month = unformattedDate.slice(3, 5);
   const year = unformattedDate.slice(6, 10);
   const time = unformattedDate.slice(11);
-  return `${year}-${month}-${day}T${time}+05:30`;
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDateAbsolute = (unformattedDate) => {
@@ -92,6 +92,45 @@ export const validateCTS = (data = []) => {
     });
 };
 
+
+export const validateHTS = (data = []) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const dataTypes = [
+    'positive',
+    'hospitalised',
+    'hospitalisedGovt',
+    'hospitalisedPvt',
+  ];
+  return data
+    .filter((d) => dataTypes.every((dt) => d[dt]) && d.date)
+    .filter((d) => dataTypes.every((dt) => Number(d[dt]) >= 0))
+    .filter((d) => {
+      const year = today.getFullYear();
+      return new Date(d.date + year) < today;
+    });
+};
+
+
+export const prettifyHospitalisationData = (data) => {
+  const parsedData = data.data
+  const header = parsedData.shift();
+
+  var newJSON = [];
+  for(var i=0; i<parsedData.length; i++) {
+    var rowData = parsedData[i];
+    newJSON[parsedData.length-i-1] = {
+      "date": formatDate(rowData[0]),
+      "positive": rowData[1],
+      "recovered": rowData[2],
+      "hospitalised" : rowData[5],
+      "hospitalisedGovt" : rowData[6],
+      "hospitalisedPvt" : rowData[7],
+    }
+  }
+  return newJSON
+};
+
 export const preprocessTimeseries = (timeseries) => {
   return timeseries.map((stat) => ({
     date: new Date(stat.date + ' 2020'),
@@ -103,6 +142,20 @@ export const preprocessTimeseries = (timeseries) => {
     dailydeceased: +stat.dailydeceased,
   }));
 };
+
+export const preprocessHospitalTimeseries = (timeseries) => {
+  console.log("Preprocessing Timeseries")
+  console.log(timeseries)
+  return timeseries.map((stat) => ({
+    date: new Date(stat.date),
+    positive: +stat.positive,
+    recovered: +stat.recovered,
+    hospitalised: +stat.hospitalised,
+    hospitalisedGovt: +stat.hospitalisedGovt,
+    hospitalisedPvt: +stat.hospitalisedPvt,    
+  }));
+};
+
 
 /**
  * Returns the last `days` entries

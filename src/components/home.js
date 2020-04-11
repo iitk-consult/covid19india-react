@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import Papa from 'papaparse';
 import axios from 'axios';
 import {formatDistance, format} from 'date-fns';
 import {
   formatDate,
   formatDateAbsolute,
   validateCTS,
+  prettifyHospitalisationData
 } from '../utils/common-functions';
 import * as Icon from 'react-feather';
 import {Link} from 'react-router-dom';
@@ -22,6 +24,7 @@ function Home(props) {
   const [fetched, setFetched] = useState(false);
   const [graphOption, setGraphOption] = useState(1);
   const [lastUpdated, setLastUpdated] = useState('');
+  // const [timeseries, setTimeseries] = useState([]);
   const [timeseries, setTimeseries] = useState([]);
   const [activityLog, setActivityLog] = useState([]);
   const [timeseriesMode, setTimeseriesMode] = useState(true);
@@ -36,19 +39,23 @@ function Home(props) {
 
   const getStates = async () => {
     try {
-      const [
+      var [
         response,
         stateDistrictWiseResponse,
         updateLogResponse,
         stateTestResponse,
+        hospitalisationData,
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2lPcrZD-M5sxSKio5EHpEOBOBfcfCCOaPVdKbUBK3JoDtYzg9nV5r7fiEGqzqnuNq1WQQpUnHXBY1/pub?gid=935363536&single=true&output=csv')
       ]);
+      console.log(hospitalisationData.data);
+      hospitalisationData = prettifyHospitalisationData(Papa.parse(hospitalisationData.data))
       setStates(response.data.statewise);
-      setTimeseries(validateCTS(response.data.cases_time_series));
+      setTimeseries(hospitalisationData);
       setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -76,8 +83,8 @@ function Home(props) {
           <div className="header fadeInUp" style={{animationDelay: '1s'}}>
             <div className="header-mid">
               <div className="titles">
-                <h1>India COVID-19 Tracker</h1>
-                <h6 style={{fontWeight: 600}}>A Crowdsourced Initiative</h6>
+                <h1>Hospitalisation Projections</h1>
+                <h6 style={{fontWeight: 600}}>An initiative by ICG</h6>
               </div>
               <div className="last-update">
                 <h6>Last Updated</h6>
@@ -97,16 +104,22 @@ function Home(props) {
               </div>
             </div>
           </div>
+          <TimeSeries
+                timeseries={timeseries}
+                type={graphOption}
+                mode={timeseriesMode}
+                logMode={timeseriesLogMode}
+              />
 
           {states.length > 1 && <Level data={states} />}
-          <Minigraph timeseries={timeseries} animate={true} />
+          {/* <Minigraph timeseries={timeseries} animate={true} />
           <Table
             states={states}
             summary={false}
             stateDistrictWiseData={stateDistrictWiseData}
             onHighlightState={onHighlightState}
             onHighlightDistrict={onHighlightDistrict}
-          />
+          /> */}
         </div>
 
         <div className="home-right">
@@ -176,12 +189,7 @@ function Home(props) {
                 </div>
               </div>
 
-              <TimeSeries
-                timeseries={timeseries}
-                type={graphOption}
-                mode={timeseriesMode}
-                logMode={timeseriesLogMode}
-              />
+              
             </React.Fragment>
           )}
         </div>

@@ -29,36 +29,36 @@ function App() {
       displayName: 'Home',
       animationDelayForNavbar: 0.2,
     },
-    {
-      pageLink: '/demographics',
-      view: PatientDB,
-      displayName: 'Demographics',
-      animationDelayForNavbar: 0.3,
-    },
-    {
-      pageLink: '/deepdive',
-      view: DeepDive,
-      displayName: 'Deep Dive',
-      animationDelayForNavbar: 0.4,
-    },
-    {
-      pageLink: '/links',
-      view: Links,
-      displayName: 'Helpful Links',
-      animationDelayForNavbar: 0.4,
-    },
-    {
-      pageLink: '/faq',
-      view: FAQ,
-      displayName: 'About',
-      animationDelayForNavbar: 0.5,
-    },
-    {
-      pageLink: '/essentials',
-      view: Resources,
-      displayName: 'Essentials',
-      animationDelayForNavbar: 0.7,
-    },
+    // {
+    //   pageLink: '/demographics',
+    //   view: PatientDB,
+    //   displayName: 'Demographics',
+    //   animationDelayForNavbar: 0.3,
+    // },
+    // {
+    //   pageLink: '/deepdive',
+    //   view: DeepDive,
+    //   displayName: 'Deep Dive',
+    //   animationDelayForNavbar: 0.4,
+    // },
+    // {
+    //   pageLink: '/links',
+    //   view: Links,
+    //   displayName: 'Helpful Links',
+    //   animationDelayForNavbar: 0.4,
+    // },
+    // {
+    //   pageLink: '/faq',
+    //   view: FAQ,
+    //   displayName: 'About',
+    //   animationDelayForNavbar: 0.5,
+    // },
+    // {
+    //   pageLink: '/essentials',
+    //   view: Resources,
+    //   displayName: 'Essentials',
+    //   animationDelayForNavbar: 0.7,
+    // },
   ];
 
   return (
@@ -68,7 +68,7 @@ function App() {
           render={({location}) => (
             <div className="Almighty-Router">
               <Navbar pages={pages} />
-              <Banner />
+              {/* <Banner /> */}
               <Route exact path="/" render={() => <Redirect to="/" />} />
               <Switch location={location}>
                 {pages.map((page, i) => {
