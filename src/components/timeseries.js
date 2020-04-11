@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 import {
-  preprocessTimeseries,
   preprocessHospitalTimeseries,
   sliceTimeseriesFromEnd,
 } from '../utils/common-functions';
@@ -60,7 +59,7 @@ function TimeSeries(props) {
       const chartRight = width - margin.right;
       const chartBottom = height - margin.bottom;
 
-      console.log("Going to preprocess")
+      console.log('Going to preprocess');
       const ts = preprocessHospitalTimeseries(timeseries);
       const T = ts.length;
       const yBuffer = 1.1;
@@ -71,13 +70,10 @@ function TimeSeries(props) {
       const svg1 = d3.select(svgRef1.current);
       const svg2 = d3.select(svgRef2.current);
       const svg3 = d3.select(svgRef3.current);
-      console.log(ts[0]);
       const dateMin = new Date(ts[0]['date']);
       dateMin.setDate(dateMin.getDate() - 1);
       const dateMax = new Date(ts[T - 1]['date']);
       dateMax.setDate(dateMax.getDate() + 1);
-      console.log(dateMin);
-      console.log(dateMax)
 
       const xScale = d3
         .scaleTime()
@@ -130,10 +126,7 @@ function TimeSeries(props) {
         const yScaleUniformLinear = d3
           .scaleLinear()
           .clamp(true)
-          .domain([
-            uniformScaleMin,
-            yBuffer * d3.max(ts, (d) => d.positive),
-          ])
+          .domain([uniformScaleMin, yBuffer * d3.max(ts, (d) => d.positive)])
           .nice()
           .range([chartBottom, margin.top]);
 
@@ -356,7 +349,7 @@ function TimeSeries(props) {
   );
 
   useEffect(() => {
-    console.log(timeseries)
+    console.log(timeseries);
     if (timeseries.length > 1) {
       graphData(timeseries);
     }
@@ -372,7 +365,6 @@ function TimeSeries(props) {
   const chartKey1 = chartType === 1 ? 'positive' : 'hospitalised';
   const chartKey2 = chartType === 1 ? 'hospitalised' : 'hospitalisedGovt';
   const chartKey3 = chartType === 1 ? 'hospitalised' : 'hospitalisedPvt';
- 
 
   return (
     <div
@@ -391,7 +383,6 @@ function TimeSeries(props) {
             <div className="stats-bottom">
               <h2>{datapoint[chartKey1]}</h2>
               <h6>
-                
                 {timeseries.length > 0 && index !== 0
                   ? timeseries[index][chartKey1] -
                       timeseries[index - 1][chartKey1] >=
@@ -419,7 +410,6 @@ function TimeSeries(props) {
             <div className="stats-bottom">
               <h2>{datapoint[chartKey2]}</h2>
               <h6>
-                
                 {timeseries.length > 0 && index !== 0
                   ? timeseries[index][chartKey2] -
                       timeseries[index - 1][chartKey2] >=
