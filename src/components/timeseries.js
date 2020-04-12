@@ -133,7 +133,7 @@ function TimeSeries(props) {
 		'ventilatorLower',
       ];
 
-      const colors = ['#ff073a', '#28a745', '#6c757d'];
+      const colors = ['#ff073a', '#28a745', '#6c757d','#ff073a', '#28a745', '#6c757d'];
 
       let yScales;
       if (plotTotal) {
@@ -214,7 +214,7 @@ function TimeSeries(props) {
           .attr('class', 'focus')
           .attr('fill', colors[i])
           .attr('stroke', colors[i])
-          .attr('r', 4);
+          
       });
 	  const focus1 = svgArray.map((svg, i) => {
         return svg
@@ -251,17 +251,17 @@ function TimeSeries(props) {
           focus.forEach((f, j) => {
             const yScale = yScales[j];
             const type = plotTotal ? dataTypesTotal[j] : dataTypesDaily[j];
-            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type]));
+            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type])).attr('r', (d[type]=="")?null:4);
           });
 		  focus1.forEach((f, j) => {
             const yScale = yScales[j];
             const type = plotTotal ? dataTypesTotal[j+2] : dataTypesDaily[j+2];
-            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type]));
+            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type])).attr('r', (d[type]=="")?null:4);
           });
 		  focus2.forEach((f, j) => {
             const yScale = yScales[j];
             const type = plotTotal ? dataTypesTotal[j+4] : dataTypesDaily[j+4];
-            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type]));
+            f.attr('cx', xScale(d.date)).attr('cy', yScale(d[type])).attr('r', (d[type]=="")?null:4);
           });
         }
       }
@@ -273,26 +273,17 @@ function TimeSeries(props) {
         focus.forEach((f, j) => {
           const yScale = yScales[j];
           const type = plotTotal ? dataTypesTotal[j] : dataTypesDaily[j];
-          f.attr('cx', xScale(ts[T - 1].date)).attr(
-            'cy',
-            yScale(ts[T - 1][type])
-          );
+          f.attr('cx', xScale(ts[T - 1].date)).attr('cy', yScale(ts[T - 1][type])).attr('r', (ts[T - 1][type]=="")?null:4);
         });
 		focus1.forEach((f, j) => {
           const yScale = yScales[j];
           const type = plotTotal ? dataTypesTotal[j+2] : dataTypesDaily[j+2];
-          f.attr('cx', xScale(ts[T - 1].date)).attr(
-            'cy',
-            yScale(ts[T - 1][type])
-          );
+          f.attr('cx', xScale(ts[T - 1].date)).attr('cy', yScale(ts[T - 1][type])).attr('r', (ts[T - 1][type]=="")?null:4);
         });
 		focus2.forEach((f, j) => {
           const yScale = yScales[j];
           const type = plotTotal ? dataTypesTotal[j+4] : dataTypesDaily[j+4];
-          f.attr('cx', xScale(ts[T - 1].date)).attr(
-            'cy',
-            yScale(ts[T - 1][type])
-          );
+          f.attr('cx', xScale(ts[T - 1].date)).attr('cy', yScale(ts[T - 1][type])).attr('r', (ts[T - 1][type]=="")?null:4);
         });
       }
 
@@ -330,7 +321,7 @@ function TimeSeries(props) {
           .attr('class', 'dot1')
           .attr('fill', color)
           .attr('stroke', color)
-          .attr('r', 2)
+          .attr('r', (d) => (d[type]=="")? null:2)
           .transition(t)
           .attr('cx', (d) => xScale(d.date))
           .attr('cy', (d) => yScale(d[type]));
@@ -385,9 +376,9 @@ function TimeSeries(props) {
           // });
         } else {
           /* DAILY TRENDS */
-          svg.selectAll('.trend').remove();
+          svg.selectAll('.trend1').remove();
           svg
-            .selectAll('.stem')
+            .selectAll('.stem1')
             .data(ts, (d) => d.date)
             .join((enter) =>
               enter
@@ -396,7 +387,7 @@ function TimeSeries(props) {
                 .attr('x2', (d) => xScale(d.date))
                 .attr('y2', chartBottom)
             )
-            .attr('class', 'stem')
+            .attr('class', 'stem1')
             .style('stroke', color + '99')
             .style('stroke-width', 4)
             .attr('y1', chartBottom)
@@ -446,7 +437,7 @@ function TimeSeries(props) {
           .attr('class', 'dot2')
           .attr('fill', color)
           .attr('stroke', color)
-          .attr('r', 2)
+          .attr('r', (d) => (d[type]=="")? null:2)
           .transition(t)
           .attr('cx', (d) => xScale(d.date))
           .attr('cy', (d) => yScale(d[type]));
@@ -501,9 +492,9 @@ function TimeSeries(props) {
           // });
         } else {
           /* DAILY TRENDS */
-          svg.selectAll('.trend').remove();
+          svg.selectAll('.trend2').remove();
           svg
-            .selectAll('.stem')
+            .selectAll('.stem2')
             .data(ts, (d) => d.date)
             .join((enter) =>
               enter
@@ -512,7 +503,7 @@ function TimeSeries(props) {
                 .attr('x2', (d) => xScale(d.date))
                 .attr('y2', chartBottom)
             )
-            .attr('class', 'stem')
+            .attr('class', 'stem2')
             .style('stroke', color + '99')
             .style('stroke-width', 4)
             .attr('y1', chartBottom)
@@ -555,7 +546,7 @@ function TimeSeries(props) {
           .attr('class', 'dot')
           .attr('fill', color)
           .attr('stroke', color)
-          .attr('r', 2)
+          .attr('r', (d) => (d[type]=="")? null:2)
           .transition(t)
           .attr('cx', (d) => xScale(d.date))
           .attr('cy', (d) => yScale(d[type]));
@@ -644,7 +635,7 @@ function TimeSeries(props) {
 
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-  const lastDate = new Date(datapoint['date'] + '2020');
+  const lastDate = new Date(datapoint['date']);
   const isYesterday =
     lastDate.getMonth() === yesterdayDate.getMonth() &&
     lastDate.getDate() === yesterdayDate.getDate();
@@ -668,9 +659,7 @@ function TimeSeries(props) {
         <div className="svg-parent" ref={wrapperRef}>
           <div className="stats">
             <h5 className={`${moving ? 'title' : ''}`}>
-              {isYesterday
-                ? `${datapoint['date']} Yesterday`
-                : datapoint['date']}
+              {datapoint['date']}
             </h5>
 			<h5 className={`${!moving ? 'title' : ''}`}>Positive</h5>
             <div className="stats-bottom">
@@ -712,9 +701,9 @@ function TimeSeries(props) {
                     0
                     ? '+' +
                       (timeseries[index][chartKey11] -
-                        timeseries[index - 1][chartKey12])
-                    : timeseries[index][chartKey12] -
-                      timeseries[index - 1][chartKey12]
+                        timeseries[index - 1][chartKey11])
+                    : timeseries[index][chartKey11] -
+                      timeseries[index - 1][chartKey11]
                   : ''}{' '}
               </h6>
             </div>
@@ -725,9 +714,7 @@ function TimeSeries(props) {
         <div className="svg-parent is-green">
           <div className="stats is-green">
             <h5 className={`${moving ? 'title' : ''}`}>
-              {isYesterday
-                ? `${datapoint['date']} Yesterday`
-                : datapoint['date']}
+              {datapoint['date']}
             </h5>
 			<h5 className={`${!moving ? 'title' : ''}`}>Admitted to Hospital</h5>
             <div className="stats-bottom">
