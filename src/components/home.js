@@ -50,11 +50,12 @@ function Home(props) {
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
-        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2lPcrZD-M5sxSKio5EHpEOBOBfcfCCOaPVdKbUBK3JoDtYzg9nV5r7fiEGqzqnuNq1WQQpUnHXBY1/pub?gid=935363536&single=true&output=csv')
+        axios.get('https://docs.google.com/spreadsheets/d/1dbZ1A13fCPxHe_TXroAt8lhNXYcOnXCaXSwl0rPlTkQ/export?format=csv&id=1dbZ1A13fCPxHe_TXroAt8lhNXYcOnXCaXSwl0rPlTkQ&gid=0')
       ]);
-      console.log(hospitalisationData.data);
-      hospitalisationData = prettifyHospitalisationData(Papa.parse(hospitalisationData.data))
-      setStates(response.data.statewise);
+      //console.log(hospitalisationData.data);
+      hospitalisationData = prettifyHospitalisationData(Papa.parse(hospitalisationData.data, {delimiter: ','}))
+      //console.log(hospitalisationData);
+	  setStates(response.data.statewise);
       setTimeseries(hospitalisationData);
       setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
