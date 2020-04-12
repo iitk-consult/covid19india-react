@@ -58,11 +58,10 @@ export const getStateName = (code) => {
 };
 
 export const formatDate = (unformattedDate) => {
-  const day = unformattedDate.slice(0, 2);
-  const month = unformattedDate.slice(3, 5);
-  const year = unformattedDate.slice(6, 10);
-  const time = unformattedDate.slice(11);
-  return `${year}-${month}-${day}`;
+  const day = unformattedDate.split(/[/-]+/)[0];
+  const month = unformattedDate.split(/[/-]+/)[1];
+  const year = unformattedDate.split(/[/-]+/)[2];
+  return `${year}-${day}-${month}`;
 };
 
 export const formatDateAbsolute = (unformattedDate) => {
@@ -115,19 +114,28 @@ export const validateHTS = (data = []) => {
 export const prettifyHospitalisationData = (data) => {
   const parsedData = data.data
   const header = parsedData.shift();
-
   var newJSON = [];
   for(var i=0; i<parsedData.length; i++) {
     var rowData = parsedData[i];
     newJSON[parsedData.length-i-1] = {
       "date": formatDate(rowData[0]),
       "positive": rowData[1],
-      "recovered": rowData[2],
-      "hospitalised" : rowData[5],
-      "hospitalisedGovt" : rowData[6],
-      "hospitalisedPvt" : rowData[7],
+	  "positiveBest": rowData[3],
+	  "positiveRealistic": rowData[4],
+	  "positiveWorst": rowData[5],
+      "hospitalisedUpper" : rowData[9],
+	  "icuUpper" : rowData[10],
+	  "ventilatorLower" : rowData[11],
+	  "hospitalisedLower" : rowData[12],
+      "icuLower" : rowData[13],
+      "ventilatorLower" : rowData[14],
+	  "admitHospital": rowData[15],
+	  "admitHospitalLower": rowData[16],
+	  "admitHospitalUpper": rowData[17],
     }
   }
+  newJSON = newJSON.reverse();
+  console.log(newJSON)
   return newJSON
 };
 
@@ -144,15 +152,23 @@ export const preprocessTimeseries = (timeseries) => {
 };
 
 export const preprocessHospitalTimeseries = (timeseries) => {
-  console.log("Preprocessing Timeseries")
-  console.log(timeseries)
+  //console.log("Preprocessing Timeseries")
+  //console.log(timeseries)
   return timeseries.map((stat) => ({
     date: new Date(stat.date),
     positive: +stat.positive,
-    recovered: +stat.recovered,
-    hospitalised: +stat.hospitalised,
-    hospitalisedGovt: +stat.hospitalisedGovt,
-    hospitalisedPvt: +stat.hospitalisedPvt,    
+	positiveBest: +stat.positiveBest,
+	positiveRealistic: +stat.positiveRealistic,
+	positiveWorst: +stat.positiveWorst,
+    hospitalisedUpper: +stat.hospitalisedUpper,
+	icuUpper: +stat.icuUpper,
+	ventilatorLower: +stat.ventilatorLower,
+	hospitalisedLower: +stat.hospitalisedLower,
+    icuLower: +stat.icuLower,
+    ventilatorLower: +stat.ventilatorLower,
+	admitHospital: +stat.admitHospital,
+	admitHospitalLower: +stat.admitHospitalLower,
+	admitHospitalUpper: +stat.admitHospitalUpper,
   }));
 };
 
