@@ -7,8 +7,9 @@ import {
   formatDate,
   formatDate1,
   formatDateAbsolute,
-  preprocessTimeseries,
+  //preprocessTimeseries,
   preprocessHospitalTimeseries,
+  processForChart,
   parseStateTimeseries,
   prettifyHospitalisationData
 } from '../utils/common-functions';
@@ -20,6 +21,9 @@ import Papa from 'papaparse';
 //import Level from './level';
 import MapExplorer from './mapexplorer';
 import TimeSeries from './timeseries';
+import ApexChart from './apex';
+import ApexChart1 from './apex1';
+import ApexChart2 from './apex2';
 //import Minigraph from './minigraph';
 
 function Home(props) {
@@ -63,9 +67,12 @@ function Home(props) {
       setStates(response.data.statewise);
       //const ts = parseStateTimeseries(statesDailyResponse);
       //ts['TT'] = preprocessTimeseries(response.data.cases_time_series); // TT -> India
-      //setTimeseries(ts);
-	  hospitalisationData = prettifyHospitalisationData(Papa.parse(hospitalisationData.data, {delimiter: ','}));
-	  setTimeseries(hospitalisationData);
+	  //var ts = new Array();
+	  //ts.push([new Date("10 Nov 2012"),1200], [new Date("16 Nov 2012"),10000], [new Date("21 Nov 2012"),20000])
+	  //setTimeseries(ts);
+	  hospitalisationData = preprocessHospitalTimeseries(prettifyHospitalisationData(Papa.parse(hospitalisationData.data, {delimiter: ','})));
+	  setTimeseries(processForChart(hospitalisationData));
+	  //setTimeseries(hospitalisationData);
 	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -254,13 +261,18 @@ function Home(props) {
 				</div>
 			  </div>
 
-              <TimeSeries
+              {/*<TimeSeries
                 //timeseries={timeseries[activeStateCode]}
 				timeseries={timeseries}
                 type={graphOption}
                 mode={timeseriesMode}
                 logMode={timeseriesLogMode}
-              />
+              />*/}
+			  <ApexChart data={timeseries}/>
+			  <br/>
+			  <ApexChart1 data={timeseries}/>
+			  <br/>
+			  <ApexChart2 data={timeseries}/>
             </React.Fragment>
           )}
         </div>

@@ -229,3 +229,47 @@ export const preprocessHospitalTimeseries = (timeseries) => {
   }));
 };
 
+export const processForChart = (hospitalisationData) => {
+  var positive = [];
+  var positiveBest = [];
+  var positiveRealistic = [];
+  var positiveWorst = [];
+  var admitHospital = [];
+  var admitHospitalLower = [];
+  var admitHospitalUpper = [];
+  var beds = [];
+  var i,k;
+  console.log(hospitalisationData)
+  for (i=0; i<hospitalisationData.length; i++){
+	  var x = hospitalisationData[i];
+	  if(x['positive']==""){
+		  break;
+	  }
+	  positive.push([x['date'], x['positive']]);
+  }
+  for (var j=i; j<hospitalisationData.length; j++){
+	  var x = hospitalisationData[j];
+	  positiveBest.push([x['date'], x['positiveBest']]);
+	  positiveRealistic.push([x['date'], x['positiveRealistic']]);
+	  positiveWorst.push([x['date'], x['positiveWorst']]);
+  }
+  for (k=0; k<hospitalisationData.length; k++){
+	  var x = hospitalisationData[i];
+	  if(x['admitHospital']==""){
+		  break;
+	  }
+	  admitHospital.push([x['date'], x['admitHospital']]);
+  }
+  for (var j=k; j<hospitalisationData.length; j++){
+	  var x = hospitalisationData[j];
+	  admitHospitalLower.push([x['date'], x['admitHospitalLower']]);
+	  admitHospitalUpper.push([x['date'], x['admitHospitalUpper']]);
+  }
+  for (var j=0; j<hospitalisationData.length; j++){
+	  var x = hospitalisationData[j];
+	  beds.push([x['date'], 1376013]);
+  }
+  var final = [positive, positiveBest, positiveRealistic, positiveWorst, admitHospital, admitHospitalLower, admitHospitalUpper, beds];
+  return final;
+};
+
