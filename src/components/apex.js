@@ -1,28 +1,17 @@
 import React, {Component} from "react";
 import moment from 'moment';
-import Chart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
 export default class ApexChart extends React.Component {
         constructor(props) {
           super(props);
 
           this.state = {
-          
+			
             series: [{
-              name: 'Current',
-              data: this.props.data[0]
-            }, {
-              name: 'Projected Best',
-              data: this.props.data[1]
-            },
-			{
-              name: 'Projected Realistic',
-              data: this.props.data[2]
-            },
-			{
-              name: 'Projected Worst',
-              data: this.props.data[3]
-            }
+              name: 'Hospitalized',
+              data: this.props.data
+			},
 			],
             options: {
               chart: {
@@ -76,7 +65,7 @@ export default class ApexChart extends React.Component {
                 }
               },
               title: {
-                text: 'Positive',
+                text: 'Hospitalized',
                 align: 'left',
                 offsetX: 14
               },
@@ -93,15 +82,13 @@ export default class ApexChart extends React.Component {
           
           };
         }
-
-      
-
+		
         render() {
           return (
             
 
       <div id="chart">
-  <Chart options={this.state.options} series={this.state.series} type="area" height={350} />
+  <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
 </div>
     
 

@@ -60,10 +60,10 @@ export const getStateName = (code) => {
 };
 
 export const formatDate = (unformattedDate) => {
-  const day = unformattedDate.split(/[/-]+/)[0];
+  const day = unformattedDate.split(/[/-]+/)[2];
   const month = unformattedDate.split(/[/-]+/)[1];
-  const year = unformattedDate.split(/[/-]+/)[2];
-  return `${year}-${day}-${month}`;
+  const year = unformattedDate.split(/[/-]+/)[0];
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDate1 = (unformattedDate) => {
@@ -207,6 +207,23 @@ export const prettifyHospitalisationData = (data) => {
   return newJSON
 };
 
+export const prettifyData = (data) => {
+  const parsedData = data.data
+  const header = parsedData.shift();
+  var newJSON = [];
+  for(var i=0; i<parsedData.length; i++) {
+    var rowData = parsedData[i];
+    newJSON[parsedData.length-i-1] = {
+      "date": formatDate(rowData[0]),
+      "hospitalCount": rowData[3],
+	  "tfScores": rowData[1],
+	  "normalisedFreq": rowData[2],
+    }
+  }
+  newJSON = newJSON.reverse();
+  //console.log(newJSON)
+  return newJSON
+};
 
 export const preprocessHospitalTimeseries = (timeseries) => {
   //console.log("Preprocessing Timeseries")
@@ -229,47 +246,39 @@ export const preprocessHospitalTimeseries = (timeseries) => {
   }));
 };
 
+export const preprocess = (timeseries) => {
+  //console.log("Preprocessing Timeseries")
+  return timeseries.map((stat) => ({
+    date: new Date(stat.date),
+    hospitalCount: +stat.hospitalCount,
+	tfScores: +stat.tfScores,
+	normalisedFreq: +stat.normalisedFreq,
+  }));
+};
+
 export const processForChart = (hospitalisationData) => {
-  var positive = [];
-  var positiveBest = [];
-  var positiveRealistic = [];
-  var positiveWorst = [];
-  var admitHospital = [];
-  var admitHospitalLower = [];
-  var admitHospitalUpper = [];
-  var beds = [];
-  var i,k;
-  console.log(hospitalisationData)
-  for (i=0; i<hospitalisationData.length; i++){
-	  var x = hospitalisationData[i];
-	  if(x['positive']==""){
-		  break;
-	  }
-	  positive.push([x['date'], x['positive']]);
-  }
-  for (var j=i; j<hospitalisationData.length; j++){
-	  var x = hospitalisationData[j];
-	  positiveBest.push([x['date'], x['positiveBest']]);
-	  positiveRealistic.push([x['date'], x['positiveRealistic']]);
-	  positiveWorst.push([x['date'], x['positiveWorst']]);
-  }
-  for (k=0; k<hospitalisationData.length; k++){
-	  var x = hospitalisationData[i];
-	  if(x['admitHospital']==""){
-		  break;
-	  }
-	  admitHospital.push([x['date'], x['admitHospital']]);
-  }
-  for (var j=k; j<hospitalisationData.length; j++){
-	  var x = hospitalisationData[j];
-	  admitHospitalLower.push([x['date'], x['admitHospitalLower']]);
-	  admitHospitalUpper.push([x['date'], x['admitHospitalUpper']]);
-  }
-  for (var j=0; j<hospitalisationData.length; j++){
-	  var x = hospitalisationData[j];
-	  beds.push([x['date'], 1376013]);
-  }
-  var final = [positive, positiveBest, positiveRealistic, positiveWorst, admitHospital, admitHospitalLower, admitHospitalUpper, beds];
+  var final = {};
+  var i = 0;
+  for(var key in stateCodes){
+    final[key]=hospitalisationData[i];
+	i++;
+	if(i == 5){
+		break;
+	}
+  };
+  final['TT'] = hospitalisationData[3];
+  return final;
+};
+
+export const getHosValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['hospitalCount']]);
+	}
+    final[key]=arr;
+  };
   return final;
 };
 
