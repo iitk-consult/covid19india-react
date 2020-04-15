@@ -8,7 +8,7 @@ export default class ApexChart extends React.Component {
 
           this.state = {
 			
-            series: [this.props.data],
+            series: this.props.series,
             options: {
               chart: {
                 type: 'area',

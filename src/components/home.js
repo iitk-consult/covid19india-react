@@ -120,10 +120,9 @@ function Home(props) {
     }
   };
 
-  const onMapHighlightChange = useCallback(({statecode}) => {
-    setActiveStateCode(statecode);
-	console.log(activeStateCode)
-  }, []);
+  const onMapHighlightChange = ({statecode}) => {
+	setActiveStateCode(statecode);  
+  };
 
   const refs = [useRef(), useRef(), useRef()];
 
@@ -217,9 +216,9 @@ function Home(props) {
                 mode={timeseriesMode}
                 logMode={timeseriesLogMode}
               />*/}
-			  <ApexChart data={{name: 'Twitter Trend Score', data: tfseries[activeStateCode]}}/>
-			  <ApexChart1 data={{name: 'Cumulative Word Freq. ', data: nfseries[activeStateCode]}}/>
-			  <ApexChart2 data={{name: 'Hospitalisation', data: hosseries[activeStateCode]}}/>
+			  <ApexChart series={[{name: 'Twitter Trend Score', data: tfseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Cumulative Word Freq. ', data: nfseries[activeStateCode]}]}/>
+			  <ApexChart2 series={[{name: 'Hospitalisation', data: hosseries[activeStateCode]}]}/>
             </React.Fragment>
           )}
         </div>
