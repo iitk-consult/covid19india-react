@@ -7,8 +7,11 @@ import {
   formatDate,
   formatDate1,
   formatDateAbsolute,
-  preprocessTimeseries,
+  prettifyData,
+  preprocess,
+  getHosValues,
   preprocessHospitalTimeseries,
+  processForChart,
   parseStateTimeseries,
   prettifyHospitalisationData
 } from '../utils/common-functions';
@@ -20,6 +23,9 @@ import Papa from 'papaparse';
 //import Level from './level';
 import MapExplorer from './mapexplorer';
 import TimeSeries from './timeseries';
+import ApexChart from './apex';
+import ApexChart1 from './apex1';
+import ApexChart2 from './apex2';
 //import Minigraph from './minigraph';
 
 function Home(props) {
@@ -51,21 +57,37 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-		hospitalisationData,
+		wb,
+		up,
+		karnataka,
+		del,
+		mh,
+		
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
-		axios.get('https://docs.google.com/spreadsheets/d/1dbZ1A13fCPxHe_TXroAt8lhNXYcOnXCaXSwl0rPlTkQ/export?format=csv&id=1dbZ1A13fCPxHe_TXroAt8lhNXYcOnXCaXSwl0rPlTkQ&gid=0')
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmp1d4JTafcB1Hjzao3WNJcm1Wdjf3LnYi17mr-_Q7Phb7z6_oJ7I_W4qThRCzoHeJ6JHMhFBU0XTr/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQd55jh-Nn_tbEszeSeF7drdccNXDyW64QRlWwvM7ZjjYxWlBTxa8P6vLJt2hG4Mgrxy_QRZCXstQpX/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-a8PI2AZidMoYQPJa_1AyOmYbfppLMkeGjH_jDkzyctgRC844iBPApBN66On2E2pS_DtvhY6pUDVT/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQlJPByX5bzt28DzOm3am0EIgqxPGOyBd3Xo6_anwTdmS_XwiSJ2KfoM2KbBNKAO94TJj7UQEkA_SwS/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQZQcxULMah8VLC8DfVu5pNV7FnfhOm-YBlRvs7VIHsdxwKhH3ATkHrypDctIMQbu0BKzCzESJ3zSXH/pub?output=csv'),
       ]);
       setStates(response.data.statewise);
       //const ts = parseStateTimeseries(statesDailyResponse);
       //ts['TT'] = preprocessTimeseries(response.data.cases_time_series); // TT -> India
-      //setTimeseries(ts);
-	  hospitalisationData = prettifyHospitalisationData(Papa.parse(hospitalisationData.data, {delimiter: ','}));
-	  setTimeseries(hospitalisationData);
+	  //setTimeseries(ts);
+	  wb = preprocess(prettifyData(Papa.parse(wb.data, {delimiter: ','})));
+	  up = preprocess(prettifyData(Papa.parse(up.data, {delimiter: ','})));
+	  karnataka = preprocess(prettifyData(Papa.parse(karnataka.data, {delimiter: ','})));
+	  del = preprocess(prettifyData(Papa.parse(del.data, {delimiter: ','})));
+	  mh = preprocess(prettifyData(Papa.parse(mh.data, {delimiter: ','})));
+	  var finalData = processForChart([wb, up, karnataka, del, mh]);
+	  var hosValues = getHosValues(finalData);
+	  //console.log(hosValues[activeStateCode])
+	  setTimeseries(hosValues);
 	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -254,13 +276,14 @@ function Home(props) {
 				</div>
 			  </div>
 
-              <TimeSeries
+              {/*<TimeSeries
                 //timeseries={timeseries[activeStateCode]}
 				timeseries={timeseries}
                 type={graphOption}
                 mode={timeseriesMode}
                 logMode={timeseriesLogMode}
-              />
+              />*/}
+			  <ApexChart data={timeseries[activeStateCode]}/>
             </React.Fragment>
           )}
         </div>

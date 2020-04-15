@@ -60,10 +60,10 @@ export const getStateName = (code) => {
 };
 
 export const formatDate = (unformattedDate) => {
-  const day = unformattedDate.split(/[/-]+/)[0];
+  const day = unformattedDate.split(/[/-]+/)[2];
   const month = unformattedDate.split(/[/-]+/)[1];
-  const year = unformattedDate.split(/[/-]+/)[2];
-  return `${year}-${day}-${month}`;
+  const year = unformattedDate.split(/[/-]+/)[0];
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDate1 = (unformattedDate) => {
@@ -207,6 +207,23 @@ export const prettifyHospitalisationData = (data) => {
   return newJSON
 };
 
+export const prettifyData = (data) => {
+  const parsedData = data.data
+  const header = parsedData.shift();
+  var newJSON = [];
+  for(var i=0; i<parsedData.length; i++) {
+    var rowData = parsedData[i];
+    newJSON[parsedData.length-i-1] = {
+      "date": formatDate(rowData[0]),
+      "hospitalCount": rowData[3],
+	  "tfScores": rowData[1],
+	  "normalisedFreq": rowData[2],
+    }
+  }
+  newJSON = newJSON.reverse();
+  //console.log(newJSON)
+  return newJSON
+};
 
 export const preprocessHospitalTimeseries = (timeseries) => {
   //console.log("Preprocessing Timeseries")
@@ -227,5 +244,41 @@ export const preprocessHospitalTimeseries = (timeseries) => {
 	admitHospitalLower: +stat.admitHospitalLower,
 	admitHospitalUpper: +stat.admitHospitalUpper,
   }));
+};
+
+export const preprocess = (timeseries) => {
+  //console.log("Preprocessing Timeseries")
+  return timeseries.map((stat) => ({
+    date: new Date(stat.date),
+    hospitalCount: +stat.hospitalCount,
+	tfScores: +stat.tfScores,
+	normalisedFreq: +stat.normalisedFreq,
+  }));
+};
+
+export const processForChart = (hospitalisationData) => {
+  var final = {};
+  var i = 0;
+  for(var key in stateCodes){
+    final[key]=hospitalisationData[i];
+	i++;
+	if(i == 5){
+		break;
+	}
+  };
+  final['TT'] = hospitalisationData[3];
+  return final;
+};
+
+export const getHosValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['hospitalCount']]);
+	}
+    final[key]=arr;
+  };
+  return final;
 };
 
