@@ -120,17 +120,9 @@ function Home(props) {
     }
   };
 
-  const onHighlightState = (state, index) => {
-    if (!state && !index) return setRegionHighlighted(null);
-    setRegionHighlighted({state, index});
-  };
-  const onHighlightDistrict = (district, state, index) => {
-    if (!state && !index && !district) return setRegionHighlighted(null);
-    setRegionHighlighted({district, state, index});
-  };
-
   const onMapHighlightChange = useCallback(({statecode}) => {
     setActiveStateCode(statecode);
+	console.log(activeStateCode)
   }, []);
 
   const refs = [useRef(), useRef(), useRef()];
@@ -147,88 +139,8 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
-                regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
-		  <div
-                className="timeseries-header fadeInUp"
-                style={{animationDelay: '2.5s'}}
-                ref={refs[2]}
-              >
-                <h1>Spread Trends</h1>
-                <div className="tabs">
-                  <div
-                    className={`tab ${graphOption === 1 ? 'focused' : ''}`}
-                    onClick={() => {
-                      setGraphOption(1);
-                    }}
-                  >
-                    <h4>Cumulative</h4>
-                  </div>
-                  <div
-                    className={`tab ${graphOption === 2 ? 'focused' : ''}`}
-                    onClick={() => {
-                      setGraphOption(2);
-                    }}
-                  >
-                    <h4>Daily</h4>
-                  </div>
-                </div>
-
-                <div className="scale-modes">
-                  <label>Scale Modes</label>
-                  <div className="timeseries-mode">
-                    <label htmlFor="timeseries-mode">Uniform</label>
-                    <input
-                      type="checkbox"
-                      checked={timeseriesMode}
-                      className="switch"
-                      aria-label="Checked by default to scale uniformly."
-                      onChange={(event) => {
-                        setTimeseriesMode(!timeseriesMode);
-                      }}
-                    />
-                  </div>
-                  <div
-                    className={`timeseries-logmode ${
-                      graphOption !== 1 ? 'disabled' : ''
-                    }`}
-                  >
-                    <label htmlFor="timeseries-logmode">Logarithmic</label>
-                    <input
-                      type="checkbox"
-                      checked={graphOption === 1 && timeseriesLogMode}
-                      className="switch"
-                      disabled={graphOption !== 1}
-                      onChange={(event) => {
-                        setTimeseriesLogMode(!timeseriesLogMode);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {window.innerWidth <= 769 && (
-                  <div className="trends-state-name">
-                    <select
-                      onChange={({target}) => {
-                        onHighlightState(JSON.parse(target.value));
-                      }}
-                    >
-                      {states.map((s) => {
-                        return (
-                          <option
-                            key={s.statecode}
-                            value={JSON.stringify(s)}
-                            selected={s.statecode === activeStateCode}
-                          >
-                            {s.state === 'Total' ? 'All States' : s.state}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                )}
-              </div>
 		  </React.Fragment>
 		  )}
 		  <div
@@ -276,7 +188,7 @@ function Home(props) {
               <div className="header fadeInUp" style={{animationDelay: '1s'}}>
 				<div className="header-mid">
 				  <div className="titles">
-					<h1>Hospitalisation Projections</h1>
+					<h1>Our Findings</h1>
 					<h6 style={{fontWeight: 600}}>An initiative by ICG</h6>
 				  </div>
 				  <div className="last-update">

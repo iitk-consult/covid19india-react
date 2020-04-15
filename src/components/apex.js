@@ -61,7 +61,7 @@ export default class ApexChart extends React.Component {
                 }
               },
               title: {
-                text: 'tfScore',
+                text: 'Twitter Trend Score',
                 align: 'left',
                 offsetX: 14
               },
