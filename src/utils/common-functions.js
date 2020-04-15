@@ -16,43 +16,43 @@ const months = {
 };
 
 const stateCodes = {
-  AP: 'Andhra Pradesh',
-  AR: 'Arunachal Pradesh',
-  AS: 'Assam',
-  BR: 'Bihar',
-  CT: 'Chhattisgarh',
-  GA: 'Goa',
-  GJ: 'Gujarat',
-  HR: 'Haryana',
-  HP: 'Himachal Pradesh',
-  JH: 'Jharkhand',
-  KA: 'Karnataka',
-  KL: 'Kerala',
-  MP: 'Madhya Pradesh',
-  MH: 'Maharashtra',
-  MN: 'Manipur',
-  ML: 'Meghalaya',
-  MZ: 'Mizoram',
-  NL: 'Nagaland',
-  OR: 'Odisha',
-  PB: 'Punjab',
-  RJ: 'Rajasthan',
-  SK: 'Sikkim',
-  TN: 'Tamil Nadu',
-  TG: 'Telangana',
-  TR: 'Tripura',
-  UT: 'Uttarakhand',
-  UP: 'Uttar Pradesh',
-  WB: 'West Bengal',
-  AN: 'Andaman and Nicobar Islands',
-  CH: 'Chandigarh',
-  DN: 'Dadra and Nagar Haveli',
-  DD: 'Daman and Diu',
-  DL: 'Delhi',
-  JK: 'Jammu and Kashmir',
-  LA: 'Ladakh',
-  LD: 'Lakshadweep',
-  PY: 'Puducherry',
+	WB: 'West Bengal',
+	UP: 'Uttar Pradesh',
+	KA: 'Karnataka',
+	DL: 'Delhi',
+	MH: 'Maharashtra',
+	KL: 'Kerala',
+	PB: 'Punjab',
+	TG: 'Telangana',
+	OR: 'Odisha',
+	TN: 'Tamil Nadu',
+	AP: 'Andhra Pradesh',
+	AR: 'Arunachal Pradesh',
+	AS: 'Assam',
+	BR: 'Bihar',
+	CT: 'Chhattisgarh',
+	GA: 'Goa',
+	GJ: 'Gujarat',
+	HR: 'Haryana',
+	HP: 'Himachal Pradesh',
+	JH: 'Jharkhand', 
+	MP: 'Madhya Pradesh',
+	MN: 'Manipur',
+	ML: 'Meghalaya',
+	MZ: 'Mizoram',
+	NL: 'Nagaland',
+	RJ: 'Rajasthan',
+	SK: 'Sikkim',
+	TR: 'Tripura',
+	UT: 'Uttarakhand',  
+	AN: 'Andaman and Nicobar Islands',
+	CH: 'Chandigarh',
+	DN: 'Dadra and Nagar Haveli',
+	DD: 'Daman and Diu',
+	JK: 'Jammu and Kashmir',
+	LA: 'Ladakh',
+	LD: 'Lakshadweep',
+	PY: 'Puducherry',
 };
 
 export const getStateName = (code) => {
@@ -215,9 +215,9 @@ export const prettifyData = (data) => {
     var rowData = parsedData[i];
     newJSON[parsedData.length-i-1] = {
       "date": formatDate(rowData[0]),
-      "hospitalCount": rowData[3],
-	  "tfScores": rowData[1],
 	  "normalisedFreq": rowData[2],
+	  "tfScores": rowData[1],
+	  "hospitalised": rowData[3],
     }
   }
   newJSON = newJSON.reverse();
@@ -250,9 +250,9 @@ export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
   return timeseries.map((stat) => ({
     date: new Date(stat.date),
-    hospitalCount: +stat.hospitalCount,
 	tfScores: +stat.tfScores,
 	normalisedFreq: +stat.normalisedFreq,
+	hospitalised: +stat.hospitalised,
   }));
 };
 
@@ -262,11 +262,35 @@ export const processForChart = (hospitalisationData) => {
   for(var key in stateCodes){
     final[key]=hospitalisationData[i];
 	i++;
-	if(i == 5){
+	if(i == 10){
 		break;
 	}
   };
   final['TT'] = hospitalisationData[3];
+  return final;
+};
+
+export const gettfValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['tfScores']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+export const getnfValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['normalisedFreq']]);
+	}
+    final[key]=arr;
+  };
   return final;
 };
 
@@ -275,10 +299,9 @@ export const getHosValues = (x) => {
   for(var key in x){
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['hospitalCount']]);
+		arr.push([x[key][i]['date'], x[key][i]['hospitalised']]);
 	}
     final[key]=arr;
   };
   return final;
 };
-

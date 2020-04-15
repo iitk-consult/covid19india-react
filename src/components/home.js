@@ -9,6 +9,8 @@ import {
   formatDateAbsolute,
   prettifyData,
   preprocess,
+  gettfValues,
+  getnfValues,
   getHosValues,
   preprocessHospitalTimeseries,
   processForChart,
@@ -36,7 +38,9 @@ function Home(props) {
   const [graphOption, setGraphOption] = useState(1);
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
-  const [timeseries, setTimeseries] = useState([]);
+  const [tfseries, setTfseries] = useState([]);
+  const [nfseries, setNfseries] = useState([]);
+  const [hosseries, setHosseries] = useState([]);
   const [activeStateCode, setActiveStateCode] = useState('TT'); // TT -> India
   const [activityLog, setActivityLog] = useState([]);
   const [timeseriesMode, setTimeseriesMode] = useState(true);
@@ -62,7 +66,11 @@ function Home(props) {
 		karnataka,
 		del,
 		mh,
-		
+		kr,
+		pb,
+		tl,
+		od,
+		tn,
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
@@ -70,11 +78,16 @@ function Home(props) {
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmp1d4JTafcB1Hjzao3WNJcm1Wdjf3LnYi17mr-_Q7Phb7z6_oJ7I_W4qThRCzoHeJ6JHMhFBU0XTr/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQd55jh-Nn_tbEszeSeF7drdccNXDyW64QRlWwvM7ZjjYxWlBTxa8P6vLJt2hG4Mgrxy_QRZCXstQpX/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQd55jh-Nn_tbEszeSeF7drdccNXDyW64QRlWwvM7ZjjYxWlBTxa8P6vLJt2hG4Mgrxy_QRZCXstQpX/pub?gid=1922732720&single=true&output=csv'),
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-a8PI2AZidMoYQPJa_1AyOmYbfppLMkeGjH_jDkzyctgRC844iBPApBN66On2E2pS_DtvhY6pUDVT/pub?output=csv'),
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQlJPByX5bzt28DzOm3am0EIgqxPGOyBd3Xo6_anwTdmS_XwiSJ2KfoM2KbBNKAO94TJj7UQEkA_SwS/pub?output=csv'),
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQZQcxULMah8VLC8DfVu5pNV7FnfhOm-YBlRvs7VIHsdxwKhH3ATkHrypDctIMQbu0BKzCzESJ3zSXH/pub?output=csv'),
-      ]);
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5g9NkQABSe8gEvfrh21e9yscusVlxj_UOLPbdp0FU4-1am12qUpIHudOXMFldRx_Q_OagrHRyMD0-/pub?gid=1081961011&single=true&output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSP6A9uiaDANSP57k3-ukvq_69cVDxQJJIJpILlIyznn4171Hv641gCe0Fr1Imgm9MoVKiy7oF0RmJ7/pub?gid=993901126&single=true&output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQzHHJK2uRm-89URV0Y5EdSgyULs-Zfk_AxIo_JF53sO2DSaou05gyFFD6MpdVuV9eRstTV0kv0vp_f/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQcuNGXPh6lyyEVZuMZDE7nf9hh9fXdo-ScRGu_52gOQVVK7iDy3_dWVDZBKWsfJWi-YfdIQ6BIcK4I/pub?output=csv'),
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQEap7wAjiaQv-m5r800dbaOezhKOhSejoFDH-J00aw2HXlweyYQ7xu9eU7uTpHruNwAojTubpzFFeL/pub?output=csv'),
+	  ]);
       setStates(response.data.statewise);
       //const ts = parseStateTimeseries(statesDailyResponse);
       //ts['TT'] = preprocessTimeseries(response.data.cases_time_series); // TT -> India
@@ -84,10 +97,19 @@ function Home(props) {
 	  karnataka = preprocess(prettifyData(Papa.parse(karnataka.data, {delimiter: ','})));
 	  del = preprocess(prettifyData(Papa.parse(del.data, {delimiter: ','})));
 	  mh = preprocess(prettifyData(Papa.parse(mh.data, {delimiter: ','})));
-	  var finalData = processForChart([wb, up, karnataka, del, mh]);
+	  kr = preprocess(prettifyData(Papa.parse(kr.data, {delimiter: ','})));
+	  pb = preprocess(prettifyData(Papa.parse(pb.data, {delimiter: ','})));
+	  tl = preprocess(prettifyData(Papa.parse(tl.data, {delimiter: ','})));
+	  od = preprocess(prettifyData(Papa.parse(od.data, {delimiter: ','})));
+	  tn = preprocess(prettifyData(Papa.parse(tn.data, {delimiter: ','})));
+	  const finalData = processForChart([wb, up, karnataka, del, mh, kr, pb, tl, od, tn]);
 	  var hosValues = getHosValues(finalData);
-	  //console.log(hosValues[activeStateCode])
-	  setTimeseries(hosValues);
+	  var tfValues = gettfValues(finalData);
+	  var nfValues = getnfValues(finalData);
+	  console.log(hosValues)
+	  setTfseries(tfValues);
+	  setNfseries(nfValues);
+	  setHosseries(hosValues);
 	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -283,7 +305,9 @@ function Home(props) {
                 mode={timeseriesMode}
                 logMode={timeseriesLogMode}
               />*/}
-			  <ApexChart data={timeseries[activeStateCode]}/>
+			  <ApexChart data={{name: 'Twitter Trend Score', data: tfseries[activeStateCode]}}/>
+			  <ApexChart1 data={{name: 'Cumulative Word Freq. ', data: nfseries[activeStateCode]}}/>
+			  <ApexChart2 data={{name: 'Hospitalisation', data: hosseries[activeStateCode]}}/>
             </React.Fragment>
           )}
         </div>

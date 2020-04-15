@@ -1,33 +1,18 @@
 import React, {Component} from "react";
 import moment from 'moment';
-import Chart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
-export default class ApexChart2 extends React.Component {
+export default class ApexChart extends React.Component {
         constructor(props) {
           super(props);
 
           this.state = {
-          
-            series: [{
-              name: 'Current',
-              data: this.props.data[1]
-            }, {
-              name: 'Projected Best',
-              data: this.props.data[2]
-            },
-			],
+			
+            series: [this.props.data],
             options: {
               chart: {
                 type: 'area',
-                stacked: true,
-				dropShadow: {
-				  enabled: true,
-				  enabledSeries: [0],
-				  top: -2,
-				  left: 2,
-				  blur: 5,
-				  opacity: 0.06
-				},
+                stacked: false,
                 height: 350,
                 zoom: {
                   enabled: true
@@ -38,22 +23,16 @@ export default class ApexChart2 extends React.Component {
               },
               markers: {
                 size: 0,
-				strokeColor: "#fff",
-				strokeWidth: 3,
-				strokeOpacity: 1,
-				fillOpacity: 1,
-				hover: {
-				  size: 6
-				}
               },
-			  colors: ['#00E396', '#0090FF'],
-			  stroke: {
-				curve: "smooth",
-				width: 3
-			  },
               fill: {
-                type: 'solid',
-                fillOpacity: 0.7
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    inverseColors: false,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [20, 100, 100, 100]
+                  },
               },
               yaxis: {
                 labels: {
@@ -82,7 +61,7 @@ export default class ApexChart2 extends React.Component {
                 }
               },
               title: {
-                text: 'Area Chart',
+                text: 'Hospitalisation',
                 align: 'left',
                 offsetX: 14
               },
@@ -99,15 +78,13 @@ export default class ApexChart2 extends React.Component {
           
           };
         }
-
-      
-
+		
         render() {
           return (
             
 
       <div id="chart">
-  <Chart options={this.state.options} series={this.state.series} type="area" height={350} />
+  <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
 </div>
     
 

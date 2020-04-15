@@ -8,11 +8,7 @@ export default class ApexChart extends React.Component {
 
           this.state = {
 			
-            series: [{
-              name: 'Hospitalized',
-              data: this.props.data
-			},
-			],
+            series: [this.props.data],
             options: {
               chart: {
                 type: 'area',
@@ -65,7 +61,7 @@ export default class ApexChart extends React.Component {
                 }
               },
               title: {
-                text: 'Hospitalized',
+                text: 'tfScore',
                 align: 'left',
                 offsetX: 14
               },
