@@ -24,6 +24,7 @@ export default class ApexChart extends React.Component {
               markers: {
                 size: 0,
               },
+			  colors: ['#9C27B0'],
               fill: {
                 type: 'gradient',
                 gradient: {
