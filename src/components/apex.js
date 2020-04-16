@@ -8,7 +8,7 @@ export default class ApexChart extends React.Component {
 
           this.state = {
 			
-            series: this.props.series,
+            series: [],
             options: {
               chart: {
                 type: 'area',
@@ -72,7 +72,10 @@ export default class ApexChart extends React.Component {
                 position: 'top',
                 horizontalAlign: 'right',
                 offsetX: -10
-              }
+              },
+			  noData: {
+				text: 'Loading...'
+			  }
             },
           
           
@@ -84,7 +87,7 @@ export default class ApexChart extends React.Component {
             
 
       <div id="chart">
-  <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
+  <ReactApexChart options={this.state.options} series={this.props.series} type="area" height={350} />
 </div>
     
 

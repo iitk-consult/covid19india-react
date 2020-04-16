@@ -120,8 +120,13 @@ function Home(props) {
     }
   };
 
+  const onHighlightState = (state, index) => {
+    if (!state && !index) return setRegionHighlighted(null);
+    setRegionHighlighted({state, index});
+  };
+	
   const onMapHighlightChange = ({statecode}) => {
-	setActiveStateCode(statecode);  
+	setActiveStateCode(statecode);
   };
 
   const refs = [useRef(), useRef(), useRef()];
@@ -138,6 +143,7 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
+				regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
 		  </React.Fragment>
