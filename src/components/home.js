@@ -106,7 +106,6 @@ function Home(props) {
 	  var hosValues = getHosValues(finalData);
 	  var tfValues = gettfValues(finalData);
 	  var nfValues = getnfValues(finalData);
-	  console.log(hosValues)
 	  setTfseries(tfValues);
 	  setNfseries(nfValues);
 	  setHosseries(hosValues);
@@ -125,9 +124,9 @@ function Home(props) {
     setRegionHighlighted({state, index});
   };
 	
-  const onMapHighlightChange = ({statecode}) => {
-	setActiveStateCode(statecode);
-  };
+  const onMapHighlightChange = useCallback(({statecode}) => {
+    setActiveStateCode(statecode);
+  }, []);
 
   const refs = [useRef(), useRef(), useRef()];
 

@@ -74,7 +74,7 @@ export default class ApexChart extends React.Component {
                 offsetX: -10
               },
 			  noData: {
-				text: 'Loading...'
+				text: 'No Data Available...'
 			  }
             },
           

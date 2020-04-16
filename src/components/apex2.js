@@ -8,7 +8,7 @@ export default class ApexChart extends React.Component {
 
           this.state = {
 			
-            series: this.props.series,
+            series: [],
             options: {
               chart: {
                 type: 'area',
@@ -73,7 +73,10 @@ export default class ApexChart extends React.Component {
                 position: 'top',
                 horizontalAlign: 'right',
                 offsetX: -10
-              }
+              },
+			  noData: {
+				text: 'No Data Available...'
+			  }
             },
           
           

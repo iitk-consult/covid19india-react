@@ -217,6 +217,7 @@ export const prettifyData = (data) => {
       "date": formatDate(rowData[0]),
 	  "normalisedFreq": rowData[2],
 	  "tfScores": rowData[1],
+	  "nomalisedTfScores": rowData[4],
 	  "hospitalised": rowData[3],
     }
   }
@@ -252,6 +253,7 @@ export const preprocess = (timeseries) => {
     date: new Date(stat.date),
 	tfScores: +stat.tfScores,
 	normalisedFreq: +stat.normalisedFreq,
+	nomalisedTfScores: +stat.nomalisedTfScores,
 	hospitalised: +stat.hospitalised,
   }));
 };
@@ -260,11 +262,12 @@ export const processForChart = (hospitalisationData) => {
   var final = {};
   var i = 0;
   for(var key in stateCodes){
-    final[key]=hospitalisationData[i];
-	i++;
-	if(i == 10){
-		break;
+    if(!hospitalisationData[i]){
+		final[key]=[];
+	}else{
+		final[key]=hospitalisationData[i];
 	}
+	i++;
   };
   final['TT'] = hospitalisationData[3];
   return final;
@@ -275,7 +278,7 @@ export const gettfValues = (x) => {
   for(var key in x){
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['tfScores']]);
+		arr.push([x[key][i]['date'], x[key][i]['nomalisedTfScores']]);
 	}
     final[key]=arr;
   };
