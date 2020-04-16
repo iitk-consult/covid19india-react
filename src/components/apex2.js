@@ -41,7 +41,9 @@ export default class ApexChart extends React.Component {
                         colors: '#8e8da4',
                     },
                     offsetX: 0,
-                    
+					formatter: function (value) {
+						return Math.trunc(value);
+					}
                 },
                 axisBorder: {
                     show: false,
