@@ -221,20 +221,28 @@ function Home(props) {
                 mode={timeseriesMode}
                 logMode={timeseriesLogMode}
               />*/}
+			  <div className="fadeInUp" style={{animationDelay: '0.5s'}}>
+			  <div className="updates">
+				  <div className="update">
+					<h5 style={{color:"blue"}}>
+					Our daily twitter scores are a measure of the people tweeting about terms related to 'hospital', 'health', 'ventilator', etc. Numerically, we compute a weighted average of tf scores over all such terms. Each score is calculated after preprocessing the tweets, with the formula w_target/w_total, where w_target is the no. of "target" words tweeted in a day and w_total is the total number of words tweeted in a day.
+					</h5>
+				  </div>
+			  </div>
 			  <ApexChart series={[{name: 'Twitter Trend Score', data: tfseries[activeStateCode]}]}/>
+			  <div className="updates">
+				  <div className="update">
+					<h5 style={{color:"red"}}>
+					Our cumulative frequencies are a measure of the total volume of incoming tweets related to the coronavirus situation in each state over time. Each individual frequency is calculated after preprocessing the tweets, with the formula w_total/max_w, where w_total is the total number of words tweeted in a day and max_w is the maximum number of words in one tweet.
+					</h5>
+				  </div>
+			  </div>
 			  <ApexChart1 series={[{name: 'Cumulative Word Freq. ', data: nfseries[activeStateCode]}]}/>
 			  <ApexChart2 series={[{name: 'Hospitalisation', data: hosseries[activeStateCode]}]}/>
+			  </div>
             </React.Fragment>
           )}
         </div>
-      </div>
-
-      <div className="Home">
-        <div className="home-left">
-          
-        </div>
-
-        <div className="home-right"></div>
       </div>
     </React.Fragment>
   );
