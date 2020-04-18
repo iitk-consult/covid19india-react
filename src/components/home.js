@@ -13,6 +13,7 @@ import {
   getnfValues,
   getHosValues,
   preprocessHospitalTimeseries,
+  getStateName,
   processForChart,
   parseStateTimeseries,
   prettifyHospitalisationData
@@ -41,7 +42,10 @@ function Home(props) {
   const [tfseries, setTfseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
   const [hosseries, setHosseries] = useState([]);
-  const [activeStateCode, setActiveStateCode] = useState('TT'); // TT -> India
+  const [activeStateCode, setActiveStateCode] = useState('TT');
+  const [activeStateName, setActiveStateName] = useState('Delhi');
+  const [activeStateName1, setActiveStateName1] = useState('Delhi');
+  const [activeStateCode1, setActiveStateCode1] = useState('TT');  // TT -> India
   const [activityLog, setActivityLog] = useState([]);
   const [timeseriesMode, setTimeseriesMode] = useState(true);
   const [timeseriesLogMode, setTimeseriesLogMode] = useState(false);
@@ -126,6 +130,7 @@ function Home(props) {
 	
   const onMapHighlightChange = useCallback(({statecode}) => {
     setActiveStateCode(statecode);
+	setActiveStateName(getStateName(statecode));
   }, []);
 
   const refs = [useRef(), useRef(), useRef()];
@@ -145,6 +150,28 @@ function Home(props) {
 				regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
+		  <h3><br />Select a state to compare plots:</h3>
+		  <div className="trends-state-name">
+                  <select style={{margin:'0px'}}
+                    onChange={({target}) => {
+                      setActiveStateCode1(target.value);
+					  setActiveStateName1(getStateName(target.value));
+                    }}
+                  >
+                    <option value="TT">None</option>
+					<option value="WB">West Bengal</option>
+					<option value="UP">Uttar Pradesh</option>
+					<option value="KA">Karnataka</option>
+					<option value="DL">Delhi</option>
+					<option value="MH">Maharashtra</option>
+					<option value="KL">Kerala</option>
+					<option value="PB">Punjab</option>
+					<option value="TG">Telangana</option>
+					<option value="OR">Odisha</option>
+					<option value="TN">Telangana</option>
+                  </select>
+                </div>
+              
 		  </React.Fragment>
 		  )}
 		  <div
@@ -229,7 +256,8 @@ function Home(props) {
 					</h5>
 				  </div>
 			  </div>
-			  <ApexChart series={[{name: 'Twitter Trend Score', data: tfseries[activeStateCode]}]}/>
+			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]},{name: activeStateName1, data: tfseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]}]}/>}
 			  <div className="updates">
 				  <div className="update">
 					<h5 style={{color:"red"}}>
@@ -237,8 +265,10 @@ function Home(props) {
 					</h5>
 				  </div>
 			  </div>
-			  <ApexChart1 series={[{name: 'Cumulative Word Freq. ', data: nfseries[activeStateCode]}]}/>
-			  <ApexChart2 series={[{name: 'Hospitalisation', data: hosseries[activeStateCode]}]}/>
+			  {activeStateCode1 != 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]},{name: activeStateName1, data: nfseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]}]}/>}
+			  {activeStateCode1 != 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]},{name: activeStateName1, data: hosseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]}]}/>}
 			  </div>
             </React.Fragment>
           )}
