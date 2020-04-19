@@ -9,6 +9,7 @@ import {
   formatDateAbsolute,
   prettifyData,
   preprocess,
+  getpsValues,
   gettfValues,
   getnfValues,
   getHosValues,
@@ -16,6 +17,7 @@ import {
   getStateName,
   processForChart,
   parseStateTimeseries,
+  preprocessTimeseries,
   prettifyHospitalisationData
 } from '../utils/common-functions';
 import {Link} from 'react-router-dom';
@@ -29,6 +31,7 @@ import TimeSeries from './timeseries';
 import ApexChart from './apex';
 import ApexChart1 from './apex1';
 import ApexChart2 from './apex2';
+import ApexChart4 from './apex4';
 //import Minigraph from './minigraph';
 
 function Home(props) {
@@ -39,6 +42,7 @@ function Home(props) {
   const [graphOption, setGraphOption] = useState(1);
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
+  const [psseries, setPsseries] = useState([]);
   const [tfseries, setTfseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
   const [hosseries, setHosseries] = useState([]);
@@ -93,9 +97,7 @@ function Home(props) {
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQEap7wAjiaQv-m5r800dbaOezhKOhSejoFDH-J00aw2HXlweyYQ7xu9eU7uTpHruNwAojTubpzFFeL/pub?output=csv'),
 	  ]);
       setStates(response.data.statewise);
-      //const ts = parseStateTimeseries(statesDailyResponse);
-      //ts['TT'] = preprocessTimeseries(response.data.cases_time_series); // TT -> India
-	  //setTimeseries(ts);
+      const ts = parseStateTimeseries(statesDailyResponse);
 	  wb = preprocess(prettifyData(Papa.parse(wb.data, {delimiter: ','})));
 	  up = preprocess(prettifyData(Papa.parse(up.data, {delimiter: ','})));
 	  karnataka = preprocess(prettifyData(Papa.parse(karnataka.data, {delimiter: ','})));
@@ -110,6 +112,9 @@ function Home(props) {
 	  var hosValues = getHosValues(finalData);
 	  var tfValues = gettfValues(finalData);
 	  var nfValues = getnfValues(finalData);
+	  var psValues = getpsValues(ts);
+	  psValues['TT']=psValues['DL'];
+	  setPsseries(psValues);
 	  setTfseries(tfValues);
 	  setNfseries(nfValues);
 	  setHosseries(hosValues);
@@ -204,12 +209,6 @@ function Home(props) {
                   </div>
                 );
               })}
-            <button className="button">
-              <Link to="/demographics">
-                <Icon.Database />
-                <span>Demographic Overview</span>
-              </Link>
-            </button>
           </div>
         </div>
 
@@ -269,6 +268,8 @@ function Home(props) {
 			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]}]}/>}
 			  {activeStateCode1 != 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]},{name: activeStateName1, data: hosseries[activeStateCode1]}]}/>}
 			  {activeStateCode1 == 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]}]}/>}
+			  {activeStateCode1 != 'TT' && <ApexChart4 series={[{name: activeStateName, data: psseries[activeStateCode]},{name: activeStateName1, data: psseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart4 series={[{name: activeStateName, data: psseries[activeStateCode]}]}/>}
 			  </div>
             </React.Fragment>
           )}

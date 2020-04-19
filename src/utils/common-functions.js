@@ -273,6 +273,18 @@ export const processForChart = (hospitalisationData) => {
   return final;
 };
 
+export const getpsValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['totalconfirmed']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
 export const gettfValues = (x) => {
   var final = {};
   for(var key in x){
