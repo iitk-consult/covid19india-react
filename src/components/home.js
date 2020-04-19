@@ -32,6 +32,8 @@ import ApexChart from './apex';
 import ApexChart1 from './apex1';
 import ApexChart2 from './apex2';
 import ApexChart4 from './apex4';
+import Modal from './modal';
+import Modal1 from './modal1';
 //import Minigraph from './minigraph';
 
 function Home(props) {
@@ -248,22 +250,16 @@ function Home(props) {
                 logMode={timeseriesLogMode}
               />*/}
 			  <div className="fadeInUp" style={{animationDelay: '0.5s'}}>
-			  <div className="updates">
-				  <div className="update">
-					<h5 style={{color:"blue"}}>
-					Our daily twitter scores are a measure of the people tweeting about terms related to 'hospital', 'health', 'ventilator', etc. Numerically, we compute a weighted average of tf scores over all such terms. Each score is calculated after preprocessing the tweets, with the formula w_target/w_total, where w_target is the no. of "target" words tweeted in a day and w_total is the total number of words tweeted in a day.
-					</h5>
-				  </div>
+			  <div className="pills">
+				<Modal1 />
 			  </div>
+			  <p />
 			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]},{name: activeStateName1, data: tfseries[activeStateCode1]}]}/>}
 			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]}]}/>}
-			  <div className="updates">
-				  <div className="update">
-					<h5 style={{color:"red"}}>
-					Our cumulative frequencies are a measure of the total volume of incoming tweets related to the coronavirus situation in each state over time. Each individual frequency is calculated after preprocessing the tweets, with the formula w_total/max_w, where w_total is the total number of words tweeted in a day and max_w is the maximum number of words in one tweet.
-					</h5>
-				  </div>
+			  <div className="pills">
+				<Modal />
 			  </div>
+			  <p />
 			  {activeStateCode1 != 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]},{name: activeStateName1, data: nfseries[activeStateCode1]}]}/>}
 			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]}]}/>}
 			  {activeStateCode1 != 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]},{name: activeStateName1, data: hosseries[activeStateCode1]}]}/>}
