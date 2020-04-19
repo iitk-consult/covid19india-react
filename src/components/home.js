@@ -250,7 +250,7 @@ function Home(props) {
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Normalised Word Freq.', data: nfseries[activeStateCode]}, {name: 'Positive Cases', data: psseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', data: nfseries[activeStateCode]}, {name: 'Positive Cases', data: psseries[activeStateCode]}]}/>
 			  </div>
             </React.Fragment>
           )}
