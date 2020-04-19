@@ -11,6 +11,7 @@ import {
   preprocess,
   gettfValues,
   getnfValues,
+  getpsValues,
   preprocessHospitalTimeseries,
   getStateName,
   processForChart,
@@ -41,6 +42,7 @@ function Home(props) {
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
   const [tfseries, setTfseries] = useState([]);
+  const [psseries, setPsseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
   const [activeStateCode, setActiveStateCode] = useState('TT');
   const [activeStateCode1, setActiveStateCode1] = useState('TT');  // TT -> India
@@ -105,7 +107,10 @@ function Home(props) {
 	  const finalData = processForChart([wb, up, karnataka, del, mh, kr, pb, tl, od, tn]);
 	  var tfValues = gettfValues(finalData);
 	  var nfValues = getnfValues(finalData);
+	  var psValues = getpsValues(ts);
+	  psValues['TT']=psValues['DL']
 	  setTfseries(tfValues);
+	  setPsseries(psValues);
 	  setNfseries(nfValues);
 	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
@@ -239,14 +244,13 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]},{name: getStateName(activeStateCode1), data: tfseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}, {name: getStateName(activeStateCode1), data: tfseries[activeStateCode1]}]}/>}
 			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  {activeStateCode1 != 'TT' && <ApexChart1 series={[{name: getStateName(activeStateCode), data: nfseries[activeStateCode]},{name: getStateName(activeStateCode1), data: nfseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: getStateName(activeStateCode), data: nfseries[activeStateCode]}]}/>}
+			  <ApexChart1 series={[{name: 'Normalised Word Freq.', data: nfseries[activeStateCode]}, {name: 'Positive Cases', data: psseries[activeStateCode]}]}/>
 			  </div>
             </React.Fragment>
           )}

@@ -38,7 +38,7 @@ export default function AlertDialogSlide() {
         <DialogTitle id="alert-dialog-slide-title">{"Twitter Word Count/Day"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            This gives the ratio of the count of terms related to hospitalisation like a hospital, ICU, medical etc. in the tweets with respect to all the words tweeted.
+            This gives the percentage of the count of terms related to hospitalisation like a hospital, ICU, medical etc. in the tweets with respect to all the words tweeted in COVID-19 related tweets
           </DialogContentText>
         </DialogContent>
         <DialogActions>
