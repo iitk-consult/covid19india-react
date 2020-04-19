@@ -9,10 +9,8 @@ import {
   formatDateAbsolute,
   prettifyData,
   preprocess,
-  getpsValues,
   gettfValues,
   getnfValues,
-  getHosValues,
   preprocessHospitalTimeseries,
   getStateName,
   processForChart,
@@ -30,8 +28,6 @@ import MapExplorer from './mapexplorer';
 import TimeSeries from './timeseries';
 import ApexChart from './apex';
 import ApexChart1 from './apex1';
-import ApexChart2 from './apex2';
-import ApexChart4 from './apex4';
 import Modal from './modal';
 import Modal1 from './modal1';
 //import Minigraph from './minigraph';
@@ -44,13 +40,9 @@ function Home(props) {
   const [graphOption, setGraphOption] = useState(1);
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
-  const [psseries, setPsseries] = useState([]);
   const [tfseries, setTfseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
-  const [hosseries, setHosseries] = useState([]);
   const [activeStateCode, setActiveStateCode] = useState('TT');
-  const [activeStateName, setActiveStateName] = useState('Delhi');
-  const [activeStateName1, setActiveStateName1] = useState('Delhi');
   const [activeStateCode1, setActiveStateCode1] = useState('TT');  // TT -> India
   const [activityLog, setActivityLog] = useState([]);
   const [timeseriesMode, setTimeseriesMode] = useState(true);
@@ -111,15 +103,10 @@ function Home(props) {
 	  od = preprocess(prettifyData(Papa.parse(od.data, {delimiter: ','})));
 	  tn = preprocess(prettifyData(Papa.parse(tn.data, {delimiter: ','})));
 	  const finalData = processForChart([wb, up, karnataka, del, mh, kr, pb, tl, od, tn]);
-	  var hosValues = getHosValues(finalData);
 	  var tfValues = gettfValues(finalData);
 	  var nfValues = getnfValues(finalData);
-	  var psValues = getpsValues(ts);
-	  psValues['TT']=psValues['DL'];
-	  setPsseries(psValues);
 	  setTfseries(tfValues);
 	  setNfseries(nfValues);
-	  setHosseries(hosValues);
 	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -137,7 +124,6 @@ function Home(props) {
 	
   const onMapHighlightChange = useCallback(({statecode}) => {
     setActiveStateCode(statecode);
-	setActiveStateName(getStateName(statecode));
   }, []);
 
   const refs = [useRef(), useRef(), useRef()];
@@ -162,7 +148,6 @@ function Home(props) {
                   <select style={{margin:'0px'}}
                     onChange={({target}) => {
                       setActiveStateCode1(target.value);
-					  setActiveStateName1(getStateName(target.value));
                     }}
                   >
                     <option value="TT">None</option>
@@ -254,18 +239,14 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]},{name: activeStateName1, data: tfseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: activeStateName, data: tfseries[activeStateCode]}]}/>}
+			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]},{name: getStateName(activeStateCode1), data: tfseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  {activeStateCode1 != 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]},{name: activeStateName1, data: nfseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: activeStateName, data: nfseries[activeStateCode]}]}/>}
-			  {activeStateCode1 != 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]},{name: activeStateName1, data: hosseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart2 series={[{name: activeStateName, data: hosseries[activeStateCode]}]}/>}
-			  {activeStateCode1 != 'TT' && <ApexChart4 series={[{name: activeStateName, data: psseries[activeStateCode]},{name: activeStateName1, data: psseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart4 series={[{name: activeStateName, data: psseries[activeStateCode]}]}/>}
+			  {activeStateCode1 != 'TT' && <ApexChart1 series={[{name: getStateName(activeStateCode), data: nfseries[activeStateCode]},{name: getStateName(activeStateCode1), data: nfseries[activeStateCode1]}]}/>}
+			  {activeStateCode1 == 'TT' && <ApexChart1 series={[{name: getStateName(activeStateCode), data: nfseries[activeStateCode]}]}/>}
 			  </div>
             </React.Fragment>
           )}

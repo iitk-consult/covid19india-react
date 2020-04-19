@@ -43,6 +43,7 @@ const stateCodes = {
 	NL: 'Nagaland',
 	RJ: 'Rajasthan',
 	SK: 'Sikkim',
+	TT: 'Delhi',
 	TR: 'Tripura',
 	UT: 'Uttarakhand',  
 	AN: 'Andaman and Nicobar Islands',
@@ -217,8 +218,6 @@ export const prettifyData = (data) => {
       "date": formatDate(rowData[0]),
 	  "normalisedFreq": rowData[2],
 	  "tfScores": rowData[1],
-	  "nomalisedTfScores": rowData[4],
-	  "hospitalised": rowData[3],
     }
   }
   newJSON = newJSON.reverse();
@@ -273,24 +272,12 @@ export const processForChart = (hospitalisationData) => {
   return final;
 };
 
-export const getpsValues = (x) => {
-  var final = {};
-  for(var key in x){
-	var arr = [];
-	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['totalconfirmed']]);
-	}
-    final[key]=arr;
-  };
-  return final;
-};
-
 export const gettfValues = (x) => {
   var final = {};
   for(var key in x){
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['nomalisedTfScores']]);
+		arr.push([x[key][i]['date'], x[key][i]['tfScores']]);
 	}
     final[key]=arr;
   };
@@ -303,18 +290,6 @@ export const getnfValues = (x) => {
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
 		arr.push([x[key][i]['date'], x[key][i]['normalisedFreq']]);
-	}
-    final[key]=arr;
-  };
-  return final;
-};
-
-export const getHosValues = (x) => {
-  var final = {};
-  for(var key in x){
-	var arr = [];
-	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['hospitalised']]);
 	}
     final[key]=arr;
   };

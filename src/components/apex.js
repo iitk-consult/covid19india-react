@@ -40,7 +40,9 @@ export default class ApexChart extends React.Component {
                         colors: '#8e8da4',
                     },
                     offsetX: 0,
-                    
+                    formatter: function (value) {
+						return (value*100).toFixed(2);
+					}
                 },
                 axisBorder: {
                     show: false,
@@ -61,7 +63,7 @@ export default class ApexChart extends React.Component {
                 }
               },
               title: {
-                text: 'Twitter Trend Score',
+                text: 'Twitter Word Count/Day',
                 align: 'left',
                 offsetX: 14
               },
