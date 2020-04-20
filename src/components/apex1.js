@@ -35,15 +35,18 @@ export default class ApexChart extends React.Component {
                     stops: [20, 100, 100, 100]
                   },
               },
-              yaxis: {
+              yaxis: [{
+                title: {
+                  text: "Twitter Volume/Day"
+                },
                 labels: {
                     style: {
                         colors: '#8e8da4',
                     },
                     offsetX: 0,
                     formatter: function (value) {
-						return Math.trunc(value);
-					}
+                      return Math.trunc(value);
+                    }
                 },
                 axisBorder: {
                     show: false,
@@ -52,6 +55,27 @@ export default class ApexChart extends React.Component {
                     show: false
                 }
               },
+              {
+                title: {
+                  text: "Positive Cases"
+                },
+                opposite: true,
+                labels: {
+                    style: {
+                        colors: '#8e8da4',
+                    },
+                    offsetX: 0,
+                    formatter: function (value) {
+                    return Math.trunc(value);
+                  }
+                },
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false
+                }
+              }],
               xaxis: {
                 type: 'datetime',
                 tickAmount: 8,

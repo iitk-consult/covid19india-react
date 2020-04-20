@@ -160,7 +160,7 @@ function Home(props) {
 			        	regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
-		  <h3><br />Select a state to compare plots:</h3>
+		  {/* <h3><br />Select a state to compare plots:</h3>
 		  <div className="trends-state-name">
                   <select style={{margin:'0px'}}
                     onChange={({target}) => {
@@ -183,7 +183,7 @@ function Home(props) {
                     <option value="GJ">Gujarat</option>
           
                   </select>
-                </div>
+                </div> */}
               
 		  </React.Fragment>
 		  )}
