@@ -67,56 +67,66 @@ function Home(props) {
         stateTestResponse,
 		wb,
 		up,
-		karnataka,
-		del,
+		kn,
+		dl,
 		mh,
 		kr,
 		pb,
 		tl,
 		od,
-		tn,
+    tn,
+    rj,
+    gj,
+    mp
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmp1d4JTafcB1Hjzao3WNJcm1Wdjf3LnYi17mr-_Q7Phb7z6_oJ7I_W4qThRCzoHeJ6JHMhFBU0XTr/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQd55jh-Nn_tbEszeSeF7drdccNXDyW64QRlWwvM7ZjjYxWlBTxa8P6vLJt2hG4Mgrxy_QRZCXstQpX/pub?gid=1922732720&single=true&output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-a8PI2AZidMoYQPJa_1AyOmYbfppLMkeGjH_jDkzyctgRC844iBPApBN66On2E2pS_DtvhY6pUDVT/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQlJPByX5bzt28DzOm3am0EIgqxPGOyBd3Xo6_anwTdmS_XwiSJ2KfoM2KbBNKAO94TJj7UQEkA_SwS/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQZQcxULMah8VLC8DfVu5pNV7FnfhOm-YBlRvs7VIHsdxwKhH3ATkHrypDctIMQbu0BKzCzESJ3zSXH/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSmp1d4JTafcB1Hjzao3WNJcm1Wdjf3LnYi17mr-_Q7Phb7z6_oJ7I_W4qThRCzoHeJ6JHMhFBU0XTr/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQd55jh-Nn_tbEszeSeF7drdccNXDyW64QRlWwvM7ZjjYxWlBTxa8P6vLJt2hG4Mgrxy_QRZCXstQpX/pub?gid=1922732720&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-a8PI2AZidMoYQPJa_1AyOmYbfppLMkeGjH_jDkzyctgRC844iBPApBN66On2E2pS_DtvhY6pUDVT/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQlJPByX5bzt28DzOm3am0EIgqxPGOyBd3Xo6_anwTdmS_XwiSJ2KfoM2KbBNKAO94TJj7UQEkA_SwS/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQZQcxULMah8VLC8DfVu5pNV7FnfhOm-YBlRvs7VIHsdxwKhH3ATkHrypDctIMQbu0BKzCzESJ3zSXH/pub?output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5g9NkQABSe8gEvfrh21e9yscusVlxj_UOLPbdp0FU4-1am12qUpIHudOXMFldRx_Q_OagrHRyMD0-/pub?gid=1081961011&single=true&output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSP6A9uiaDANSP57k3-ukvq_69cVDxQJJIJpILlIyznn4171Hv641gCe0Fr1Imgm9MoVKiy7oF0RmJ7/pub?gid=993901126&single=true&output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQzHHJK2uRm-89URV0Y5EdSgyULs-Zfk_AxIo_JF53sO2DSaou05gyFFD6MpdVuV9eRstTV0kv0vp_f/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQcuNGXPh6lyyEVZuMZDE7nf9hh9fXdo-ScRGu_52gOQVVK7iDy3_dWVDZBKWsfJWi-YfdIQ6BIcK4I/pub?output=csv'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQEap7wAjiaQv-m5r800dbaOezhKOhSejoFDH-J00aw2HXlweyYQ7xu9eU7uTpHruNwAojTubpzFFeL/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSP6A9uiaDANSP57k3-ukvq_69cVDxQJJIJpILlIyznn4171Hv641gCe0Fr1Imgm9MoVKiy7oF0RmJ7/pub?gid=993901126&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQzHHJK2uRm-89URV0Y5EdSgyULs-Zfk_AxIo_JF53sO2DSaou05gyFFD6MpdVuV9eRstTV0kv0vp_f/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQcuNGXPh6lyyEVZuMZDE7nf9hh9fXdo-ScRGu_52gOQVVK7iDy3_dWVDZBKWsfJWi-YfdIQ6BIcK4I/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQEap7wAjiaQv-m5r800dbaOezhKOhSejoFDH-J00aw2HXlweyYQ7xu9eU7uTpHruNwAojTubpzFFeL/pub?output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNsGwpfY6IRkSc0S9zs89UPRAIgQQIYfHr9ZA1oqatUXyvDnFDviNuich0Q9umZreOWcGJqWcEgjqt/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTuPdEUzM5q0sPtNFJR3znhr6_C1vLiir4c9x0ZhHY_E0xF1yyPqVIF2MXoCtrIS1rCo1x6otQDeOmR/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSDnB6BYXlUf_Ds7HdrrFwVnqDKnnxFg15_jyDm_Dl-bS0o6gP82aKLGy-vj7yZW3WQiHS0Ef-OWyCk/pub?gid=0&single=true&output=csv'),
 	  ]);
       setStates(response.data.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
-	  wb = preprocess(prettifyData(Papa.parse(wb.data, {delimiter: ','})));
-	  up = preprocess(prettifyData(Papa.parse(up.data, {delimiter: ','})));
-	  karnataka = preprocess(prettifyData(Papa.parse(karnataka.data, {delimiter: ','})));
-	  del = preprocess(prettifyData(Papa.parse(del.data, {delimiter: ','})));
-	  mh = preprocess(prettifyData(Papa.parse(mh.data, {delimiter: ','})));
-	  kr = preprocess(prettifyData(Papa.parse(kr.data, {delimiter: ','})));
-	  pb = preprocess(prettifyData(Papa.parse(pb.data, {delimiter: ','})));
-	  tl = preprocess(prettifyData(Papa.parse(tl.data, {delimiter: ','})));
-	  od = preprocess(prettifyData(Papa.parse(od.data, {delimiter: ','})));
-	  tn = preprocess(prettifyData(Papa.parse(tn.data, {delimiter: ','})));
-	  const finalData = processForChart([wb, up, karnataka, del, mh, kr, pb, tl, od, tn]);
-	  var tfValues = gettfValues(finalData);
-	  var nfValues = getnfValues(finalData);
-	  var psValues = getpsValues(ts);
-	  psValues['TT']=psValues['DL']
-	  setTfseries(tfValues);
-	  setPsseries(psValues);
-	  setNfseries(nfValues);
-	  setLastUpdated(response.data.statewise[0].lastupdatedtime);
+      wb = preprocess(prettifyData(Papa.parse(wb.data, {delimiter: ','})));
+      up = preprocess(prettifyData(Papa.parse(up.data, {delimiter: ','})));
+      kn = preprocess(prettifyData(Papa.parse(kn.data, {delimiter: ','})));
+      dl = preprocess(prettifyData(Papa.parse(dl.data, {delimiter: ','})));
+      mh = preprocess(prettifyData(Papa.parse(mh.data, {delimiter: ','})));
+      kr = preprocess(prettifyData(Papa.parse(kr.data, {delimiter: ','})));
+      pb = preprocess(prettifyData(Papa.parse(pb.data, {delimiter: ','})));
+      tl = preprocess(prettifyData(Papa.parse(tl.data, {delimiter: ','})));
+      od = preprocess(prettifyData(Papa.parse(od.data, {delimiter: ','})));
+      tn = preprocess(prettifyData(Papa.parse(tn.data, {delimiter: ','})));
+      rj = preprocess(prettifyData(Papa.parse(rj.data, {delimiter: ','})));
+      gj = preprocess(prettifyData(Papa.parse(gj.data, {delimiter: ','})));
+      mp = preprocess(prettifyData(Papa.parse(mp.data, {delimiter: ','})));
+      const finalData = processForChart([wb, up, kn, dl, mh, kr, pb, tl, od, tn, rj, gj, mp]);
+      var tfValues = gettfValues(finalData);
+      var nfValues = getnfValues(finalData);
+      var psValues = getpsValues(ts);
+      psValues['TT']=psValues['DL']
+      setTfseries(tfValues);
+      setPsseries(psValues);
+      setNfseries(nfValues);
+      setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setActivityLog(updateLogResponse.data);
       setFetched(true);
+      console.log(finalData);
     } catch (err) {
       console.log(err);
     }
@@ -128,7 +138,9 @@ function Home(props) {
   };
 	
   const onMapHighlightChange = useCallback(({statecode}) => {
+    console.log(statecode);
     setActiveStateCode(statecode);
+    console.log(activeStateCode);
   }, []);
 
   const refs = [useRef(), useRef(), useRef()];
@@ -145,7 +157,7 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
-				regionHighlighted={regionHighlighted}
+			        	regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
 		  <h3><br />Select a state to compare plots:</h3>
@@ -156,16 +168,20 @@ function Home(props) {
                     }}
                   >
                     <option value="TT">None</option>
-					<option value="WB">West Bengal</option>
-					<option value="UP">Uttar Pradesh</option>
-					<option value="KA">Karnataka</option>
-					<option value="DL">Delhi</option>
-					<option value="MH">Maharashtra</option>
-					<option value="KL">Kerala</option>
-					<option value="PB">Punjab</option>
-					<option value="TG">Telangana</option>
-					<option value="OR">Odisha</option>
-					<option value="TN">Telangana</option>
+                    <option value="WB">West Bengal</option>
+                    <option value="UP">Uttar Pradesh</option>
+                    <option value="KA">Karnataka</option>
+                    <option value="DL">Delhi</option>
+                    <option value="MH">Maharashtra</option>
+                    <option value="KL">Kerala</option>
+                    <option value="PB">Punjab</option>
+                    <option value="TG">Telangana</option>
+                    <option value="OR">Odisha</option>
+                    <option value="TN">Tamil Nadu</option>
+                    <option value="RJ">Rajasthan</option>
+                    <option value="MP">Madhya Pradesh</option>
+                    <option value="GJ">Gujarat</option>
+          
                   </select>
                 </div>
               

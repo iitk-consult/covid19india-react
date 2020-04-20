@@ -26,22 +26,22 @@ const stateCodes = {
 	TG: 'Telangana',
 	OR: 'Odisha',
 	TN: 'Tamil Nadu',
-	AP: 'Andhra Pradesh',
+  AP: 'Andhra Pradesh',
+  RJ: 'Rajasthan',
+  GJ: 'Gujarat',
+  MP: 'Madhya Pradesh',
 	AR: 'Arunachal Pradesh',
 	AS: 'Assam',
 	BR: 'Bihar',
 	CT: 'Chhattisgarh',
 	GA: 'Goa',
-	GJ: 'Gujarat',
 	HR: 'Haryana',
 	HP: 'Himachal Pradesh',
 	JH: 'Jharkhand', 
-	MP: 'Madhya Pradesh',
 	MN: 'Manipur',
 	ML: 'Meghalaya',
 	MZ: 'Mizoram',
 	NL: 'Nagaland',
-	RJ: 'Rajasthan',
 	SK: 'Sikkim',
 	TT: 'Delhi',
 	TR: 'Tripura',
@@ -216,8 +216,8 @@ export const prettifyData = (data) => {
     var rowData = parsedData[i];
     newJSON[parsedData.length-i-1] = {
       "date": formatDate(rowData[0]),
-	  "normalisedFreq": rowData[2],
-	  "tfScores": rowData[1],
+      "normalisedFreq": rowData[2],
+      "tfScores": rowData[1],
     }
   }
   newJSON = newJSON.reverse();
@@ -262,11 +262,12 @@ export const processForChart = (hospitalisationData) => {
   var i = 0;
   for(var key in stateCodes){
     if(!hospitalisationData[i]){
-		final[key]=[];
-	}else{
+		  final[key]=[];
+    }
+    else{
 		final[key]=hospitalisationData[i];
-	}
-	i++;
+	  }
+	  i++;
   };
   final['TT'] = hospitalisationData[3];
   return final;
