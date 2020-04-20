@@ -1,10 +1,8 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import axios from 'axios';
 import {formatDistance, format} from 'date-fns';
-import * as Icon from 'react-feather';
 
 import {
-  formatDate,
   formatDate1,
   formatDateAbsolute,
   prettifyData,
@@ -12,14 +10,10 @@ import {
   gettfValues,
   getnfValues,
   getpsValues,
-  preprocessHospitalTimeseries,
   getStateName,
   processForChart,
   parseStateTimeseries,
-  preprocessTimeseries,
-  prettifyHospitalisationData
 } from '../utils/common-functions';
-import {Link} from 'react-router-dom';
 
 import Papa from 'papaparse';
 
@@ -57,6 +51,8 @@ function Home(props) {
     }
   }, [fetched]);
 
+  const varToString = varObj => Object.keys(varObj)[0]
+
   const getStates = async () => {
     try {
       var [
@@ -65,19 +61,7 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-		wb,
-		up,
-		kn,
-		dl,
-		mh,
-		kr,
-		pb,
-		tl,
-		od,
-    tn,
-    rj,
-    gj,
-    mp
+		    wb, up, ka, dl, mh, kl, pb, tg, od, tn, rj, gj, mp,
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
@@ -100,20 +84,11 @@ function Home(props) {
 	  ]);
       setStates(response.data.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
-      wb = preprocess(prettifyData(Papa.parse(wb.data, {delimiter: ','})));
-      up = preprocess(prettifyData(Papa.parse(up.data, {delimiter: ','})));
-      kn = preprocess(prettifyData(Papa.parse(kn.data, {delimiter: ','})));
-      dl = preprocess(prettifyData(Papa.parse(dl.data, {delimiter: ','})));
-      mh = preprocess(prettifyData(Papa.parse(mh.data, {delimiter: ','})));
-      kr = preprocess(prettifyData(Papa.parse(kr.data, {delimiter: ','})));
-      pb = preprocess(prettifyData(Papa.parse(pb.data, {delimiter: ','})));
-      tl = preprocess(prettifyData(Papa.parse(tl.data, {delimiter: ','})));
-      od = preprocess(prettifyData(Papa.parse(od.data, {delimiter: ','})));
-      tn = preprocess(prettifyData(Papa.parse(tn.data, {delimiter: ','})));
-      rj = preprocess(prettifyData(Papa.parse(rj.data, {delimiter: ','})));
-      gj = preprocess(prettifyData(Papa.parse(gj.data, {delimiter: ','})));
-      mp = preprocess(prettifyData(Papa.parse(mp.data, {delimiter: ','})));
-      const finalData = processForChart([wb, up, kn, dl, mh, kr, pb, tl, od, tn, rj, gj, mp]);
+      var forPreprocessing = {"WB": wb, "UP": up, "KA": ka, "DL": dl, "MH": mh, "KL": kl, "PB": pb, "TG": tg, "OD": od, "TN": tn, "RJ": rj, "GJ": gj, "MP": mp};
+      for(var stateSheet in forPreprocessing){
+        forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
+      }
+      const finalData = processForChart(forPreprocessing);
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues(ts);

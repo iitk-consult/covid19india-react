@@ -5,7 +5,7 @@ import moment from 'moment';
 import {sliceTimeseriesFromEnd} from '../utils/common-functions';
 import {useResizeObserver} from '../utils/hooks';
 import {formatNumber} from '../utils/common-functions';
-import {preprocessHospitalTimeseries} from '../utils/common-functions';
+// import {preprocessHospitalTimeseries} from '../utils/common-functions';
 
 function TimeSeries(props) {
   const [lastDaysCount, setLastDaysCount] = useState(
@@ -60,7 +60,8 @@ function TimeSeries(props) {
       const chartRight = width - margin.right;
       const chartBottom = height - margin.bottom;
 
-      const ts = preprocessHospitalTimeseries(timeseries);
+      // const ts = preprocessHospitalTimeseries(timeseries);
+      const ts = 0;
 	  const T = ts.length;
       const yBuffer = 1.1;
 

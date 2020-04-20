@@ -180,34 +180,6 @@ export const validateHTS = (data = []) => {
 };
 
 
-export const prettifyHospitalisationData = (data) => {
-  const parsedData = data.data
-  const header = parsedData.shift();
-  var newJSON = [];
-  for(var i=0; i<parsedData.length; i++) {
-    var rowData = parsedData[i];
-    newJSON[parsedData.length-i-1] = {
-      "date": formatDate(rowData[0]),
-      "positive": rowData[1],
-	  "positiveBest": rowData[3],
-	  "positiveRealistic": rowData[4],
-	  "positiveWorst": rowData[5],
-      "hospitalisedUpper" : rowData[9],
-	  "icuUpper" : rowData[10],
-	  "ventilatorLower" : rowData[11],
-	  "hospitalisedLower" : rowData[12],
-      "icuLower" : rowData[13],
-      "ventilatorLower" : rowData[14],
-	  "admitHospital": rowData[15],
-	  "admitHospitalLower": rowData[16],
-	  "admitHospitalUpper": rowData[17],
-    }
-  }
-  newJSON = newJSON.reverse();
-  //console.log(newJSON)
-  return newJSON
-};
-
 export const prettifyData = (data) => {
   const parsedData = data.data
   const header = parsedData.shift();
@@ -225,51 +197,29 @@ export const prettifyData = (data) => {
   return newJSON
 };
 
-export const preprocessHospitalTimeseries = (timeseries) => {
-  //console.log("Preprocessing Timeseries")
-  //console.log(timeseries)
-  return timeseries.map((stat) => ({
-    date: new Date(stat.date),
-    positive: +stat.positive,
-	positiveBest: +stat.positiveBest,
-	positiveRealistic: +stat.positiveRealistic,
-	positiveWorst: +stat.positiveWorst,
-    hospitalisedUpper: +stat.hospitalisedUpper,
-	icuUpper: +stat.icuUpper,
-	ventilatorLower: +stat.ventilatorLower,
-	hospitalisedLower: +stat.hospitalisedLower,
-    icuLower: +stat.icuLower,
-    ventilatorUpper: +stat.ventilatorUpper,
-	admitHospital: +stat.admitHospital,
-	admitHospitalLower: +stat.admitHospitalLower,
-	admitHospitalUpper: +stat.admitHospitalUpper,
-  }));
-};
-
 export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
   return timeseries.map((stat) => ({
     date: new Date(stat.date),
-	tfScores: +stat.tfScores,
-	normalisedFreq: +stat.normalisedFreq,
-	nomalisedTfScores: +stat.nomalisedTfScores,
-	hospitalised: +stat.hospitalised,
+    tfScores: +stat.tfScores,
+    normalisedFreq: +stat.normalisedFreq,
+    normalisedTfScores: +stat.nomalisedTfScores,
   }));
 };
 
-export const processForChart = (hospitalisationData) => {
+export const processForChart = (data) => {
   var final = {};
-  var i = 0;
   for(var key in stateCodes){
-    if(!hospitalisationData[i]){
+    if(!data[key])
+    {
 		  final[key]=[];
     }
-    else{
-		final[key]=hospitalisationData[i];
+    else
+    {
+		  final[key]=data[key];
 	  }
-	  i++;
   };
-  final['TT'] = hospitalisationData[3];
+  final['TT'] = data['DL'];
   return final;
 };
 
