@@ -235,8 +235,7 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-			  {activeStateCode1 != 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}, {name: getStateName(activeStateCode1), data: tfseries[activeStateCode1]}]}/>}
-			  {activeStateCode1 == 'TT' && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
+			  <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>
 			  <div className="pills">
 				<Modal />
 			  </div>

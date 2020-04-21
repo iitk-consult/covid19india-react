@@ -15,26 +15,27 @@ export default class ApexChart extends React.Component {
 				  {
 					x: new Date("03/24/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#eb4034",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#eb4034",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#eb4034",
+						background: "#775DD0",
 						fontSize: "8px"
 					  },
+					  orientation: "horizontal",
 					  text: "Lockdown Announced"
 					},
 				  },
 				  {
 					x: new Date("03/10/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#4aed18",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#4aed18",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#4aed18",
+						background: "#775DD0",
 						fontSize: "8px"
 					  },
 					  text: "First COVID-related Death"
@@ -43,12 +44,12 @@ export default class ApexChart extends React.Component {
 				  {
 					x: new Date("03/19/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#f2ee0a",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#f2ee0a",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#f2ee0a",
+						background: "#775DD0",
 						fontSize: "8px",
 					  },
 					  text: "Announcement of Janta Curfew"
@@ -57,12 +58,12 @@ export default class ApexChart extends React.Component {
 				  {
 					x: new Date("03/22/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#7a6bed",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#7a6bed",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#7a6bed",
+						background: "#775DD0",
 						fontSize: "8px",
 					  },
 					  text: "Junta Curfew Observed"
@@ -71,12 +72,12 @@ export default class ApexChart extends React.Component {
 				  {
 					x: new Date("04/03/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#ff9100",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#ff9100",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#ff9100",
+						background: "#775DD0",
 						fontSize: "8px",
 					  },
 					  text: "Announcement of Diya Jalao"
@@ -85,12 +86,12 @@ export default class ApexChart extends React.Component {
 				  {
 					x: new Date("04/05/2020").getTime(),
 					strokeDashArray: 0,
-					borderColor: "#ff00d0",
+					borderColor: "#775DD0",
 					label: {
-					  borderColor: "#ff00d0",
+					  borderColor: "#775DD0",
 					  style: {
 						color: "#fff",
-						background: "#ff00d0",
+						background: "#775DD0",
 						fontSize: "8px",
 					  },
 					  text: "Diya Jalao Observed at 9PM"
@@ -173,6 +174,7 @@ export default class ApexChart extends React.Component {
                 shared: true
               },
               legend: {
+				showForZeroSeries: false,
                 position: 'top',
                 horizontalAlign: 'right',
                 offsetX: -10
