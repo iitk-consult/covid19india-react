@@ -12,6 +12,7 @@ import {
   getpsValues,
   getStateName,
   processForChart,
+  eventdata,
   parseStateTimeseries,
 } from '../utils/common-functions';
 
@@ -36,6 +37,7 @@ function Home(props) {
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
   const [tfseries, setTfseries] = useState([]);
+  const [eventseries, setEventseries] = useState([]);
   const [psseries, setPsseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
   const [activeStateCode, setActiveStateCode] = useState('TT');
@@ -96,12 +98,13 @@ function Home(props) {
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
+	  setEventseries(eventdata());
       setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setActivityLog(updateLogResponse.data);
       setFetched(true);
-      console.log(finalData);
+	  //console.log(finalData);
     } catch (err) {
       console.log(err);
     }
@@ -113,10 +116,22 @@ function Home(props) {
   };
 	
   const onMapHighlightChange = useCallback(({statecode}) => {
-    console.log(statecode);
     setActiveStateCode(statecode);
-    console.log(activeStateCode);
+    //console.log(activeStateCode);
   }, []);
+  
+  const normalise = (nf, maxp) => {
+	var max = 0;
+	for(var x=0; x < nf.length; x++){
+	  if(nf[x][1] > max){
+		  max = nf[x][1];
+	  }
+	}
+	for(var i=0; i < nf.length; i++){
+	  nf[i][1] *= (maxp / max);
+	}
+	return nf;
+  }
 
   const refs = [useRef(), useRef(), useRef()];
 
@@ -235,12 +250,13 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-			  <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>
+			  {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName(activeStateCode), type:'area', data: tfseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/>}
+			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Twitter Volume/Day', data: nfseries[activeStateCode]}, {name: 'Positive Cases', data: psseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/>
 			  </div>
             </React.Fragment>
           )}

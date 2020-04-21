@@ -16,99 +16,36 @@ export default class ApexChart extends React.Component {
 					x: new Date("03/24/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Lockdown Announced"
-					},
 				  },
 				  {
 					x: new Date("03/10/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px"
-					  },
-					  text: "First COVID-related Death"
-					},
 				  },
 				  {
 					x: new Date("03/19/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Janta Curfew"
-					},
 				  },
 				  {
 					x: new Date("03/22/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Junta Curfew Observed"
-					},
 				  },
 				  {
 					x: new Date("04/03/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Diya Jalao"
-					},
 				  },
 				  {
 					x: new Date("04/05/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Diya Jalao Observed at 9PM"
-					},
 				  },
 				  {
 					x: new Date("04/14/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Lockdown Extension"
-					},
 				  },
 				],
 			  },
@@ -124,9 +61,9 @@ export default class ApexChart extends React.Component {
                 enabled: false
               },
               markers: {
-                size: 0,
+                size: [1,1,8,8,8,8,8,8,8],
               },
-			  colors:['#E91E63', '#ffea00'],
+			  colors:['#E91E63', '#ffea00', '#5b4ef2', '#ff8000', '#ff00d9', '#00ffee', '#bbff00', '#ff8000', '#E91E63'],
               fill: {
                 type: 'gradient',
                 gradient: {
@@ -137,10 +74,7 @@ export default class ApexChart extends React.Component {
                     stops: [20, 100, 100, 100]
                   },
               },
-              yaxis: [{
-                title: {
-                  text: "Twitter Volume/Day"
-                },
+              yaxis: {
                 labels: {
                     style: {
                         colors: '#8e8da4',
@@ -157,27 +91,7 @@ export default class ApexChart extends React.Component {
                     show: false
                 }
               },
-              {
-                title: {
-                  text: "Positive Cases"
-                },
-                opposite: true,
-                labels: {
-                    style: {
-                        colors: '#8e8da4',
-                    },
-                    offsetX: 0,
-                    formatter: function (value) {
-                    return Math.trunc(value);
-                  }
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false
-                }
-              }],
+              
               xaxis: {
                 type: 'datetime',
                 tickAmount: 8,
@@ -198,6 +112,7 @@ export default class ApexChart extends React.Component {
                 shared: true
               },
               legend: {
+				showForZeroSeries: false,
                 position: 'top',
                 horizontalAlign: 'right',
                 offsetX: -10

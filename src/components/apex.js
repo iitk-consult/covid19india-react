@@ -8,7 +8,7 @@ export default class ApexChart extends React.Component {
 
           this.state = {
 			
-            series: [],
+            series: this.props.series,
             options: {
 			  annotations: {
 				xaxis: [
@@ -16,99 +16,36 @@ export default class ApexChart extends React.Component {
 					x: new Date("03/24/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px"
-					  },
-					  text: "Lockdown Announced"
-					},
 				  },
 				  {
 					x: new Date("03/10/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px"
-					  },
-					  text: "First COVID-related Death"
-					},
 				  },
 				  {
 					x: new Date("03/19/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Janta Curfew"
-					},
 				  },
 				  {
 					x: new Date("03/22/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Junta Curfew Observed"
-					},
 				  },
 				  {
 					x: new Date("04/03/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Diya Jalao"
-					},
 				  },
 				  {
 					x: new Date("04/05/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Diya Jalao Observed at 9PM"
-					},
 				  },
 				  {
 					x: new Date("04/14/2020").getTime(),
 					strokeDashArray: 0,
 					borderColor: "#775DD0",
-					label: {
-					  borderColor: "#775DD0",
-					  style: {
-						color: "#fff",
-						background: "#775DD0",
-						fontSize: "8px",
-					  },
-					  text: "Announcement of Lockdown Extension"
-					},
 				  },
 				],
 			  },
@@ -124,7 +61,7 @@ export default class ApexChart extends React.Component {
                 enabled: false
               },
               markers: {
-                size: 0,
+                size: [1,8,8,8,8,8,8,8],
               },
               fill: {
                 type: 'gradient',
@@ -143,7 +80,7 @@ export default class ApexChart extends React.Component {
                     },
                     offsetX: 0,
                     formatter: function (value) {
-						return (value*100).toFixed(2);
+						return (value).toFixed(2);
 					}
                 },
                 axisBorder: {
@@ -170,7 +107,7 @@ export default class ApexChart extends React.Component {
                 offsetX: 14
               },
               tooltip: {
-                shared: true
+                shared: true,
               },
               legend: {
 				showForZeroSeries: false,

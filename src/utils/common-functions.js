@@ -26,10 +26,10 @@ const stateCodes = {
 	TG: 'Telangana',
 	OR: 'Odisha',
 	TN: 'Tamil Nadu',
-  AP: 'Andhra Pradesh',
-  RJ: 'Rajasthan',
-  GJ: 'Gujarat',
-  MP: 'Madhya Pradesh',
+	AP: 'Andhra Pradesh',
+	RJ: 'Rajasthan',
+	GJ: 'Gujarat',
+	MP: 'Madhya Pradesh',
 	AR: 'Arunachal Pradesh',
 	AS: 'Assam',
 	BR: 'Bihar',
@@ -218,7 +218,7 @@ export const processForChart = (data) => {
     {
 		  final[key]=data[key];
 	  }
-  };
+  }
   final['TT'] = data['DL'];
   return final;
 };
@@ -257,4 +257,17 @@ export const getnfValues = (x) => {
     final[key]=arr;
   };
   return final;
+};
+
+
+export const eventdata = () => {
+  var arr=[];
+  arr.push([new Date("03/10/2020").getTime(), 0]);
+  arr.push([new Date("03/19/2020").getTime(), 0]);
+  arr.push([new Date("03/22/2020").getTime(), 0]);
+  arr.push([new Date("03/24/2020").getTime(), 0]);
+  arr.push([new Date("04/03/2020").getTime(), 0]);
+  arr.push([new Date("04/05/2020").getTime(), 0]);
+  arr.push([new Date("04/14/2020").getTime(), 0]);
+  return arr;
 };
