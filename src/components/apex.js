@@ -23,7 +23,6 @@ export default class ApexChart extends React.Component {
 						background: "#775DD0",
 						fontSize: "8px"
 					  },
-					  orientation: "horizontal",
 					  text: "Lockdown Announced"
 					},
 				  },
