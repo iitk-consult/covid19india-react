@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import moment from 'moment';
 import ReactApexChart from "react-apexcharts";
+import { tr } from "date-fns/locale";
 
 export default class ApexChart extends React.Component {
         constructor(props) {
@@ -79,8 +80,15 @@ export default class ApexChart extends React.Component {
                     },
                     offsetX: 0,
                     formatter: function (value) {
-						return (value).toFixed(2);
-					}
+                      var truncatedVal;
+                      try{
+					          	  truncatedVal = (value).toFixed(2);
+                      }
+                      catch{
+                        truncatedVal = 0.0;
+                      }
+                      return truncatedVal;
+                    }
                 },
                 axisBorder: {
                     show: false,
