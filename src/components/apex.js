@@ -56,6 +56,11 @@ export default class ApexChart extends React.Component {
                 zoom: {
                   enabled: true
                 },
+                toolbar:
+                {
+                  show: true,
+                  position: 'right'
+                }
               },
               dataLabels: {
                 enabled: false
@@ -108,23 +113,23 @@ export default class ApexChart extends React.Component {
                   }
                 }
               },
-              title: {
-                text: 'Twitter Word Count/Day',
-                align: 'left',
-                offsetX: 14
-              },
+              // title: {
+              //   text: 'Twitter Word Count/Day',
+              //   align: 'left',
+              //   offsetX: 14
+              // },
               tooltip: {
                 shared: true,
               },
               legend: {
-				showForZeroSeries: false,
+				        showForZeroSeries: false,
                 position: 'top',
-                horizontalAlign: 'right',
+                horizontalAlign: 'left',
                 offsetX: -10
               },
-			  noData: {
-				text: 'No Data Available...'
-			  }
+            noData: {
+              text: 'No Data Available...'
+            }
             },
           
           

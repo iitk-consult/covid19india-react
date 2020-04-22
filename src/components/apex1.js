@@ -127,18 +127,18 @@ export default class ApexChart extends React.Component {
                   }
                 }
               },
-              title: {
-                text: 'Twitter Volume/Day and Positive Cases',
-                align: 'left',
-                offsetX: 14
-              },
+              // title: {
+              //   text: 'Twitter Volume/Day and Positive Cases',
+              //   align: 'left',
+              //   offsetX: 14
+              // },
               tooltip: {
                 shared: true
               },
               legend: {
-				showForZeroSeries: false,
+				        showForZeroSeries: false,
                 position: 'top',
-                horizontalAlign: 'right',
+                horizontalAlign: 'left',
                 offsetX: -10
               },
 			  noData: {
