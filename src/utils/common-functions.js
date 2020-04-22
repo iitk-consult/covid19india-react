@@ -247,6 +247,21 @@ export const getnfValues = (x) => {
   return final;
 };
 
+export const getwa1Values = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+    if (i<4)
+      arr.push([x[key][i]['date'], x[key][0]['colD']]);
+    else
+		  arr.push([x[key][i]['date'], (x[key][i]['colD'] + x[key][i-1]['colD'] + x[key][i-2]['colD'] + x[key][i-3]['colD'] + x[key][i-4]['colD'])/5]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
 
 export const eventdata = () => {
   var arr=[];

@@ -14,6 +14,7 @@ import {
   processForChart,
   eventdata,
   parseStateTimeseries,
+  getwa1Values
 } from '../utils/common-functions';
 
 import Papa from 'papaparse';
@@ -92,7 +93,7 @@ function Home(props) {
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues(ts);
-      var wa1Values = getpsValues(finalData);
+      var wa1Values = getwa1Values(finalData);
       psValues['TT']=psValues['DL']
       setTfseries(tfValues);
       setPsseries(psValues);
@@ -253,7 +254,7 @@ function Home(props) {
                                                                       {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]},
                                                                       {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, 
                                                                       {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]},
-                                                                      {name: getStateName(activeStateCode)+"wa1", type:'area', data: wa1series[activeStateCode]}]}/>}
+                                                                      {name: getStateName(activeStateCode)+" (Moving Average)", type:'area', data: wa1series[activeStateCode]}]}/>}
 			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />

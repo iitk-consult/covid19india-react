@@ -11,44 +11,44 @@ export default class ApexChart extends React.Component {
             series: [],
             options: {
 			  annotations: {
-				xaxis: [
-				  {
-					x: new Date("03/24/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("03/10/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("03/19/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("03/22/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("04/03/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("04/05/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				  {
-					x: new Date("04/14/2020").getTime(),
-					strokeDashArray: 0,
-					borderColor: "#775DD0",
-				  },
-				],
-			  },
+          xaxis: [
+            {
+            x: new Date("03/24/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("03/10/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("03/19/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("03/22/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("04/03/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("04/05/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+            {
+            x: new Date("04/14/2020").getTime(),
+            strokeDashArray: 0,
+            borderColor: "#775DD0",
+            },
+          ],
+          },
               chart: {
                 type: 'area',
                 stacked: false,
