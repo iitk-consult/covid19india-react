@@ -62,7 +62,7 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-		    wb, up, ka, dl, mh, kl, pb, tg, od, tn, rj, gj, mp,
+        wb, up, ka, dl, mh, kl, pb, tg, or, tn, rj, gj, mp, ar, as, br, ct, ga, hr, hp, jh, mn, ml, mz, nl, tr, ut, an, jk, la, py
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
@@ -82,10 +82,31 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNsGwpfY6IRkSc0S9zs89UPRAIgQQIYfHr9ZA1oqatUXyvDnFDviNuich0Q9umZreOWcGJqWcEgjqt/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTuPdEUzM5q0sPtNFJR3znhr6_C1vLiir4c9x0ZhHY_E0xF1yyPqVIF2MXoCtrIS1rCo1x6otQDeOmR/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSDnB6BYXlUf_Ds7HdrrFwVnqDKnnxFg15_jyDm_Dl-bS0o6gP82aKLGy-vj7yZW3WQiHS0Ef-OWyCk/pub?gid=0&single=true&output=csv'),
+        //new added states
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSy1O3_KfPaHsdm21NqB4VliAMopDyd_dyKgMHHrvJYuy9TPMutAjr2DP0A2AWmvhePyhEupKIEaz7P/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4jkqdKULkWuxKJq28y370xv9CmFJQrrSya6C3VJerBxf7ym75ocnftR5y4UVEx5N-IJUmFLwzGa_Z/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQBUqNt912EQMI5tu18AaXzJFdqb_kfbyxorosJE-qT820B6CF3-W7tTmkfedRTLwF4Chx0Yg9Xl565/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTqrz-BPWB6-qDOWYTwTtDhQBbmAFsVpAe_Xr4aZ3a5P0T0hkARRDnaHF25a4SCl8eNtEgxiu6z5UwN/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQgUbqRSuppeO3GX7ySorbvwxsIq5Xz5benN025ZuWB-5cUX_295s0GwUPDhMH5XJkp7Os--AdOoBmy/pubhtml?gid=0&single=true'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSjTwm4qPq4QLiB6x1LyEqNAxnvOohnRyGSRbNq_ThRiKfa7xlqsmUzZh3CbqSsujuTbMYHDgYs7cP5/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQZV2z023VO-Dy5qsMH_CMrB3VsjjOW0vzhFtQppWrW3FDQJBx7r7_o4mIlzGzl-5RLWktqPvNm-ctf/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQkisSNI7PaOgqRjc5nko5SN4tSK7bCAu29ec9bzV_pjCNZtiW9TS0s4ethcnmmgTy-LhMuzfxt4AQ7/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQE67PzCWymINN6KW3lwh6f9TazOlp2raO-ists2q4I2ZQff2fNPJz9x-hX3DzdGGL9Of66WgQVWG15/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTJvG4vS2dtvjXKEzSFVHnWQFvDApj_BT3HicCo8ILOHW8tutxIPP0Ad32FN6L04MMQOzeyUWz7e_BY/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTeaR4_Uxe00DwqrfqMspz7rVrYGp6vyIceZrfhhCj4sC7mMwMyW-v1xBLBGwV0zAd54x8-4DoArYqP/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTYrqu0WJhHKFPfR3V5JqFhYJ0l4YMondHoc7jOSFlSt7KCYCW0-XzCjdAzF8Zuttn1ATrqSVwEY05i/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRojnEepHTJY-Tphoc5SJwuPTzKdqw8CIVFXfkOR_KTC4NoFyqSC_6whKpwbWDqNDdWqwF5IVjNc8Jv/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTsTNhSMJHlaqrjjzaj-Wvr3UdZLx9kEMp3IzsO0YNVG1t9_eYFyryxHeguc6yfEMjy65UBZVivpDKe/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTE-_ds94oUBtNKbJsO1vOHHJinL8hXvpuh5Cj7O09JMGVAZZamxE27IsTBiZzRgO197R5jD9El4G-7/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vR6hdU48OumqI6C60GZFMTol8RTsSTNH3phNoQeqacPwhSamXzaKW4GdxJ72nCljRnbulg444Hu44YW/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vT1VDQws4AuKQ4gLw19BKnBwyNfFC1qzjFWbpjobS8av4oOQitZNl66tHHSxxvhV2dBKjnr6ZVm9SYR/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTgpwjlWkiKGGqK_KCsxBCrUTs8AzUvx67fZRXQowHLKIn1mzXAOt3ZKXSLUcdTAp4nTvVVIle8KWC2/pub?gid=0&single=true&output=csv'),
+
 	  ]);
       setStates(response.data.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
-      var forPreprocessing = {"WB": wb, "UP": up, "KA": ka, "DL": dl, "MH": mh, "KL": kl, "PB": pb, "TG": tg, "OD": od, "TN": tn, "RJ": rj, "GJ": gj, "MP": mp};
+      var forPreprocessing = {"WB": wb, "UP": up, "KA": ka, "DL": dl, "MH": mh, "KL": kl, "PB": pb, "TG": tg, "OR": or, "TN": tn, "RJ": rj, "GJ": gj, "MP": mp,
+                              "AR": ar, "AS": as, "BR": br, "CT": ct, "GA": ga, "HR": hr, "HP": hp, "JH": jh, "MN": mn, "ML": ml, "MZ": mz, "NL": nl, "TR": tr, "UT": ut, "AN": an, "JK": jk, "LA":la, "PY":py };
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }

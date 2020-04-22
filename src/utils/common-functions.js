@@ -180,7 +180,10 @@ export const prettifyData = (data) => {
       countValidDates++;
     }
   }
-  return newJSON
+  if (countValidDates>5)
+    return newJSON
+  else
+    return []
 };
 
 export const preprocess = (timeseries) => {
