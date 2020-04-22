@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { invalid } from 'moment';
 
 const months = {
   '01': 'Jan',
@@ -160,40 +160,26 @@ export const parseStateTimeseries = ({states_daily: data}) => {
   return statewiseSeries;
 };
 
-
-export const validateHTS = (data = []) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const dataTypes = [
-    'positive',
-    'hospitalised',
-    'hospitalisedGovt',
-    'hospitalisedPvt',
-  ];
-  return data
-    .filter((d) => dataTypes.every((dt) => d[dt]) && d.date)
-    .filter((d) => dataTypes.every((dt) => Number(d[dt]) >= 0))
-    .filter((d) => {
-      const year = today.getFullYear();
-      return new Date(d.date + year) < today;
-    });
-};
-
-
 export const prettifyData = (data) => {
   const parsedData = data.data
   const header = parsedData.shift();
   var newJSON = [];
-  for(var i=0; i<parsedData.length; i++) {
+  for(var i=0, countValidDates=0; i<parsedData.length; i++) {
     var rowData = parsedData[i];
-    newJSON[parsedData.length-i-1] = {
-      "date": formatDate(rowData[0]),
-      "normalisedFreq": rowData[2],
-      "tfScores": rowData[1],
+    var date_parsed = formatDate(rowData[0]);
+    // console.log(rowData[0]);
+    if(rowData[0])
+    {
+      newJSON[countValidDates] = {
+        "date":date_parsed,
+        "colB": rowData[1],
+        "colC": rowData[2],
+        "colD": rowData[3],
+        "colE": rowData[3],
+      }
+      countValidDates++;
     }
   }
-  newJSON = newJSON.reverse();
-  //console.log(newJSON)
   return newJSON
 };
 
@@ -201,9 +187,10 @@ export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
   return timeseries.map((stat) => ({
     date: new Date(stat.date),
-    tfScores: +stat.tfScores,
-    normalisedFreq: +stat.normalisedFreq,
-    normalisedTfScores: +stat.nomalisedTfScores,
+    colB: +stat.colB,
+    colC: +stat.colC,
+    colD: +stat.colD,
+    colE: +stat.colE,
   }));
 };
 
@@ -220,6 +207,7 @@ export const processForChart = (data) => {
 	  }
   }
   final['TT'] = data['DL'];
+  console.log(final);
   return final;
 };
 
@@ -240,7 +228,7 @@ export const gettfValues = (x) => {
   for(var key in x){
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['tfScores']]);
+		arr.push([x[key][i]['date'], x[key][i]['colB']]);
 	}
     final[key]=arr;
   };
@@ -252,7 +240,7 @@ export const getnfValues = (x) => {
   for(var key in x){
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
-		arr.push([x[key][i]['date'], x[key][i]['normalisedFreq']]);
+		arr.push([x[key][i]['date'], x[key][i]['colC']]);
 	}
     final[key]=arr;
   };

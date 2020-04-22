@@ -37,14 +37,12 @@ function Home(props) {
   const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
   const [tfseries, setTfseries] = useState([]);
+  const [wa1series, setWa1series] = useState([]);
   const [eventseries, setEventseries] = useState([]);
   const [psseries, setPsseries] = useState([]);
   const [nfseries, setNfseries] = useState([]);
   const [activeStateCode, setActiveStateCode] = useState('TT');
-  const [activeStateCode1, setActiveStateCode1] = useState('TT');  // TT -> India
   const [activityLog, setActivityLog] = useState([]);
-  const [timeseriesMode, setTimeseriesMode] = useState(true);
-  const [timeseriesLogMode, setTimeseriesLogMode] = useState(false);
   const [regionHighlighted, setRegionHighlighted] = useState(undefined);
 
   useEffect(() => {
@@ -94,11 +92,13 @@ function Home(props) {
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues(ts);
+      var wa1Values = getpsValues(finalData);
       psValues['TT']=psValues['DL']
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
-	  setEventseries(eventdata());
+      setWa1series(wa1Values);
+	    setEventseries(eventdata());
       setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -110,11 +110,6 @@ function Home(props) {
     }
   };
 
-  const onHighlightState = (state, index) => {
-    if (!state && !index) return setRegionHighlighted(null);
-    setRegionHighlighted({state, index});
-  };
-	
   const onMapHighlightChange = useCallback(({statecode}) => {
     setActiveStateCode(statecode);
     //console.log(activeStateCode);
@@ -250,7 +245,15 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-			  {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName(activeStateCode), type:'area', data: tfseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/>}
+        {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName(activeStateCode), type:'area', data: tfseries[activeStateCode]}, 
+                                                                      {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, 
+                                                                      {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, 
+                                                                      {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, 
+                                                                      {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, 
+                                                                      {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]},
+                                                                      {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, 
+                                                                      {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]},
+                                                                      {name: getStateName(activeStateCode)+"wa1", type:'area', data: wa1series[activeStateCode]}]}/>}
 			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />

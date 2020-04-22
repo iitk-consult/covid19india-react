@@ -5,7 +5,6 @@ import ReactApexChart from "react-apexcharts";
 export default class ApexChart extends React.Component {
         constructor(props) {
           super(props);
-
           this.state = {
 			
             series: this.props.series,
