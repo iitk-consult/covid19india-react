@@ -89,7 +89,6 @@ function App() {
       </Router>
 
       <footer className="fadeInUp" style={{animationDelay: '2s'}}>
-
         <h5>We stand with everyone fighting on the frontlines</h5>
         <div className="link">
           <a

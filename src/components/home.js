@@ -62,7 +62,7 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-        wb, up, ka, dl, mh, kl, pb, tg, or, tn, rj, gj, mp, ar, as, br, ct, ga, hr, hp, jh, mn, ml, mz, nl, tr, ut, an, jk, la, py
+        wb, up, ka, dl, mh, kl, pb, tg, or, tn, rj, gj, mp, ar, as, br, ct, ga, hr, hp, jh, mn, ml, mz, nl, tr, ut, an, jk, la, py, ap
       ] = await Promise.all([
         axios.get('https://api.covid19india.org/data.json'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
@@ -101,12 +101,13 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vR6hdU48OumqI6C60GZFMTol8RTsSTNH3phNoQeqacPwhSamXzaKW4GdxJ72nCljRnbulg444Hu44YW/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vT1VDQws4AuKQ4gLw19BKnBwyNfFC1qzjFWbpjobS8av4oOQitZNl66tHHSxxvhV2dBKjnr6ZVm9SYR/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTgpwjlWkiKGGqK_KCsxBCrUTs8AzUvx67fZRXQowHLKIn1mzXAOt3ZKXSLUcdTAp4nTvVVIle8KWC2/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKjNMXYXaPY1Vb0ZfTZcGqMyNYcBkelf5sfwc0IR0_Rs7VQ-h6qLEWDCYi7Ad2LyEFiENDkbGW3ZH-/pub?gid=0&single=true&output=csv'),
 
 	  ]);
       setStates(response.data.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
       var forPreprocessing = {"WB": wb, "UP": up, "KA": ka, "DL": dl, "MH": mh, "KL": kl, "PB": pb, "TG": tg, "OR": or, "TN": tn, "RJ": rj, "GJ": gj, "MP": mp,
-                              "AR": ar, "AS": as, "BR": br, "CT": ct, "GA": ga, "HR": hr, "HP": hp, "JH": jh, "MN": mn, "ML": ml, "MZ": mz, "NL": nl, "TR": tr, "UT": ut, "AN": an, "JK": jk, "LA":la, "PY":py };
+                              "AR": ar, "AS": as, "BR": br, "CT": ct, "GA": ga, "HR": hr, "HP": hp, "JH": jh, "MN": mn, "ML": ml, "MZ": mz, "NL": nl, "TR": tr, "UT": ut, "AN": an, "JK": jk, "LA":la, "PY":py, "AP": ap};
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
@@ -233,8 +234,8 @@ function Home(props) {
               <div className="header fadeInUp" style={{animationDelay: '1s'}}>
 				<div className="header-mid">
 				  <div className="titles">
-					<h1>Our Findings</h1>
-					<h6 style={{fontWeight: 600}}>An initiative by ICG</h6>
+					<h1>Social Media Analysis</h1>
+					<h6 style={{fontWeight: 600}}>An initiative by ICG for WHO's Office for South East Asia</h6>
 				  </div>
 				  <div className="last-update">
 					<h6>Last Updated</h6>
