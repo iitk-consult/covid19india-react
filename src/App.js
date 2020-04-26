@@ -10,6 +10,8 @@ import * as Icon from 'react-feather';
 import './App.scss';
 
 import Home from './components/home';
+import Indonesia from './components/indonesia';
+import Bangladesh from './components/bangladesh';
 import Navbar from './components/navbar';
 //import Links from './components/links';
 //import FAQ from './components/faq';
@@ -26,8 +28,20 @@ function App() {
     {
       pageLink: '/',
       view: Home,
-      displayName: 'Home',
+      displayName: 'India',
       animationDelayForNavbar: 0.2,
+    },
+	{
+      pageLink: '/indonesia',
+      view: Indonesia,
+      displayName: 'Indonesia',
+      animationDelayForNavbar: 0.3,
+    },
+	{
+      pageLink: '/bangladesh',
+      view: Bangladesh,
+      displayName: 'Bangladesh',
+      animationDelayForNavbar: 0.4,
     },
     // {
     //   pageLink: '/demographics',
