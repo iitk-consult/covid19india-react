@@ -25,7 +25,7 @@ export default function AlertDialogSlide() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-      Twitter Volume/Day & Positive Cases
+      Number of postings (on Twitter) related to COVID-19 and hospitalisation
       </Button>
       <Dialog
         open={open}

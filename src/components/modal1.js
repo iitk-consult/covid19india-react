@@ -25,7 +25,7 @@ export default function AlertDialogSlide() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Twitter Word Count/Day
+        Relative frequency of postings (in Twitter) per day related to COVID-19 and hospitalization
       </Button>
       <Dialog
         open={open}
@@ -38,7 +38,7 @@ export default function AlertDialogSlide() {
         <DialogTitle id="alert-dialog-slide-title">{"Twitter Word Count/Day"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-          This gives the total count of terms related to hospitalisation like hospital, medical college, beds etc. in the tweets on a daily level
+            Relative frequency = Proportion of COVID-19/hospitalisation related postings over the total volume of Twitter posting
           </DialogContentText>
         </DialogContent>
         <DialogActions>
