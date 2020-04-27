@@ -10,13 +10,15 @@ import * as Icon from 'react-feather';
 import './App.scss';
 
 import Home from './components/home';
+import Indonesia from './components/indonesia';
+import Bangladesh from './components/bangladesh';
 import Navbar from './components/navbar';
-import Links from './components/links';
-import FAQ from './components/faq';
-import Banner from './components/banner';
-import PatientDB from './components/patientdb';
-import DeepDive from './components/deepdive';
-import Resources from './components/resources';
+//import Links from './components/links';
+//import FAQ from './components/faq';
+//import Banner from './components/banner';
+//import PatientDB from './components/patientdb';
+//import DeepDive from './components/deepdive';
+//import Resources from './components/resources';
 /* import PatientDB from './components/patientdb';*/
 
 const history = require('history').createBrowserHistory;
@@ -26,8 +28,20 @@ function App() {
     {
       pageLink: '/',
       view: Home,
-      displayName: 'Home',
+      displayName: 'India',
       animationDelayForNavbar: 0.2,
+    },
+	{
+      pageLink: '/indonesia',
+      view: Indonesia,
+      displayName: 'Indonesia',
+      animationDelayForNavbar: 0.3,
+    },
+	{
+      pageLink: '/bangladesh',
+      view: Bangladesh,
+      displayName: 'Bangladesh',
+      animationDelayForNavbar: 0.4,
     },
     // {
     //   pageLink: '/demographics',
@@ -89,7 +103,6 @@ function App() {
       </Router>
 
       <footer className="fadeInUp" style={{animationDelay: '2s'}}>
-
         <h5>We stand with everyone fighting on the frontlines</h5>
         <div className="link">
           <a

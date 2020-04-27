@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { invalid } from 'moment';
 
 const months = {
   '01': 'Jan',
@@ -16,43 +16,44 @@ const months = {
 };
 
 const stateCodes = {
-  AP: 'Andhra Pradesh',
-  AR: 'Arunachal Pradesh',
-  AS: 'Assam',
-  BR: 'Bihar',
-  CT: 'Chhattisgarh',
-  GA: 'Goa',
-  GJ: 'Gujarat',
-  HR: 'Haryana',
-  HP: 'Himachal Pradesh',
-  JH: 'Jharkhand',
-  KA: 'Karnataka',
-  KL: 'Kerala',
-  MP: 'Madhya Pradesh',
-  MH: 'Maharashtra',
-  MN: 'Manipur',
-  ML: 'Meghalaya',
-  MZ: 'Mizoram',
-  NL: 'Nagaland',
-  OR: 'Odisha',
-  PB: 'Punjab',
-  RJ: 'Rajasthan',
-  SK: 'Sikkim',
-  TN: 'Tamil Nadu',
-  TG: 'Telangana',
-  TR: 'Tripura',
-  UT: 'Uttarakhand',
-  UP: 'Uttar Pradesh',
-  WB: 'West Bengal',
-  AN: 'Andaman and Nicobar Islands',
-  CH: 'Chandigarh',
-  DN: 'Dadra and Nagar Haveli',
-  DD: 'Daman and Diu',
-  DL: 'Delhi',
-  JK: 'Jammu and Kashmir',
-  LA: 'Ladakh',
-  LD: 'Lakshadweep',
-  PY: 'Puducherry',
+	WB: 'West Bengal',
+	UP: 'Uttar Pradesh',
+	KA: 'Karnataka',
+	DL: 'Delhi',
+	MH: 'Maharashtra',
+	KL: 'Kerala',
+	PB: 'Punjab',
+	TG: 'Telangana',
+	OR: 'Odisha',
+	TN: 'Tamil Nadu',
+	AP: 'Andhra Pradesh',
+	RJ: 'Rajasthan',
+	GJ: 'Gujarat',
+	MP: 'Madhya Pradesh',
+	AR: 'Arunachal Pradesh',
+	AS: 'Assam',
+	BR: 'Bihar',
+	CT: 'Chhattisgarh',
+	GA: 'Goa',
+	HR: 'Haryana',
+	HP: 'Himachal Pradesh',
+	JH: 'Jharkhand', 
+	MN: 'Manipur',
+	ML: 'Meghalaya',
+	MZ: 'Mizoram',
+	NL: 'Nagaland',
+	SK: 'Sikkim',
+	TT: 'Delhi',
+	TR: 'Tripura',
+	UT: 'Uttarakhand',  
+	AN: 'Andaman and Nicobar Islands',
+	CH: 'Chandigarh',
+	DN: 'Dadra and Nagar Haveli',
+	DD: 'Daman and Diu',
+	JK: 'Jammu and Kashmir',
+	LA: 'Ladakh',
+	LD: 'Lakshadweep',
+	PY: 'Puducherry',
 };
 
 export const getStateName = (code) => {
@@ -60,10 +61,10 @@ export const getStateName = (code) => {
 };
 
 export const formatDate = (unformattedDate) => {
-  const day = unformattedDate.split(/[/-]+/)[0];
+  const day = unformattedDate.split(/[/-]+/)[2];
   const month = unformattedDate.split(/[/-]+/)[1];
-  const year = unformattedDate.split(/[/-]+/)[2];
-  return `${year}-${day}-${month}`;
+  const year = unformattedDate.split(/[/-]+/)[0];
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDate1 = (unformattedDate) => {
@@ -159,73 +160,120 @@ export const parseStateTimeseries = ({states_daily: data}) => {
   return statewiseSeries;
 };
 
-
-export const validateHTS = (data = []) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const dataTypes = [
-    'positive',
-    'hospitalised',
-    'hospitalisedGovt',
-    'hospitalisedPvt',
-  ];
-  return data
-    .filter((d) => dataTypes.every((dt) => d[dt]) && d.date)
-    .filter((d) => dataTypes.every((dt) => Number(d[dt]) >= 0))
-    .filter((d) => {
-      const year = today.getFullYear();
-      return new Date(d.date + year) < today;
-    });
-};
-
-
-export const prettifyHospitalisationData = (data) => {
+export const prettifyData = (data) => {
   const parsedData = data.data
   const header = parsedData.shift();
   var newJSON = [];
-  for(var i=0; i<parsedData.length; i++) {
+  for(var i=0, countValidDates=0; i<parsedData.length; i++) {
     var rowData = parsedData[i];
-    newJSON[parsedData.length-i-1] = {
-      "date": formatDate(rowData[0]),
-      "positive": rowData[1],
-	  "positiveBest": rowData[3],
-	  "positiveRealistic": rowData[4],
-	  "positiveWorst": rowData[5],
-      "hospitalisedUpper" : rowData[9],
-	  "icuUpper" : rowData[10],
-	  "ventilatorLower" : rowData[11],
-	  "hospitalisedLower" : rowData[12],
-      "icuLower" : rowData[13],
-      "ventilatorLower" : rowData[14],
-	  "admitHospital": rowData[15],
-	  "admitHospitalLower": rowData[16],
-	  "admitHospitalUpper": rowData[17],
+    var date_parsed = formatDate(rowData[0]);
+    // console.log(rowData[0]);
+    if(rowData[0])
+    {
+      newJSON[countValidDates] = {
+        "date":date_parsed,
+        "colB": rowData[1],
+        "colC": rowData[2],
+        "colD": rowData[3],
+        "colE": rowData[3],
+      }
+      countValidDates++;
     }
   }
-  newJSON = newJSON.reverse();
-  //console.log(newJSON)
-  return newJSON
+  if (countValidDates>5)
+    return newJSON
+  else
+    return []
 };
 
-
-export const preprocessHospitalTimeseries = (timeseries) => {
+export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
-  //console.log(timeseries)
   return timeseries.map((stat) => ({
     date: new Date(stat.date),
-    positive: +stat.positive,
-	positiveBest: +stat.positiveBest,
-	positiveRealistic: +stat.positiveRealistic,
-	positiveWorst: +stat.positiveWorst,
-    hospitalisedUpper: +stat.hospitalisedUpper,
-	icuUpper: +stat.icuUpper,
-	ventilatorLower: +stat.ventilatorLower,
-	hospitalisedLower: +stat.hospitalisedLower,
-    icuLower: +stat.icuLower,
-    ventilatorUpper: +stat.ventilatorUpper,
-	admitHospital: +stat.admitHospital,
-	admitHospitalLower: +stat.admitHospitalLower,
-	admitHospitalUpper: +stat.admitHospitalUpper,
+    colB: +stat.colB,
+    colC: +stat.colC,
+    colD: +stat.colD,
+    colE: +stat.colE,
   }));
 };
 
+export const processForChart = (data) => {
+  var final = {};
+  for(var key in stateCodes){
+    if(!data[key])
+    {
+		  final[key]=[];
+    }
+    else
+    {
+		  final[key]=data[key];
+	  }
+  }
+  final['TT'] = data['DL'];
+  console.log(final);
+  return final;
+};
+
+export const getpsValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['totalconfirmed']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+export const gettfValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['colB']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+export const getnfValues = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+		arr.push([x[key][i]['date'], x[key][i]['colC']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+export const getwa1Values = (x) => {
+  var final = {};
+  for(var key in x){
+	var arr = [];
+	for(var i = 0; i < x[key].length; i++){
+    if (i<4)
+      arr.push([x[key][i]['date'], x[key][0]['colD']]);
+    else
+		  arr.push([x[key][i]['date'], (x[key][i]['colD'] + x[key][i-1]['colD'] + x[key][i-2]['colD'] + x[key][i-3]['colD'] + x[key][i-4]['colD'])/5]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+
+export const eventdata = () => {
+  var arr=[];
+  arr.push([new Date("03/10/2020").getTime(), 0]);
+  arr.push([new Date("03/19/2020").getTime(), 0]);
+  arr.push([new Date("03/22/2020").getTime(), 0]);
+  arr.push([new Date("03/24/2020").getTime(), 0]);
+  arr.push([new Date("04/03/2020").getTime(), 0]);
+  arr.push([new Date("04/05/2020").getTime(), 0]);
+  arr.push([new Date("04/14/2020").getTime(), 0]);
+  return arr;
+};

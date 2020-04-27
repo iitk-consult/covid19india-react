@@ -21,7 +21,7 @@ import Papa from 'papaparse';
 
 //import Table from './table';
 //import Level from './level';
-import MapExplorer from './mapexplorer';
+import MapExplorer from './mapexplorer1';
 import TimeSeries from './timeseries';
 import ApexChart from './apex';
 import ApexChart1 from './apex1';

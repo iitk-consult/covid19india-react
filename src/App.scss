@@ -236,11 +236,15 @@ h6 {
   margin-left: 5rem;
   margin-right: 5rem;
 
-  .home-left,
-  .home-right {
+  .home-left{
     display: flex;
     flex-direction: column;
     width: 30rem;
+  }
+  .home-right {
+    display: flex;
+    flex-direction: column;
+    width: 60rem;
   }
 
   .home-left {
@@ -650,7 +654,7 @@ h6 {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  width: 60rem;
   align-self: center;
   justify-content: space-between;
   padding-top: 2rem;
