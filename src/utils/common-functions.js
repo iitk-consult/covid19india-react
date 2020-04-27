@@ -15,6 +15,44 @@ const months = {
   '12': 'Dec',
 };
 
+const IndonesiaStateCodes = {
+	AC: 'Aceh', //aceh
+	BA: 'Bali', //bali
+	BB: 'Babel', //bangka_belitung_islands
+	BT: 'Banten', //banten
+	BE: 'Bengkulu', //bengkulu
+	JT: 'Jateng', //central java
+	KT: 'Kalteng', //central kalimantan
+	ST: 'Sulteng', //central sulawesi
+	JI: 'Jatim', //east java
+	KI: 'Kaltim', //east kalimantan
+	NT: 'NTT', //east nusa tenggara
+  GO: 'Gorontalo', //gorontalo
+	JK: 'DKI', //special region of jakarta
+	JA: 'Jambi', //jambi
+	LA: 'Lampung', //lampung
+	MA: 'Maluku', //maluku
+	KU: 'Kaltara', //noth kalimantan
+	MU: 'Malut', //north maluku
+	SA: 'Sulut',  //north sulawesi
+	SU: 'Sumut', //north sumatra
+	PA: 'Papua', //papua
+	RI: 'Riau', //riau
+	KR: 'Kepri', //riau islands
+	SG: 'Sultra', //southeast sulawesi
+	KS: 'Kalsel', //south kalimantan
+	SN: 'Sulsel', //south sulawesi
+	SS: 'Sumsel',  //south sumatra
+	JB: 'Jabar', //west java
+	KB: 'Kalbar', //west kalimantan 
+	NB: 'NTB', //west nusa tenggara
+	PB: 'Pabar', //west papua
+	SR: 'Sulbar', //west sulawesi
+	SB: 'Sumbar', //west sumatra
+  YO: 'DIY', //speacial region of yogyakarta
+  TT: 'Indonesia' //whole country
+};
+
 const stateCodes = {
 	WB: 'West Bengal',
 	UP: 'Uttar Pradesh',
@@ -55,6 +93,7 @@ const stateCodes = {
 	LD: 'Lakshadweep',
 	PY: 'Puducherry',
 };
+
 
 export const getStateName = (code) => {
   return stateCodes[code.toUpperCase()];
@@ -193,9 +232,17 @@ export const preprocess = (timeseries) => {
   }));
 };
 
-export const processForChart = (data) => {
+export const processForChart = (data, country) => {
   var final = {};
-  for(var key in stateCodes){
+  var Codes;
+  if (country==="Indonesia")
+    Codes=IndonesiaStateCodes;
+  else
+    Codes=stateCodes;
+  console.log(Codes)
+  for(var key in Codes){
+    console.log(key);
+    console.log(data[key]);
     if(!data[key])
     {
 		  final[key]=[];
@@ -205,7 +252,6 @@ export const processForChart = (data) => {
 		  final[key]=data[key];
 	  }
   }
-  final['TT'] = data['DL'];
   console.log(final);
   return final;
 };

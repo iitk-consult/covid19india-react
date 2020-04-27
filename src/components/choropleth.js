@@ -5,8 +5,8 @@ import * as topojson from 'topojson';
 import {MAP_TYPES} from '../constants';
 
 const propertyFieldMap = {
-  country: 'st_nm',
-  state: 'district',
+  country: 'provinsi',
+  state: 'kabkot',
 };
 
 function ChoroplethMap({
@@ -211,7 +211,7 @@ function ChoroplethMap({
     const paths = d3.selectAll('.path-region');
     paths.classed('map-hover', (d, i, nodes) => {
       const propertyField =
-        'district' in d.properties
+        'kabkot' in d.properties
           ? propertyFieldMap['state']
           : propertyFieldMap['country'];
       if (name === d.properties[propertyField]) {

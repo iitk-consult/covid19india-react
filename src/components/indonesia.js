@@ -106,12 +106,11 @@ function Home(props) {
 	  ]);
       setStates(response.data.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
-      var forPreprocessing = {"WB": wb, "UP": up, "KA": ka, "DL": dl, "MH": mh, "KL": kl, "PB": pb, "TG": tg, "OR": or, "TN": tn, "RJ": rj, "GJ": gj, "MP": mp,
-                              "AR": ar, "AS": as, "BR": br, "CT": ct, "GA": ga, "HR": hr, "HP": hp, "JH": jh, "MN": mn, "ML": ml, "MZ": mz, "NL": nl, "TR": tr, "UT": ut, "AN": an, "JK": jk, "LA":la, "PY":py, "AP": ap};
+      var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
-      const finalData = processForChart(forPreprocessing);
+      const finalData = processForChart(forPreprocessing, "Indonesia");
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues(ts);
