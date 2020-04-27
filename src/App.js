@@ -13,13 +13,6 @@ import Home from './components/home';
 import Indonesia from './components/indonesia';
 import Bangladesh from './components/bangladesh';
 import Navbar from './components/navbar';
-//import Links from './components/links';
-//import FAQ from './components/faq';
-//import Banner from './components/banner';
-//import PatientDB from './components/patientdb';
-//import DeepDive from './components/deepdive';
-//import Resources from './components/resources';
-/* import PatientDB from './components/patientdb';*/
 
 const history = require('history').createBrowserHistory;
 

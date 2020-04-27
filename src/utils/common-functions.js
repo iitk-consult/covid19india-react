@@ -174,8 +174,6 @@ export const prettifyData = (data) => {
         "date":date_parsed,
         "colB": rowData[1],
         "colC": rowData[2],
-        "colD": rowData[3],
-        "colE": rowData[3],
       }
       countValidDates++;
     }
@@ -192,8 +190,6 @@ export const preprocess = (timeseries) => {
     date: new Date(stat.date),
     colB: +stat.colB,
     colC: +stat.colC,
-    colD: +stat.colD,
-    colE: +stat.colE,
   }));
 };
 
@@ -256,9 +252,9 @@ export const getwa1Values = (x) => {
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
     if (i<4)
-      arr.push([x[key][i]['date'], x[key][0]['colD']]);
+      arr.push([x[key][i]['date'], x[key][0]['colB']]);
     else
-		  arr.push([x[key][i]['date'], (x[key][i]['colD'] + x[key][i-1]['colD'] + x[key][i-2]['colD'] + x[key][i-3]['colD'] + x[key][i-4]['colD'])/5]);
+		  arr.push([x[key][i]['date'], (x[key][i]['colB'] + x[key][i-1]['colB'] + x[key][i-2]['colB'] + x[key][i-3]['colB'] + x[key][i-4]['colB'])/5]);
 	}
     final[key]=arr;
   };
