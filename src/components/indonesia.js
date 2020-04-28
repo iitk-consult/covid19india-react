@@ -18,7 +18,7 @@ import {
 } from '../utils/common-functions';
 
 import Papa from 'papaparse';
-
+import stateData from './sample_data.json';
 //import Table from './table';
 //import Level from './level';
 import MapExplorer from './mapexplorer1';
@@ -104,7 +104,7 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKjNMXYXaPY1Vb0ZfTZcGqMyNYcBkelf5sfwc0IR0_Rs7VQ-h6qLEWDCYi7Ad2LyEFiENDkbGW3ZH-/pub?gid=0&single=true&output=csv'),
 
 	  ]);
-      setStates(response.data.statewise);
+      setStates(stateData.statewise);
       const ts = parseStateTimeseries(statesDailyResponse);
       var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
       for(var stateSheet in forPreprocessing){
@@ -167,64 +167,9 @@ function Home(props) {
 			        	regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
-		  {/* <h3><br />Select a state to compare plots:</h3>
-		  <div className="trends-state-name">
-                  <select style={{margin:'0px'}}
-                    onChange={({target}) => {
-                      setActiveStateCode1(target.value);
-                    }}
-                  >
-                    <option value="TT">None</option>
-                    <option value="WB">West Bengal</option>
-                    <option value="UP">Uttar Pradesh</option>
-                    <option value="KA">Karnataka</option>
-                    <option value="DL">Delhi</option>
-                    <option value="MH">Maharashtra</option>
-                    <option value="KL">Kerala</option>
-                    <option value="PB">Punjab</option>
-                    <option value="TG">Telangana</option>
-                    <option value="OR">Odisha</option>
-                    <option value="TN">Tamil Nadu</option>
-                    <option value="RJ">Rajasthan</option>
-                    <option value="MP">Madhya Pradesh</option>
-                    <option value="GJ">Gujarat</option>
-          
-                  </select>
-                </div> */}
-              
 		  </React.Fragment>
 		  )}
-		  <div
-            className="updates-header fadeInUp"
-            style={{animationDelay: '1.5s'}}
-          >
-            <h1>Updates</h1>
-            <h2>{format(new Date(), 'd MMM')}</h2>
-          </div>
-
-          <div className="updates fadeInUp" style={{animationDelay: '1.7s'}}>
-            {activityLog
-              .slice(-5)
-              .reverse()
-              .map(function (activity, index) {
-                activity.update = activity.update.replace('\n', '<br/>');
-                return (
-                  <div key={index} className="update">
-                    <h5>
-                      {formatDistance(
-                        new Date(activity.timestamp * 1000),
-                        new Date()
-                      ) + ' Ago'}
-                    </h5>
-                    <h4
-                      dangerouslySetInnerHTML={{
-                        __html: activity.update,
-                      }}
-                    ></h4>
-                  </div>
-                );
-              })}
-          </div>
+	
         </div>
 
         <div className="home-right">

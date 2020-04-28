@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo, useCallback} from 'react';
-import ChoroplethMap from './choropleth';
+import ChoroplethMap from './choropleth_indonesia';
 import {MAP_TYPES, INDONESIA_MAPS_DIR} from '../constants';
 import {formatDate, formatDate1, formatDateAbsolute} from '../utils/common-functions';
 import {formatDistance, format, parse} from 'date-fns';
@@ -8,17 +8,204 @@ import * as Icon from 'react-feather';
 
 const mapMeta = {
   Indonesia: {
-    name: 'Indonesia',
-    geoDataFile: `${INDONESIA_MAPS_DIR}/aceh-simplified-topo.json`,
+    name: '',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/indonesia-simplified-topo.json`,
     mapType: MAP_TYPES.COUNTRY,
-    graphObjectName: 'indonesia',
+    graphObjectName: 'provinces',
   },
   'Aceh': {
     name: 'Aceh',
     geoDataFile: `${INDONESIA_MAPS_DIR}/aceh-simplified-topo.json`,
     mapType: MAP_TYPES.STATE,
     graphObjectName: 'aceh',
-  }
+  },
+  'Bali': {
+    name: 'Bali',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/bali-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'bali',
+  },
+  'Banten': {
+    name: 'Banten',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/banten-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'banten',
+  },
+  'Bengkulu': {
+    name: 'Bengkulu',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/bengkulu-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'bengkulu',
+  },
+  'Gorontalo': {
+    name: 'Gorontalo',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/gorontalo-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'gorontalo',
+  },
+  'Jakarta': {
+    name: 'Jakarta',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/jakarta-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'jakarta',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/jambi-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'jambi',
+  },
+  'Barat': {
+    name: 'Barat',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/jawa-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'jawa-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/jawa-tengah-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'jawa-tengah',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/jawa-timur-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'jawa-timur',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kalimantan-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kalimantan-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kalimantan-selantan-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kalimantan-selantan',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kalimantan-timur-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kalimantan-timur',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kalimantan-utara-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kalimantan-utara',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kepulauan-bangka-belitung-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kepulauan-bangka-belitung',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kepulauan-riau-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kepulauan-riau',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/kepulauan-seribu-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'kepulauan-seribu',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/lampung-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'lampung',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/maluku-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'maluku',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/nusa-tenggara-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'nusa-tenggara-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/nusa-tenggara-timur-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'nusa-tenggara-timur',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/papua-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'papua-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/papua-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'papua',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sulawesi-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sulawesi-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sulawesi-selatan-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sulawesi-selatan',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sulawesi-tengah-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sulawesi-tengah',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sulawesi-tenggara-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sulawesi-tenggara',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sulawesi-utara-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sulawesi-utara',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sumatera-barat-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sumatera-barat',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sumatera-selatan-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sumatera-selatan',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/sumatera-utara-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'sumatera-utara',
+  },
+  'Jambi': {
+    name: 'Jambi',
+    geoDataFile: `${INDONESIA_MAPS_DIR}/yogyakarta-simplified-topo.json`,
+    mapType: MAP_TYPES.STATE,
+    graphObjectName: 'yogyakarta',
+  },
+
 };
 
 const getRegionFromState = (state) => {
@@ -43,6 +230,8 @@ function MapExplorer({
   regionHighlighted,
   onMapHighlightChange,
 }) {
+  console.log("STATES");
+  console.log(states);
   const [selectedRegion, setSelectedRegion] = useState({});
   const [panelRegion, setPanelRegion] = useState(getRegionFromState(states[0]));
   const [currentHoveredRegion, setCurrentHoveredRegion] = useState(

@@ -5,8 +5,8 @@ import * as topojson from 'topojson';
 import {MAP_TYPES} from '../constants';
 
 const propertyFieldMap = {
-  country: 'st_nm',
-  state: 'district',
+  country: 'provinsi',
+  state: 'kaboski',
 };
 
 function ChoroplethMap({
@@ -20,6 +20,8 @@ function ChoroplethMap({
 }) {
   const choroplethMap = useRef(null);
   const [svgRenderCount, setSvgRenderCount] = useState(0);
+  console.log(mapData);
+  console.log(mapMeta);
 
   const ready = useCallback(
     (geoData) => {
