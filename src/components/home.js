@@ -127,7 +127,7 @@ function Home(props) {
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setActivityLog(updateLogResponse.data);
       setFetched(true);
-	  //console.log(response.data.statewise);
+	  //console.log(formatDate1(lastUpdated))
     } catch (err) {
       console.log(err);
     }

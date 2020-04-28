@@ -3,7 +3,7 @@ import axios from 'axios';
 import {formatDistance, format} from 'date-fns';
 
 import {
-  formatDate1,
+  formatDate2,
   getoveralldata,
   pushregionwise,
   formatDateAbsolute,
@@ -32,13 +32,13 @@ import Modal1 from './modal1';
 //import Minigraph from './minigraph';
 
 var states = [];
-var lastUpdated = '';
 
 function Home(props) {
   const [stateDistrictWiseData, setStateDistrictWiseData] = useState({});
   const [stateTestData, setStateTestData] = useState({});
   const [fetched, setFetched] = useState(false);
   const [graphOption, setGraphOption] = useState(1);
+  const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
   const [tfseries, setTfseries] = useState([]);
   const [wa1series, setWa1series] = useState([]);
@@ -128,7 +128,7 @@ function Home(props) {
       setNfseries(nfValues);
       setWa1series(wa1Values);
 	  setEventseries(eventdata());
-      lastUpdated = states[1].lastupdatedtime;
+      setLastUpdated(states[1].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setFetched(true);
@@ -190,15 +190,15 @@ function Home(props) {
 				  <div className="last-update">
 					<h6>Last Updated</h6>
 					<h6 style={{color: '#28a745', fontWeight: 600}}>
-					  {isNaN(Date.parse(lastUpdated))
+					  {isNaN(Date.parse(formatDate2(lastUpdated)))
 						? ''
 						: formatDistance(
-							new Date(lastUpdated),
+							new Date(formatDate2(lastUpdated)),
 							new Date()
 						  ) + ' Ago'}
 					</h6>
 					<h6 style={{color: '#28a745', fontWeight: 600}}>
-					  {isNaN(Date.parse(lastUpdated))
+					  {isNaN(Date.parse(formatDate2(lastUpdated)))
 						? ''
 						: (lastUpdated)}
 					</h6>

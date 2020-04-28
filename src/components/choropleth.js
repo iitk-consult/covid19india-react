@@ -38,8 +38,8 @@ function ChoroplethMap({
           console.log('err', err);
         }
       };
-      console.log(geoData);
-      console.log(geoData.objects[mapMeta.graphObjectName]);
+      //console.log(geoData);
+      //console.log(geoData.objects[mapMeta.graphObjectName]);
       
       const topology = topojson.feature(
         geoData,

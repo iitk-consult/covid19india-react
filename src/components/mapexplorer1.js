@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import ChoroplethMap from './choropleth_indonesia';
 import {MAP_TYPES, INDONESIA_MAPS_DIR} from '../constants';
-import {formatDate, formatDate1, formatDateAbsolute} from '../utils/common-functions';
+import {formatDate, formatDate2, formatDateAbsolute} from '../utils/common-functions';
 import {formatDistance, format, parse} from 'date-fns';
 import {formatNumber} from '../utils/common-functions';
 import * as Icon from 'react-feather';
@@ -281,8 +281,8 @@ function MapExplorer({
         const region = getRegionFromState(
           states.find((state) => name === state.state)
         );
-        console.log("HOVER");
-        console.log(region);
+        //console.log("HOVER");
+        //console.log(region);
           setCurrentHoveredRegion(region);
         setPanelRegion(region);
         onMapHighlightChange(region);
@@ -440,15 +440,15 @@ function MapExplorer({
             <h6>Last Updated</h6>
             <h3
               title={
-                isNaN(Date.parse(formatDate1(lastupdatedtime)))
+                isNaN(Date.parse(formatDate2(lastupdatedtime)))
                   ? ''
                   : formatDateAbsolute(lastupdatedtime)
               }
             >
-              {isNaN(Date.parse(formatDate1(lastupdatedtime)))
+              {isNaN(Date.parse(formatDate2(lastupdatedtime)))
                 ? ''
                 : formatDistance(
-                    new Date(formatDate1(lastupdatedtime)),
+                    new Date(formatDate2(lastupdatedtime)),
                     new Date()
                   ) + ' Ago'}
             </h3>

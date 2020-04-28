@@ -154,6 +154,14 @@ export const formatDate1 = (unformattedDate) => {
   return `${year}-${month}-${day}T${time}+05:30`;
 };
 
+export const formatDate2 = (unformattedDate) => {
+  const day = unformattedDate.slice(8, 10);
+  const month = unformattedDate.slice(5, 7);
+  const year = unformattedDate.slice(0, 4);
+  const time = unformattedDate.slice(11,19);
+  return `${year}-${month}-${day}T${time}`;
+};
+
 export const formatDateAbsolute = (unformattedDate) => {
   const day = unformattedDate.slice(0, 2);
   const month = unformattedDate.slice(3, 5);
