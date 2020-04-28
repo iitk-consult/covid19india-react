@@ -281,7 +281,9 @@ function MapExplorer({
         const region = getRegionFromState(
           states.find((state) => name === state.state)
         );
-        setCurrentHoveredRegion(region);
+        console.log("HOVER");
+        console.log(region);
+          setCurrentHoveredRegion(region);
         setPanelRegion(region);
         onMapHighlightChange(region);
       } else if (currentMap.mapType === MAP_TYPES.STATE) {
@@ -354,7 +356,7 @@ function MapExplorer({
     },
     [setHoveredRegion, stateDistrictWiseData, states]
   );
-
+  
   const {name, lastupdatedtime} = currentHoveredRegion;
 
   useEffect(() => {

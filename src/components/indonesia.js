@@ -64,7 +64,7 @@ function Home(props) {
         stateTestResponse,
         wb, up, ka, dl, mh, kl, pb, tg, or, tn, rj, gj, mp, ar, as, br, ct, ga, hr, hp, jh, mn, ml, mz, nl, tr, ut, an, jk, la, py, ap
       ] = await Promise.all([
-        axios.get('https://api.covid19india.org/data.json'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTUXqrD_I1ZvBVVFbNWI7GvQO5nnqbZwuU6hVyvo84cOqPMdGKhRHJVU_5OHPVeI_IPa2VssXkIxKNB/pub?gid=1845820554&single=true&output=csv'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
@@ -103,9 +103,9 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTgpwjlWkiKGGqK_KCsxBCrUTs8AzUvx67fZRXQowHLKIn1mzXAOt3ZKXSLUcdTAp4nTvVVIle8KWC2/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKjNMXYXaPY1Vb0ZfTZcGqMyNYcBkelf5sfwc0IR0_Rs7VQ-h6qLEWDCYi7Ad2LyEFiENDkbGW3ZH-/pub?gid=0&single=true&output=csv'),
 
-	  ]);
+    ]);
+      
       setStates(stateData.statewise);
-      const ts = parseStateTimeseries(statesDailyResponse);
       var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
@@ -113,11 +113,11 @@ function Home(props) {
       const finalData = processForChart(forPreprocessing, "Indonesia");
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
-      var psValues = getpsValues(ts);
+      // var psValues = getpsValues(ts);
       var wa1Values = getwa1Values(finalData);
-      psValues['TT']=psValues['DL']
+      // psValues['TT']=psValues['DL']
       setTfseries(tfValues);
-      setPsseries(psValues);
+      // setPsseries(psValues);
       setNfseries(nfValues);
       setWa1series(wa1Values);
 	    setEventseries(eventdata());
@@ -226,7 +226,7 @@ function Home(props) {
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/>
+			  {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/> */}
         {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},  */}
                              {/* {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/> */}
 			  </div>
