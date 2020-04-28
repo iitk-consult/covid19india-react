@@ -13,7 +13,7 @@ import {
   getStateName,
   processForChart,
   eventdata,
-  parseStateTimeseries,
+  preprocessIndonesiaData,
   getwa1Values
 } from '../utils/common-functions';
 
@@ -104,8 +104,9 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKjNMXYXaPY1Vb0ZfTZcGqMyNYcBkelf5sfwc0IR0_Rs7VQ-h6qLEWDCYi7Ad2LyEFiENDkbGW3ZH-/pub?gid=0&single=true&output=csv'),
 
     ]);
-      
-      setStates(stateData.statewise);
+      var stateData = preprocessIndonesiaData(Papa.parse(response.data));
+      console.log(stateData);
+      setStates(stateData);
       var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))

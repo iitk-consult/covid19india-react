@@ -223,6 +223,27 @@ export const prettifyData = (data) => {
     return []
 };
 
+
+export const preprocessIndonesiaData = (data) => {
+  const parsedData = data.data
+  console.log(parsedData);
+  var newJSON = [];
+  for (var i = 0; i<36; i++)
+  {
+    var state=[];
+    for (var j = 0; j<parsedData.length; j++)
+    {
+        state.push({
+          "date": formatDate(parsedData[j][0]),
+          "totalconfirmed": parsedData[j][1]
+        })
+    }
+    newJSON[parsedData[0][i]]=state;
+  }
+  console.log(newJSON);
+};
+
+
 export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
   return timeseries.map((stat) => ({
