@@ -127,7 +127,7 @@ function Home(props) {
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setActivityLog(updateLogResponse.data);
       setFetched(true);
-	  //console.log(finalData);
+	  //console.log(response.data.statewise);
     } catch (err) {
       console.log(err);
     }
@@ -165,7 +165,7 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
-			        	regionHighlighted={regionHighlighted}
+			    regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
 		  {/* <h3><br />Select a state to compare plots:</h3>

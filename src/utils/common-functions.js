@@ -15,6 +15,42 @@ const months = {
   '12': 'Dec',
 };
 
+const ordered = [
+	'JK',
+	'JB',
+	'JI',
+	'JT',
+	'SN',
+	'BT',
+	'NB',
+	'BA',
+	'PA',
+	'KS',
+	'SS',
+	'SS',
+	'KT',
+	'KI',
+	'SU',
+	'YO',
+	'KU',
+	'KR',
+	'KB',
+	'SG',
+	'LA',
+	'SA',
+	'ST',
+	'RI',
+	'PB',
+	'SR',
+	'JA',
+	'MU',
+	'MA',
+	'GO',
+	'BB',
+	'AC',
+	'BE',
+	'NT'
+];
 const IndonesiaStateCodes = {
 	AC: 'Aceh', //aceh
 	BA: 'Bali', //bali
@@ -27,7 +63,7 @@ const IndonesiaStateCodes = {
 	JI: 'Jatim', //east java
 	KI: 'Kaltim', //east kalimantan
 	NT: 'NTT', //east nusa tenggara
-  GO: 'Gorontalo', //gorontalo
+	GO: 'Gorontalo', //gorontalo
 	JK: 'DKI', //special region of jakarta
 	JA: 'Jambi', //jambi
 	LA: 'Lampung', //lampung
@@ -49,8 +85,8 @@ const IndonesiaStateCodes = {
 	PB: 'Pabar', //west papua
 	SR: 'Sulbar', //west sulawesi
 	SB: 'Sumbar', //west sumatra
-  YO: 'DIY', //speacial region of yogyakarta
-  TT: 'Indonesia' //whole country
+	YO: 'DIY', //speacial region of yogyakarta
+	TT: 'Indonesia' //whole country
 };
 
 const stateCodes = {
@@ -97,6 +133,10 @@ const stateCodes = {
 
 export const getStateName = (code) => {
   return stateCodes[code.toUpperCase()];
+};
+
+export const getStateName1 = (code) => {
+  return IndonesiaStateCodes[code.toUpperCase()];
 };
 
 export const formatDate = (unformattedDate) => {
@@ -240,7 +280,8 @@ export const preprocessIndonesiaData = (data) => {
     }
     newJSON[parsedData[0][i]]=state;
   }
-  console.log(newJSON);
+  //console.log(newJSON);
+  return newJSON
 };
 
 
@@ -260,10 +301,10 @@ export const processForChart = (data, country) => {
     Codes=IndonesiaStateCodes;
   else
     Codes=stateCodes;
-  console.log(Codes)
+  //console.log(Codes)
   for(var key in Codes){
-    console.log(key);
-    console.log(data[key]);
+    //console.log(key);
+    //console.log(data[key]);
     if(!data[key])
     {
 		  final[key]=[];
@@ -273,7 +314,7 @@ export const processForChart = (data, country) => {
 		  final[key]=data[key];
 	  }
   }
-  console.log(final);
+  //console.log(final);
   return final;
 };
 
@@ -340,3 +381,30 @@ export const eventdata = () => {
   arr.push([new Date("04/14/2020").getTime(), 0]);
   return arr;
 };
+
+export const getoveralldata = (data) => {
+	var arr = [];
+	var ref = data.stats[0];
+	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered};
+	arr.push(obj);
+	return arr;
+};
+
+export const pushregionwise = (a, data) => {
+	var relevant = []
+	for(var x in data){
+		var dat = data[x];
+		if(dat.parentId === "indonesia"){
+			relevant.push(dat);
+		}
+	}
+	//console.log(relevant)
+	for(var y in relevant){
+		var ref = relevant[y].report;
+		var name = ref.name;
+		var obj = {'confirmed' : ref.infected, 'lastupdatedtime':ref.lastUpdated, 'deaths': ref.dead, 'active': ref.sick, 'statecode': ordered[y], 'state': getStateName1(ordered[y]), 'recovered': ref.recovered};
+		a.push(obj);
+	}
+	//console.log(a)
+	return a;
+}

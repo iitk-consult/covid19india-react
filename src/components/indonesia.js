@@ -4,6 +4,8 @@ import {formatDistance, format} from 'date-fns';
 
 import {
   formatDate1,
+  getoveralldata,
+  pushregionwise,
   formatDateAbsolute,
   prettifyData,
   preprocess,
@@ -29,13 +31,14 @@ import Modal from './modal';
 import Modal1 from './modal1';
 //import Minigraph from './minigraph';
 
+var states = [];
+var lastUpdated = '';
+
 function Home(props) {
-  const [states, setStates] = useState([]);
   const [stateDistrictWiseData, setStateDistrictWiseData] = useState({});
   const [stateTestData, setStateTestData] = useState({});
   const [fetched, setFetched] = useState(false);
   const [graphOption, setGraphOption] = useState(1);
-  const [lastUpdated, setLastUpdated] = useState('');
   //const [timeseries, setTimeseries] = useState({});
   const [tfseries, setTfseries] = useState([]);
   const [wa1series, setWa1series] = useState([]);
@@ -57,14 +60,16 @@ function Home(props) {
   const getStates = async () => {
     try {
       var [
-        response,
+        overall,
+		regionwise,
         stateDistrictWiseResponse,
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
         wb, up, ka, dl, mh, kl, pb, tg, or, tn, rj, gj, mp, ar, as, br, ct, ga, hr, hp, jh, mn, ml, mz, nl, tr, ut, an, jk, la, py, ap
       ] = await Promise.all([
-        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTUXqrD_I1ZvBVVFbNWI7GvQO5nnqbZwuU6hVyvo84cOqPMdGKhRHJVU_5OHPVeI_IPa2VssXkIxKNB/pub?gid=1845820554&single=true&output=csv'),
+        axios.get('https://visalist.io/api/public/emergency/stats?slug=indonesia'),
+		axios.get('https://visalist.io/api/public/emergency/places'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
@@ -104,9 +109,10 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRKjNMXYXaPY1Vb0ZfTZcGqMyNYcBkelf5sfwc0IR0_Rs7VQ-h6qLEWDCYi7Ad2LyEFiENDkbGW3ZH-/pub?gid=0&single=true&output=csv'),
 
     ]);
-      var stateData = preprocessIndonesiaData(Papa.parse(response.data));
-      console.log(stateData);
-      setStates(stateData);
+	  var stateData = getoveralldata(overall.data);
+      stateData = pushregionwise(stateData, regionwise.data);
+      states=(stateData);
+	  //console.log(states)
       var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
       for(var stateSheet in forPreprocessing){
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
@@ -121,11 +127,10 @@ function Home(props) {
       // setPsseries(psValues);
       setNfseries(nfValues);
       setWa1series(wa1Values);
-	    setEventseries(eventdata());
-      setLastUpdated(response.data.statewise[0].lastupdatedtime);
+	  setEventseries(eventdata());
+      lastUpdated = states[1].lastupdatedtime;
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
-      setActivityLog(updateLogResponse.data);
       setFetched(true);
 	  //console.log(finalData);
     } catch (err) {
@@ -165,7 +170,7 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
-			        	regionHighlighted={regionHighlighted}
+			    regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
 		  </React.Fragment>
@@ -185,17 +190,17 @@ function Home(props) {
 				  <div className="last-update">
 					<h6>Last Updated</h6>
 					<h6 style={{color: '#28a745', fontWeight: 600}}>
-					  {isNaN(Date.parse(formatDate1(lastUpdated)))
+					  {isNaN(Date.parse(lastUpdated))
 						? ''
 						: formatDistance(
-							new Date(formatDate1(lastUpdated)),
+							new Date(lastUpdated),
 							new Date()
 						  ) + ' Ago'}
 					</h6>
 					<h6 style={{color: '#28a745', fontWeight: 600}}>
-					  {isNaN(Date.parse(formatDate1(lastUpdated)))
+					  {isNaN(Date.parse(lastUpdated))
 						? ''
-						: formatDateAbsolute(lastUpdated)}
+						: (lastUpdated)}
 					</h6>
 				  </div>
 				</div>
