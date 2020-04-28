@@ -424,30 +424,7 @@ function MapExplorer({
           </div>
         </div>
 
-        {
-          <div
-            className="stats is-purple tested fadeInUp"
-            style={{animationDelay: '2.4s'}}
-          >
-            <h5>{window.innerWidth <= 769 ? 'Tested' : 'Tested'}</h5>
-            <div className="stats-bottom">
-              <h1>NA</h1>
-            </div>
-            <h6 className="timestamp">
-              {!isNaN(new Date(testObj?.updatedon))
-                ? `As of ${format(
-                    parse(testObj?.updatedon, 'dd/MM/yyyy', new Date()),
-                    'dd MMM'
-                  )}`
-                : ''}
-            </h6>
-            {testObj?.totaltested?.length > 1 && (
-              <a href={testObj.source} target="_noblank">
-                <Icon.Link />
-              </a>
-            )}
-          </div>
-        }
+        
       </div>
 
       <div className="meta fadeInUp" style={{animationDelay: '2.4s'}}>

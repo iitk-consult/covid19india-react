@@ -40,6 +40,7 @@ function ChoroplethMap({
           console.log('err', err);
         }
       };
+	  
       console.log(geoData);
       console.log(geoData.objects[mapMeta.graphObjectName]);
       
@@ -103,7 +104,7 @@ function ChoroplethMap({
           if (mapMeta.mapType === MAP_TYPES.STATE) {
             return;
           }
-          changeMap(d.properties[propertyField], mapMeta.mapType);
+          //changeMap(d.properties[propertyField], mapMeta.mapType);
         })
         .style('cursor', 'pointer')
         .append('title')
