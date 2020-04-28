@@ -54,38 +54,38 @@ const ordered = [
 const IndonesiaStateCodes = {
 	AC: 'Aceh', //aceh
 	BA: 'Bali', //bali
-	BB: 'Babel', //bangka_belitung_islands
+	BB: 'Kepulauan Bangka Belitung', //bangka_belitung_islands
 	BT: 'Banten', //banten
 	BE: 'Bengkulu', //bengkulu
-	JT: 'Jateng', //central java
-	KT: 'Kalteng', //central kalimantan
-	ST: 'Sulteng', //central sulawesi
-	JI: 'Jatim', //east java
-	KI: 'Kaltim', //east kalimantan
-	NT: 'NTT', //east nusa tenggara
+	JT: 'Jawa Tengah', //central java
+	KT: 'Kalimantan Tengah', //central kalimantan
+	ST: 'Sulawesi Tengah', //central sulawesi
+	JI: 'Jawa Timur', //east java
+	KI: 'Kalimantan Timur', //east kalimantan
+	NT: 'Nusa Tenggara Timur', //east nusa tenggara
 	GO: 'Gorontalo', //gorontalo
-	JK: 'DKI', //special region of jakarta
+	JK: 'Jakarta', //special region of jakarta
 	JA: 'Jambi', //jambi
 	LA: 'Lampung', //lampung
 	MA: 'Maluku', //maluku
-	KU: 'Kaltara', //noth kalimantan
-	MU: 'Malut', //north maluku
-	SA: 'Sulut',  //north sulawesi
-	SU: 'Sumut', //north sumatra
+	KU: 'Kalimantan Utara', //noth kalimantan
+	MU: 'Maluku Utara', //north maluku
+	SA: 'Sulawesi Utara',  //north sulawesi
+	SU: 'Sumatera Utara', //north sumatra
 	PA: 'Papua', //papua
 	RI: 'Riau', //riau
-	KR: 'Kepri', //riau islands
-	SG: 'Sultra', //southeast sulawesi
-	KS: 'Kalsel', //south kalimantan
-	SN: 'Sulsel', //south sulawesi
-	SS: 'Sumsel',  //south sumatra
-	JB: 'Jabar', //west java
-	KB: 'Kalbar', //west kalimantan 
-	NB: 'NTB', //west nusa tenggara
-	PB: 'Pabar', //west papua
-	SR: 'Sulbar', //west sulawesi
-	SB: 'Sumbar', //west sumatra
-	YO: 'DIY', //speacial region of yogyakarta
+	KR: 'Kepulauan Riau', //riau islands
+	SG: 'Sulawesi Tenggara', //southeast sulawesi
+	KS: 'Kalimantan Selatan', //south kalimantan
+	SN: 'Sulawesi Selatan', //south sulawesi
+	SS: 'Sumatera Selatan',  //south sumatra
+	JB: 'Jawa Barat', //west java
+	KB: 'Kalimantan Barat', //west kalimantan 
+	NB: 'Nusa Tenggara Barat', //west nusa tenggara
+	PB: 'Papua Barat', //west papua
+	SR: 'Sulawesi Barat', //west sulawesi
+	SB: 'Sumatera Barat', //west sumatra
+	YO: 'Yogyakarta', //speacial region of yogyakarta
 	TT: 'Indonesia' //whole country
 };
 

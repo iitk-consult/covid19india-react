@@ -20,8 +20,8 @@ function ChoroplethMap({
 }) {
   const choroplethMap = useRef(null);
   const [svgRenderCount, setSvgRenderCount] = useState(0);
-  console.log(mapData);
-  console.log(mapMeta);
+  //console.log(mapData);
+  //console.log(mapMeta);
 
   const ready = useCallback(
     (geoData) => {
@@ -41,8 +41,8 @@ function ChoroplethMap({
         }
       };
 	  
-      console.log(geoData);
-      console.log(geoData.objects[mapMeta.graphObjectName]);
+      //console.log(geoData);
+      //console.log(geoData.objects[mapMeta.graphObjectName]);
       
       const topology = topojson.feature(
         geoData,

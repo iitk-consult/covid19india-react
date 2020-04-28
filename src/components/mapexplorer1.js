@@ -13,7 +13,7 @@ const mapMeta = {
     mapType: MAP_TYPES.COUNTRY,
     graphObjectName: 'provinces',
   },
-  'Aceh': {
+  /*'Aceh': {
     name: 'Aceh',
     geoDataFile: `${INDONESIA_MAPS_DIR}/aceh-simplified-topo.json`,
     mapType: MAP_TYPES.STATE,
@@ -204,7 +204,7 @@ const mapMeta = {
     geoDataFile: `${INDONESIA_MAPS_DIR}/yogyakarta-simplified-topo.json`,
     mapType: MAP_TYPES.STATE,
     graphObjectName: 'yogyakarta',
-  },
+  },*/
 
 };
 
@@ -230,8 +230,8 @@ function MapExplorer({
   regionHighlighted,
   onMapHighlightChange,
 }) {
-  console.log("STATES");
-  console.log(states);
+  //console.log("STATES");
+  //console.log(states);
   const [selectedRegion, setSelectedRegion] = useState({});
   const [panelRegion, setPanelRegion] = useState(getRegionFromState(states[0]));
   const [currentHoveredRegion, setCurrentHoveredRegion] = useState(
