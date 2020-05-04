@@ -21,7 +21,7 @@ import {
 
 import Papa from 'papaparse';
 import stateData from './sample_data.json';
-//import Table from './table';
+import Table from './table';
 //import Level from './level';
 import MapExplorer from './mapexplorer1';
 import TimeSeries from './timeseries';
@@ -115,9 +115,9 @@ function Home(props) {
 	  //console.log(states)
       var forPreprocessing = {"AC": aceh, "BA": bali, "BB": bbislands, "BT": banten, "BE": bengkulu, "JT": centralJava, "KT": centralKalimantan, "ST": centralSulawesi, "JI": eastJava, "KI": eastKalimantan, "NT": eastNusaTenggara, "GO": gorontalo, "JK": jakarta, "JA": jambi, "LA": lampung, "MA": maluku, "KU": northKalimantan, "MU": norhtMaluku, "SA": northSulawesi, "PA": papua, "RI": riau, "KR": riauIslands, "SG": southEastSulwesi, "KS": southKalimantan, "SN": southSulawesi, "SS": southSumatra, "JB": westJava, "LB": westKalimantan, "NB": westNusaTenggara, "PB": westPapua, "SR": westSulawesi, "SB": westSumatra, "YO": yogyakarta};
       for(var stateSheet in forPreprocessing){
-        console.log(stateSheet);
-        console.log(forPreprocessing[stateSheet].data);
-        forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
+        //console.log(stateSheet);
+        //console.log(forPreprocessing[stateSheet].data);
+        //forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
 
       const finalData = processForChart(forPreprocessing, "Indonesia");
@@ -145,6 +145,16 @@ function Home(props) {
     setActiveStateCode(statecode);
     //console.log(activeStateCode);
   }, []);
+  
+  const onHighlightState = (state, index) => {
+    if (!state && !index) return setRegionHighlighted(null);
+    setRegionHighlighted({state, index});
+  };
+  
+  const onHighlightDistrict = (district, state, index) => {
+    if (!state && !index && !district) return setRegionHighlighted(null);
+    setRegionHighlighted({district, state, index});
+  };
   
   const normalise = (nf, maxp) => {
 	var max = 0;
@@ -176,6 +186,13 @@ function Home(props) {
 			    regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
+		   <Table
+            states={states}
+            summary={false}
+            stateDistrictWiseData={stateDistrictWiseData}
+            onHighlightState={onHighlightState}
+            onHighlightDistrict={onHighlightDistrict}
+			/>
 		  </React.Fragment>
 		  )}
 	

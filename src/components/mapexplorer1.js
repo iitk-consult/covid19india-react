@@ -318,7 +318,7 @@ function MapExplorer({
     }
     const isState = !('district' in regionHighlighted);
     if (isState) {
-      const newMap = mapMeta['India'];
+      const newMap = mapMeta['Indonesia'];
       setCurrentMap(newMap);
       const region = getRegionFromState(regionHighlighted.state);
       setHoveredRegion(region.name, newMap);

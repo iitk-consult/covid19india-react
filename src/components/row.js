@@ -103,7 +103,7 @@ function Row(props) {
               }`}
               style={{display: !props.total ? '' : 'none'}}
               onClick={() => {
-                handleReveal();
+                //handleReveal();
               }}
             >
               <Icon.ChevronDown />

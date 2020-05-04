@@ -103,13 +103,7 @@ function Table(props) {
 
   return (
     <React.Fragment>
-      <h5
-        className="table-fineprint fadeInUp"
-        style={{animationDelay: '1.8s'}}
-        ref={props.forwardRef}
-      >
-        Compiled from State Govt. numbers <Link to="/faq">Know More</Link>
-      </h5>
+	<br />
       <table className="table fadeInUp" style={{animationDelay: '1.8s'}}>
         <thead>
           <tr>
@@ -118,7 +112,7 @@ function Table(props) {
               onClick={(e) => handleSort(e, props)}
             >
               <div className="heading-content">
-                <abbr title="State">State/UT</abbr>
+                <abbr title="State">Provinces</abbr>
                 <div
                   style={{
                     display:
@@ -281,9 +275,6 @@ function Table(props) {
           )}
         </tbody>
       </table>
-      <h5 className="table-fineprint fadeInUp" style={{animationDelay: '1s'}}>
-        {count} States/UTS Affected
-      </h5>
     </React.Fragment>
   );
 }
