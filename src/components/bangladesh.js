@@ -21,7 +21,7 @@ import Papa from 'papaparse';
 
 //import Table from './table';
 //import Level from './level';
-import MapExplorer from './mapexplorer';
+import MapExplorer from './mapexplorer2';
 import TimeSeries from './timeseries';
 import ApexChart from './apex';
 import ApexChart1 from './apex1';
@@ -127,7 +127,7 @@ function Home(props) {
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setActivityLog(updateLogResponse.data);
       setFetched(true);
-	  //console.log(formatDate1(lastUpdated))
+	  //console.log(finalData);
     } catch (err) {
       console.log(err);
     }
@@ -165,7 +165,7 @@ function Home(props) {
                 states={states}
                 stateDistrictWiseData={stateDistrictWiseData}
                 stateTestData={stateTestData}
-			    regionHighlighted={regionHighlighted}
+			        	regionHighlighted={regionHighlighted}
                 onMapHighlightChange={onMapHighlightChange}
 		  />
 		  {/* <h3><br />Select a state to compare plots:</h3>

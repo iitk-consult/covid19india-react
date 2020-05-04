@@ -10,14 +10,9 @@ import * as Icon from 'react-feather';
 import './App.scss';
 
 import Home from './components/home';
+import Indonesia from './components/indonesia';
+import Bangladesh from './components/bangladesh';
 import Navbar from './components/navbar';
-//import Links from './components/links';
-//import FAQ from './components/faq';
-//import Banner from './components/banner';
-//import PatientDB from './components/patientdb';
-//import DeepDive from './components/deepdive';
-//import Resources from './components/resources';
-/* import PatientDB from './components/patientdb';*/
 
 const history = require('history').createBrowserHistory;
 
@@ -26,39 +21,21 @@ function App() {
     {
       pageLink: '/',
       view: Home,
-      displayName: 'Home',
+      displayName: 'India',
       animationDelayForNavbar: 0.2,
     },
-    // {
-    //   pageLink: '/demographics',
-    //   view: PatientDB,
-    //   displayName: 'Demographics',
-    //   animationDelayForNavbar: 0.3,
-    // },
-    // {
-    //   pageLink: '/deepdive',
-    //   view: DeepDive,
-    //   displayName: 'Deep Dive',
-    //   animationDelayForNavbar: 0.4,
-    // },
-    // {
-    //   pageLink: '/links',
-    //   view: Links,
-    //   displayName: 'Helpful Links',
-    //   animationDelayForNavbar: 0.4,
-    // },
-    // {
-    //   pageLink: '/faq',
-    //   view: FAQ,
-    //   displayName: 'About',
-    //   animationDelayForNavbar: 0.5,
-    // },
-    // {
-    //   pageLink: '/essentials',
-    //   view: Resources,
-    //   displayName: 'Essentials',
-    //   animationDelayForNavbar: 0.7,
-    // },
+	{
+      pageLink: '/indonesia',
+      view: Indonesia,
+      displayName: 'Indonesia',
+      animationDelayForNavbar: 0.3,
+    },
+	// {
+  //     pageLink: '/bangladesh',
+  //     view: Bangladesh,
+  //     displayName: 'Bangladesh',
+  //     animationDelayForNavbar: 0.4,
+  //   },
   ];
 
   return (

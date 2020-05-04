@@ -15,6 +15,80 @@ const months = {
   '12': 'Dec',
 };
 
+const ordered = [
+	'JK',
+	'JB',
+	'JI',
+	'JT',
+	'SN',
+	'BT',
+	'NB',
+	'BA',
+	'PA',
+	'KS',
+	'SS',
+	'SS',
+	'KT',
+	'KI',
+	'SU',
+	'YO',
+	'KU',
+	'KR',
+	'KB',
+	'SG',
+	'LA',
+	'SA',
+	'ST',
+	'RI',
+	'PB',
+	'SR',
+	'JA',
+	'MU',
+	'MA',
+	'GO',
+	'BB',
+	'AC',
+	'BE',
+	'NT'
+];
+const IndonesiaStateCodes = {
+	AC: 'Aceh', //aceh
+	BA: 'Bali', //bali
+	BB: 'Kepulauan Bangka Belitung', //bangka_belitung_islands
+	BT: 'Banten', //banten
+	BE: 'Bengkulu', //bengkulu
+	JT: 'Jawa Tengah', //central java
+	KT: 'Kalimantan Tengah', //central kalimantan
+	ST: 'Sulawesi Tengah', //central sulawesi
+	JI: 'Jawa Timur', //east java
+	KI: 'Kalimantan Timur', //east kalimantan
+	NT: 'Nusa Tenggara Timur', //east nusa tenggara
+	GO: 'Gorontalo', //gorontalo
+	JK: 'Jakarta', //special region of jakarta
+	JA: 'Jambi', //jambi
+	LA: 'Lampung', //lampung
+	MA: 'Maluku', //maluku
+	KU: 'Kalimantan Utara', //noth kalimantan
+	MU: 'Maluku Utara', //north maluku
+	SA: 'Sulawesi Utara',  //north sulawesi
+	SU: 'Sumatera Utara', //north sumatra
+	PA: 'Papua', //papua
+	RI: 'Riau', //riau
+	KR: 'Kepulauan Riau', //riau islands
+	SG: 'Sulawesi Tenggara', //southeast sulawesi
+	KS: 'Kalimantan Selatan', //south kalimantan
+	SN: 'Sulawesi Selatan', //south sulawesi
+	SS: 'Sumatera Selatan',  //south sumatra
+	JB: 'Jawa Barat', //west java
+	KB: 'Kalimantan Barat', //west kalimantan 
+	NB: 'Nusa Tenggara Barat', //west nusa tenggara
+	PB: 'Papua Barat', //west papua
+	SR: 'Sulawesi Barat', //west sulawesi
+	SB: 'Sumatera Barat', //west sumatra
+	YO: 'Yogyakarta', //speacial region of yogyakarta
+	TT: 'Indonesia' //whole country
+};
+
 const stateCodes = {
 	WB: 'West Bengal',
 	UP: 'Uttar Pradesh',
@@ -56,8 +130,13 @@ const stateCodes = {
 	PY: 'Puducherry',
 };
 
+
 export const getStateName = (code) => {
   return stateCodes[code.toUpperCase()];
+};
+
+export const getStateName1 = (code) => {
+  return IndonesiaStateCodes[code.toUpperCase()];
 };
 
 export const formatDate = (unformattedDate) => {
@@ -73,6 +152,14 @@ export const formatDate1 = (unformattedDate) => {
   const year = unformattedDate.slice(6, 10);
   const time = unformattedDate.slice(11);
   return `${year}-${month}-${day}T${time}+05:30`;
+};
+
+export const formatDate2 = (unformattedDate) => {
+  const day = unformattedDate.slice(8, 10);
+  const month = unformattedDate.slice(5, 7);
+  const year = unformattedDate.slice(0, 4);
+  const time = unformattedDate.slice(11,19);
+  return `${year}-${month}-${day}T${time}`;
 };
 
 export const formatDateAbsolute = (unformattedDate) => {
@@ -184,6 +271,28 @@ export const prettifyData = (data) => {
     return []
 };
 
+
+export const preprocessIndonesiaData = (data) => {
+  const parsedData = data.data
+  console.log(parsedData);
+  var newJSON = [];
+  for (var i = 0; i<36; i++)
+  {
+    var state=[];
+    for (var j = 0; j<parsedData.length; j++)
+    {
+        state.push({
+          "date": formatDate(parsedData[j][0]),
+          "totalconfirmed": parsedData[j][1]
+        })
+    }
+    newJSON[parsedData[0][i]]=state;
+  }
+  //console.log(newJSON);
+  return newJSON
+};
+
+
 export const preprocess = (timeseries) => {
   //console.log("Preprocessing Timeseries")
   return timeseries.map((stat) => ({
@@ -193,9 +302,17 @@ export const preprocess = (timeseries) => {
   }));
 };
 
-export const processForChart = (data) => {
+export const processForChart = (data, country) => {
   var final = {};
-  for(var key in stateCodes){
+  var Codes;
+  if (country==="Indonesia")
+    Codes=IndonesiaStateCodes;
+  else
+    Codes=stateCodes;
+  //console.log(Codes)
+  for(var key in Codes){
+    //console.log(key);
+    //console.log(data[key]);
     if(!data[key])
     {
 		  final[key]=[];
@@ -205,8 +322,7 @@ export const processForChart = (data) => {
 		  final[key]=data[key];
 	  }
   }
-  final['TT'] = data['DL'];
-  console.log(final);
+  //console.log(final);
   return final;
 };
 
@@ -273,3 +389,30 @@ export const eventdata = () => {
   arr.push([new Date("04/14/2020").getTime(), 0]);
   return arr;
 };
+
+export const getoveralldata = (data) => {
+	var arr = [];
+	var ref = data.stats[0];
+	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered};
+	arr.push(obj);
+	return arr;
+};
+
+export const pushregionwise = (a, data) => {
+	var relevant = []
+	for(var x in data){
+		var dat = data[x];
+		if(dat.parentId === "indonesia"){
+			relevant.push(dat);
+		}
+	}
+	//console.log(relevant)
+	for(var y in relevant){
+		var ref = relevant[y].report;
+		var name = ref.name;
+		var obj = {'confirmed' : ref.infected, 'lastupdatedtime':ref.lastUpdated, 'deaths': ref.dead, 'active': ref.sick, 'statecode': ordered[y], 'state': getStateName1(ordered[y]), 'recovered': ref.recovered};
+		a.push(obj);
+	}
+	//console.log(a)
+	return a;
+}
