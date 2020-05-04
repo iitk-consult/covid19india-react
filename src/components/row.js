@@ -92,7 +92,7 @@ function Row(props) {
         onMouseEnter={() => props.onHighlightState?.(state, props.index)}
         onMouseLeave={() => props.onHighlightState?.()}
         onTouchStart={() => props.onHighlightState?.(state, props.index)}
-        onClick={!props.total ? handleReveal : null}
+        //onClick={!props.total ? handleReveal : null}
         style={{background: props.index % 2 === 0 ? '#f8f9fa' : ''}}
       >
         <td style={{fontWeight: 600}}>
@@ -101,7 +101,7 @@ function Row(props) {
               className={`dropdown ${
                 props.reveal ? 'rotateRightDown' : 'rotateDownRight'
               }`}
-              style={{display: !props.total ? '' : 'none'}}
+              style={{display: 'none'}}
               onClick={() => {
                 //handleReveal();
               }}
