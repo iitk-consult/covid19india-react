@@ -10,6 +10,7 @@ import * as Icon from 'react-feather';
 import './App.scss';
 
 import Home from './components/home';
+import About from './components/about';
 import Indonesia from './components/indonesia';
 import Bangladesh from './components/bangladesh';
 import Navbar from './components/navbar';
@@ -29,6 +30,12 @@ function App() {
       view: Indonesia,
       displayName: 'Indonesia',
       animationDelayForNavbar: 0.3,
+    },
+	{
+      pageLink: '/about',
+      view: About,
+      displayName: 'About',
+      animationDelayForNavbar: 0.4,
     },
 	// {
   //     pageLink: '/bangladesh',
