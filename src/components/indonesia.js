@@ -66,7 +66,7 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-        aceh, bali, bbislands, banten, bengkulu, centralJava, centralKalimantan, centralSulawesi, eastJava, eastNusaTenggara, gorontalo, jakarta, jambi, lampung, maluku, northKalimantan, norhtMaluku, northSulawesi, northSumatra, papua, riau, riauIslands, southKalimantan, southSulawesi, southSumatra, southEastSulwesi, westJava, westKalimantan, westNusaTenggara, westPapua, westSulawesi, westSumatra, yogyakarta
+        aceh, bali, bbislands, banten, bengkulu, centralJava, centralKalimantan, centralSulawesi, eastJava, eastKalimantan, eastNusaTenggara, gorontalo, jakarta, jambi, lampung, maluku, northKalimantan, norhtMaluku, northSulawesi, northSumatra, papua, riau, riauIslands, southKalimantan, southSulawesi, southSumatra, southEastSulwesi, westJava, westKalimantan, westNusaTenggara, westPapua, westSulawesi, westSumatra, yogyakarta
       ] = await Promise.all([
         axios.get('https://visalist.io/api/public/emergency/stats?slug=indonesia'),
 		    axios.get('https://visalist.io/api/public/emergency/places'),
@@ -86,7 +86,7 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTcbb1jZvT4ZqFTXkuJbLavcikMWL2b23wiBzOqLCJPXMb5feOxbAGD9EHZZ_PiwSi4O3Z12iovnHgt/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRWL-W1C0-q7lJcwjK1W4j6CPaFw1kTpvHr1XhOMP-zzIUA5Q1RrGlNbFzeyPp2vIx7aozwlLymBHEN/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSAv69WjOby9lciBr27ysenDZEurEHG6R9ugrqmk3ZKfau4KFAz7qh0xVPIlYTdczJr4LjOh5Q0mCzP/pub?gid=0&single=true&output=csv'),
-        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRWL-W1C0-q7lJcwjK1W4j6CPaFw1kTpvHr1XhOMP-zzIUA5Q1RrGlNbFzeyPp2vIx7aozwlLymBHEN/pub?gid=0&single=true&output=csv'),
+        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSfqz_npmh_X_C3yN_8tXgZOXrLRw_L8E6BruRAho4U7MsHuQRdDymSC-eBEHpd2GbSHpW6td9lT-YT/pub?gid=0&single=true&output=csv'),        
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQp0RQwiErsd4f0Z8TkFXwcHmQnk6viC1tke15_TGMpBJxZ9DQLdm6dk2ZvH2vrmFNZ9yNhcrmac7ZO/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vTXykCQlFmPpMTmR1PN2bvq2H3TWzoyrL23RQvwnJgHaxWhPJao4Jr2Lnr1xJy8a0GGGFkydcOR2lIN/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSedqnguV9GGlvEw0nkbXdLHfES8dL6bjykUQi2xIW1ZGYmsaYFQpa46y5T5h53A6QJw1W0_WQ09SVd/pub?gid=0&single=true&output=csv'),
@@ -109,14 +109,17 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRMAWGXJJJveJgxMT7ztFKJIbhlu_AyZ3sf1W02MPPpqv7VFOFADpacO2CTNQi9M_Ex_ZN9cp_9EihI/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQXEQnY99nd_wEvfkDiW1s5vSsEp1O6szh4QgP0n8Z6kNfCXz9yaEQUSxWruemvxl0CcljVi50TT8Tm/pub?gid=0&single=true&output=csv'),
     ]);
-	  var stateData = getoveralldata(overall.data);
+	    var stateData = getoveralldata(overall.data);
       stateData = pushregionwise(stateData, regionwise.data);
       states=(stateData);
 	  //console.log(states)
-      var forPreprocessing = {"AC": wb, "BB": up, "BA": ka};
+      var forPreprocessing = {"AC": aceh, "BA": bali, "BB": bbislands, "BT": banten, "BE": bengkulu, "JT": centralJava, "KT": centralKalimantan, "ST": centralSulawesi, "JI": eastJava, "KI": eastKalimantan, "NT": eastNusaTenggara, "GO": gorontalo, "JK": jakarta, "JA": jambi, "LA": lampung, "MA": maluku, "KU": northKalimantan, "MU": norhtMaluku, "SA": northSulawesi, "PA": papua, "RI": riau, "KR": riauIslands, "SG": southEastSulwesi, "KS": southKalimantan, "SN": southSulawesi, "SS": southSumatra, "JB": westJava, "LB": westKalimantan, "NB": westNusaTenggara, "PB": westPapua, "SR": westSulawesi, "SB": westSumatra, "YO": yogyakarta};
       for(var stateSheet in forPreprocessing){
+        console.log(stateSheet);
+        console.log(forPreprocessing[stateSheet].data);
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
+
       const finalData = processForChart(forPreprocessing, "Indonesia");
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
