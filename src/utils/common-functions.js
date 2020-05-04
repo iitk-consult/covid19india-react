@@ -26,7 +26,7 @@ const ordered = [
 	'BA',
 	'PA',
 	'KS',
-	'SS',
+	'SB',
 	'SS',
 	'KT',
 	'KI',
@@ -393,7 +393,7 @@ export const eventdata = () => {
 export const getoveralldata = (data) => {
 	var arr = [];
 	var ref = data.stats[0];
-	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered};
+	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal - ref.recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered};
 	arr.push(obj);
 	return arr;
 };
