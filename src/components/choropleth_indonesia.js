@@ -90,7 +90,7 @@ function ChoroplethMap({
           handleMouseover(d.properties[propertyField]);
         })
         .on('mouseleave', (d) => {
-          setSelectedRegion(null);
+          //setSelectedRegion(null);
           if (onceTouchedRegion === d) onceTouchedRegion = null;
         })
         .on('touchstart', (d) => {
