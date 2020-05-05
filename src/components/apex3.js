@@ -1,33 +1,18 @@
 import React, {Component} from "react";
 import moment from 'moment';
-import Chart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
-export default class ApexChart2 extends React.Component {
+export default class ApexChart extends React.Component {
         constructor(props) {
           super(props);
 
           this.state = {
-          
-            series: [{
-              name: 'Current',
-              data: this.props.data[1]
-            }, {
-              name: 'Projected Best',
-              data: this.props.data[2]
-            },
-			],
+			
+            series: [],
             options: {
               chart: {
                 type: 'area',
-                stacked: true,
-				dropShadow: {
-				  enabled: true,
-				  enabledSeries: [0],
-				  top: -2,
-				  left: 2,
-				  blur: 5,
-				  opacity: 0.06
-				},
+                stacked: false,
                 height: 350,
                 zoom: {
                   enabled: true
@@ -37,31 +22,31 @@ export default class ApexChart2 extends React.Component {
                 enabled: false
               },
               markers: {
-                size: 0,
-				strokeColor: "#fff",
-				strokeWidth: 3,
-				strokeOpacity: 1,
-				fillOpacity: 1,
-				hover: {
-				  size: 6
-				}
+                size: [1,1],
               },
-			  colors: ['#00E396', '#0090FF'],
-			  stroke: {
-				curve: "smooth",
-				width: 3
-			  },
+			  colors:['#E91E63', '#ffea00', '#5b4ef2', '#ff8000', '#ff00d9', '#00ffee', '#bbff00', '#ff8000', '#E91E63'],
               fill: {
-                type: 'solid',
-                fillOpacity: 0.7
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    inverseColors: false,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [20, 100, 100, 100]
+                  },
               },
-              yaxis: {
+               yaxis: [{
+                title: {
+                  text: "Twitter Volume/Day"
+                },
                 labels: {
                     style: {
                         colors: '#8e8da4',
                     },
                     offsetX: 0,
-                    
+                    formatter: function (value) {
+                      return Math.trunc(value);
+                    }
                 },
                 axisBorder: {
                     show: false,
@@ -70,6 +55,28 @@ export default class ApexChart2 extends React.Component {
                     show: false
                 }
               },
+              {
+                title: {
+                  text: "Positive Cases"
+                },
+                opposite: true,
+                labels: {
+                    style: {
+                        colors: '#8e8da4',
+                    },
+                    offsetX: 0,
+                    formatter: function (value) {
+                    return Math.trunc(value);
+                  }
+                },
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false
+                }
+              }],
+              
               xaxis: {
                 type: 'datetime',
                 tickAmount: 8,
@@ -81,33 +88,39 @@ export default class ApexChart2 extends React.Component {
                   }
                 }
               },
-              title: {
-                text: 'Area Chart',
-                align: 'left',
-                offsetX: 14
-              },
+              // title: {
+              //   text: 'Twitter Volume/Day and Positive Cases',
+              //   align: 'left',
+              //   offsetX: 14
+              // },
               tooltip: {
                 shared: true
               },
               legend: {
+				        showForZeroSeries: false,
                 position: 'top',
-                horizontalAlign: 'right',
+                horizontalAlign: 'left',
                 offsetX: -10
-              }
+              },
+			  noData: {
+				text: 'No Data Available...'
+			  }
             },
           
           
           };
         }
-
-      
-
+		
+		test(){
+			console.log('yo')
+		}
+		
         render() {
           return (
             
 
       <div id="chart">
-  <Chart options={this.state.options} series={this.state.series} type="area" height={350} />
+  <ReactApexChart options={this.state.options} series={this.props.series} type="area" height={350} />
 </div>
     
 

@@ -1,14 +1,15 @@
 import React, {Component} from "react";
 import moment from 'moment';
 import ReactApexChart from "react-apexcharts";
+import { tr } from "date-fns/locale";
 
 export default class ApexChart extends React.Component {
         constructor(props) {
           super(props);
-
+          
           this.state = {
 			
-            series: [],
+            series: this.props.series,
             options: {
               chart: {
                 type: 'area',
@@ -17,14 +18,18 @@ export default class ApexChart extends React.Component {
                 zoom: {
                   enabled: true
                 },
+                toolbar:
+                {
+                  show: true,
+                  position: 'right'
+                }
               },
               dataLabels: {
                 enabled: false
               },
               markers: {
-                size: 0,
+                size: [1,1],
               },
-			  colors: ['#9C27B0', '#fcba03'],
               fill: {
                 type: 'gradient',
                 gradient: {
@@ -41,9 +46,16 @@ export default class ApexChart extends React.Component {
                         colors: '#8e8da4',
                     },
                     offsetX: 0,
-					formatter: function (value) {
-						return Math.trunc(value);
-					}
+                    formatter: function (value) {
+                      var truncatedVal;
+                      try{
+					          	  truncatedVal = (value).toFixed(2);
+                      }
+                      catch{
+                        truncatedVal = 0.0;
+                      }
+                      return truncatedVal;
+                    }
                 },
                 axisBorder: {
                     show: false,
@@ -63,22 +75,23 @@ export default class ApexChart extends React.Component {
                   }
                 }
               },
-              title: {
-                text: 'Hospitalisation',
-                align: 'left',
-                offsetX: 14
-              },
+              // title: {
+              //   text: 'Twitter Word Count/Day',
+              //   align: 'left',
+              //   offsetX: 14
+              // },
               tooltip: {
-                shared: true
+                shared: true,
               },
               legend: {
+				        showForZeroSeries: false,
                 position: 'top',
-                horizontalAlign: 'right',
+                horizontalAlign: 'left',
                 offsetX: -10
               },
-			  noData: {
-				text: 'No Data Available...'
-			  }
+            noData: {
+              text: 'No Data Available...'
+            }
             },
           
           

@@ -1,4 +1,5 @@
 import moment, { invalid } from 'moment';
+import axios from 'axios';
 
 const months = {
   '01': 'Jan',
@@ -15,42 +16,43 @@ const months = {
   '12': 'Dec',
 };
 
-const ordered = [
-	'JK',
-	'JB',
-	'JI',
-	'JT',
-	'SN',
-	'BT',
-	'NB',
-	'BA',
-	'PA',
-	'KS',
-	'SB',
-	'SS',
-	'KT',
-	'KI',
-	'SU',
-	'YO',
-	'KU',
-	'KR',
-	'KB',
-	'SG',
-	'LA',
-	'SA',
-	'ST',
-	'RI',
-	'PB',
-	'SR',
-	'JA',
-	'MU',
-	'MA',
-	'GO',
-	'BB',
-	'AC',
-	'BE',
-	'NT'
-];
+const ordered = {
+	'Jakarta': 'JK',
+	'West Java': 'JB',
+	'East Java': 'JI',
+	'Central Java': 'JT',
+	'South Sulawesi': 'SN',
+	'Banten': 'BT',
+	'West Nusa Tenggara': 'NB',
+	'Bali': 'BA',
+	'Papua': 'PA',
+	'South Kalimantan': 'KS',
+	'West Sumatra': 'SB',
+	'South Sumatra': 'SS',
+	'Central Kalimantan': 'KT',
+	'East Kalimantan': 'KI',
+	'North Sumatra': 'SU',
+	'Yogyakarta': 'YO',
+	'North Kalimantan': 'KU',
+	'Riau Islands': 'KR',
+	'West Kalimantan': 'KB',
+	'South East Sulawesi': 'SG',
+	'Lampung': 'LA',
+	'North Sulawesi': 'SA',
+	'Central Sulawesi': 'ST',
+	'Riau': 'RI',
+	'West Papua': 'PB',
+	'West Sulawesi': 'SR',
+	'Jambi': 'JA',
+	'North Maluku': 'MU',
+	'Maluku': 'MA',
+	'Gorontalo': 'GO',
+	'Bangka-Belitung': 'BB',
+	'Aceh': 'AC',
+	'Bengkulu': 'BE',
+	'East Nusa Tenggara': 'NT'
+};
+
 const IndonesiaStateCodes = {
 	AC: 'Aceh', //aceh
 	BA: 'Bali', //bali
@@ -393,7 +395,7 @@ export const eventdata = () => {
 export const getoveralldata = (data) => {
 	var arr = [];
 	var ref = data.stats[0];
-	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal - ref.recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered};
+	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal - ref.recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered, 'slug': 'indonesia'};
 	arr.push(obj);
 	return arr;
 };
@@ -410,7 +412,7 @@ export const pushregionwise = (a, data) => {
 	for(var y in relevant){
 		var ref = relevant[y].report;
 		var name = ref.name;
-		var obj = {'confirmed' : ref.infected, 'lastupdatedtime':ref.lastUpdated, 'deaths': ref.dead, 'active': ref.sick, 'statecode': ordered[y], 'state': getStateName1(ordered[y]), 'recovered': ref.recovered};
+		var obj = {'confirmed' : ref.infected, 'lastupdatedtime':ref.lastUpdated, 'deaths': ref.dead, 'active': ref.sick, 'statecode': ordered[relevant[y].name], 'state': getStateName1(ordered[relevant[y].name]), 'recovered': ref.recovered, 'slug': relevant[y].areaId};
 		a.push(obj);
 	}
 	//console.log(a)
