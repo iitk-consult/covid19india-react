@@ -12,7 +12,7 @@ import {
   gettfValues,
   getnfValues,
   getpsValues,
-  getStateName,
+  getStateName1,
   processForChart,
   eventdata,
   preprocessIndonesiaData,
@@ -25,13 +25,14 @@ import Table from './table';
 //import Level from './level';
 import MapExplorer from './mapexplorer1';
 import TimeSeries from './timeseries';
-import ApexChart from './apex';
-import ApexChart1 from './apex1';
+import ApexChart from './apex2';
+import ApexChart1 from './apex3';
 import Modal from './modal';
 import Modal1 from './modal1';
 //import Minigraph from './minigraph';
 
 var states = [];
+var posdata = {};
 
 function Home(props) {
   const [stateDistrictWiseData, setStateDistrictWiseData] = useState({});
@@ -56,7 +57,11 @@ function Home(props) {
   }, [fetched]);
 
   const varToString = varObj => Object.keys(varObj)[0]
-
+  
+  const getd = async(x, j) => {
+	
+  };
+  
   const getStates = async () => {
     try {
       var [
@@ -74,12 +79,15 @@ function Home(props) {
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
-
+		//sheets
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSAerP3eEPO4yVB0CXkzavAiHaXv2NhBDoMEBJUplu3tbuWZ3S4f729-llr4d9z7k3_duI3mA89F5Y7/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSnPAZbtXSwg9Fs8EROAXgIJAGhiH1VP5_eQ7vVf0BBtPQ10Bb0aENgyOqVMLy1JV4SwPEyNBKWooPy/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQqD4gBDoRynua68buVyOHkWQrcN16ryHEer3YpnOP9UF9smtvBDtl_1aF-y4n692RU4mmgU6y09Im0/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRunYa3bz50G6Q2YNosirKviRBOhyjEf4Qrpu7xkf_r-n81h9vb54PAQqWCvNYFCH3gs-9s_gvF2kLP/pub?gid=0&single=true&output=csv'),
-        axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vR_Mwf1WT2W8tMHhXj_etiu-MVNtofjO1hqUql-8HOJEAiaevLxT6wL2S5VXzzj6W8rE5_FKFCG3RhA/pub?gid=0&single=true&output=csv'),
+		//bengkulu missing using yogyakarta instead
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQXEQnY99nd_wEvfkDiW1s5vSsEp1O6szh4QgP0n8Z6kNfCXz9yaEQUSxWruemvxl0CcljVi50TT8Tm/pub?gid=0&single=true&output=csv'),
+        //
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vR_Mwf1WT2W8tMHhXj_etiu-MVNtofjO1hqUql-8HOJEAiaevLxT6wL2S5VXzzj6W8rE5_FKFCG3RhA/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5rBFZux9LO6-EXjxf7UiO3P8t-zPLqd5vu9Hc6_Ri3OYlEJuX8-VH3314gc0VR6w3JavSi967vBM5/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vT_UY3ia0qCndK-c5jODBCVPjpSgag40SLJC_m6p6xH5zGtOlD4cbcGLEIHaMYlrPf6zBUaT6-Puno9/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSHol1YnGROXvgMo66GzuciKJawYDH-8HNi_cGI0mLzajqGOYmu2HK08i3xaRFjd51Bqsl6hYIYvJub/pub?gid=0&single=true&output=csv'),
@@ -117,17 +125,42 @@ function Home(props) {
       for(var stateSheet in forPreprocessing){
         //console.log(stateSheet);
         //console.log(forPreprocessing[stateSheet].data);
-        //forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
+        forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
-
+	  for(var i in states){
+		var x = 'https://visalist.io/api/public/emergency/stats?slug=' + states[i].slug
+		var j = states[i].statecode;
+		if(j != 'BA' && j != 'JB' && j != 'JI' && j != 'JK' && j != 'JT' && j != 'KT' && j != 'KU' && j != 'NB' && j != 'PA' && j != 'SB' && j != 'SN' && j != 'TT' && j != 'YO'){
+		  posdata[j] = [];
+		  continue;
+	    }
+		var final1 = [];
+		var [posd] = await Promise.all([
+		  axios.get(x),
+		]);
+		posd = posd.data.stats;
+		for(var y in posd){
+		  var data = {}
+		  data['date'] = new Date(posd[y].date);
+		  data['totalconfirmed'] = posd[y].confirmed;
+		  final1.unshift(data);
+		}
+		posdata[j] = final1;
+	  }
+	  //console.log(posdata)
       const finalData = processForChart(forPreprocessing, "Indonesia");
+	  //console.log(finalData)
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
-      // var psValues = getpsValues(ts);
+      var psValues = getpsValues(posdata);
+	  //console.log(psValues)
       var wa1Values = getwa1Values(finalData);
-      // psValues['TT']=psValues['DL']
+	  psValues['TT']=psValues['JK'];
+	  tfValues['TT']=tfValues['JK'];
+	  nfValues['TT']=nfValues['JK'];
+	  wa1Values['TT']=wa1Values['JK'];
       setTfseries(tfValues);
-      // setPsseries(psValues);
+      setPsseries(psValues);
       setNfseries(nfValues);
       setWa1series(wa1Values);
 	  setEventseries(eventdata());
@@ -135,7 +168,7 @@ function Home(props) {
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setFetched(true);
-	  //console.log(finalData);
+	  //console.log(psseries);
     } catch (err) {
       console.log(err);
     }
@@ -238,21 +271,14 @@ function Home(props) {
 				<Modal1 />
 			  </div>
 			  <p />
-        {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName(activeStateCode), type:'area', data: tfseries[activeStateCode]}, 
-                                                                      {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, 
-                                                                      {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, 
-                                                                      {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, 
-                                                                      {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, 
-                                                                      {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]},
-                                                                      {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, 
-                                                                      {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]},
-                                                                      {name: getStateName(activeStateCode)+" (Moving Average)", type:'area', data: wa1series[activeStateCode]}]}/>}
-			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName(activeStateCode), data: tfseries[activeStateCode]}]}/>}
+        {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName1(activeStateCode), type:'area', data: tfseries[activeStateCode]},
+                                                                      {name: getStateName1(activeStateCode)+" (Moving Average)", type:'area', data: wa1series[activeStateCode]}]}/>}
+			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName1(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}, {name: 'First COVID-related Death', type:'scatter', data: [eventseries[0]]}, {name: 'Announcement of Janta Curfew', type:'scatter', data: [eventseries[1]]}, {name: 'Junta Curfew Observed', type:'scatter', data: [eventseries[2]]}, {name: 'Announcement of Diya Jalao', type:'scatter', data: [eventseries[4]]}, {name: 'Diya Jalao Observed at 9PM', type:'scatter', data: [eventseries[5]]}, {name: 'Announcement of Lockdown Extension', type:'scatter', data: [eventseries[6]]}, {name: 'Lockdown Announced', type:'scatter', data: [eventseries[3]]}]}/> */}
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/>
         {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},  */}
                              {/* {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/> */}
 			  </div>

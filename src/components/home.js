@@ -112,11 +112,16 @@ function Home(props) {
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
       const finalData = processForChart(forPreprocessing);
+	  //console.log(finalData)
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues(ts);
+	  //console.log(tfValues['DL'])
       var wa1Values = getwa1Values(finalData);
-      psValues['TT']=psValues['DL']
+      psValues['TT']=psValues['DL'];
+	  tfValues['TT']=tfValues['DL'];
+	  nfValues['TT']=nfValues['DL'];
+	  wa1Values['TT']=wa1Values['DL'];
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
