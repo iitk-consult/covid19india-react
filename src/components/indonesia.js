@@ -84,9 +84,7 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSnPAZbtXSwg9Fs8EROAXgIJAGhiH1VP5_eQ7vVf0BBtPQ10Bb0aENgyOqVMLy1JV4SwPEyNBKWooPy/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQqD4gBDoRynua68buVyOHkWQrcN16ryHEer3YpnOP9UF9smtvBDtl_1aF-y4n692RU4mmgU6y09Im0/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRunYa3bz50G6Q2YNosirKviRBOhyjEf4Qrpu7xkf_r-n81h9vb54PAQqWCvNYFCH3gs-9s_gvF2kLP/pub?gid=0&single=true&output=csv'),
-		//bengkulu missing using yogyakarta instead
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQXEQnY99nd_wEvfkDiW1s5vSsEp1O6szh4QgP0n8Z6kNfCXz9yaEQUSxWruemvxl0CcljVi50TT8Tm/pub?gid=0&single=true&output=csv'),
-        //
+		axios.get('https://docs.google.com/spreadsheets/d/1PcxPqbSfZ1uuwMKxdf0WFdK3b7N7N8A8m2-ou8XhcMY/export?format=csv&id=1PcxPqbSfZ1uuwMKxdf0WFdK3b7N7N8A8m2-ou8XhcMY&gid=0'),
 		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vR_Mwf1WT2W8tMHhXj_etiu-MVNtofjO1hqUql-8HOJEAiaevLxT6wL2S5VXzzj6W8rE5_FKFCG3RhA/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5rBFZux9LO6-EXjxf7UiO3P8t-zPLqd5vu9Hc6_Ri3OYlEJuX8-VH3314gc0VR6w3JavSi967vBM5/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vT_UY3ia0qCndK-c5jODBCVPjpSgag40SLJC_m6p6xH5zGtOlD4cbcGLEIHaMYlrPf6zBUaT6-Puno9/pub?gid=0&single=true&output=csv'),
