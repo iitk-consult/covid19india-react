@@ -8,10 +8,11 @@ import {
   pushregionwise,
   formatDateAbsolute,
   prettifyData,
+  prettifyData1,
   preprocess,
   gettfValues,
   getnfValues,
-  getpsValues,
+  getpsValues1,
   getStateName1,
   processForChart,
   eventdata,
@@ -32,7 +33,6 @@ import Modal1 from './modal1';
 //import Minigraph from './minigraph';
 
 var states = [];
-var posdata = {};
 
 function Home(props) {
   const [stateDistrictWiseData, setStateDistrictWiseData] = useState({});
@@ -71,7 +71,8 @@ function Home(props) {
         {data: statesDailyResponse},
         updateLogResponse,
         stateTestResponse,
-        aceh, bali, bbislands, banten, bengkulu, centralJava, centralKalimantan, centralSulawesi, eastJava, eastKalimantan, eastNusaTenggara, gorontalo, jakarta, jambi, lampung, maluku, northKalimantan, norhtMaluku, northSulawesi, northSumatra, papua, riau, riauIslands, southKalimantan, southSulawesi, southSumatra, southEastSulwesi, westJava, westKalimantan, westNusaTenggara, westPapua, westSulawesi, westSumatra, yogyakarta
+        aceh, bali, bbislands, banten, bengkulu, centralJava, centralKalimantan, centralSulawesi, eastJava, eastKalimantan, eastNusaTenggara, gorontalo, jakarta, jambi, lampung, maluku, northKalimantan, norhtMaluku, northSulawesi, northSumatra, papua, riau, riauIslands, southKalimantan, southSulawesi, southSumatra, southEastSulwesi, westJava, westKalimantan, westNusaTenggara, westPapua, westSulawesi, westSumatra, yogyakarta,
+		posData
       ] = await Promise.all([
         axios.get('https://visalist.io/api/public/emergency/stats?slug=indonesia'),
 		    axios.get('https://visalist.io/api/public/emergency/places'),
@@ -114,7 +115,9 @@ function Home(props) {
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vS2DC8vGtl7HzNbshOFH-sGsAceKkZhhZ5x19wyYaxQTp6Tzm7gY4FpTKDAG7yZ0AY5niLMAZUTRX3G/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vRMAWGXJJJveJgxMT7ztFKJIbhlu_AyZ3sf1W02MPPpqv7VFOFADpacO2CTNQi9M_Ex_ZN9cp_9EihI/pub?gid=0&single=true&output=csv'),
         axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQXEQnY99nd_wEvfkDiW1s5vSsEp1O6szh4QgP0n8Z6kNfCXz9yaEQUSxWruemvxl0CcljVi50TT8Tm/pub?gid=0&single=true&output=csv'),
-    ]);
+		
+		axios.get('https://docs.google.com/spreadsheets/d/15R0qe47lk-8hsBJrXa669WcPveIzLLBN8rG8h3ysKIU/export?format=csv&id=15R0qe47lk-8hsBJrXa669WcPveIzLLBN8rG8h3ysKIU&gid=0')
+	]);
 	    var stateData = getoveralldata(overall.data);
       stateData = pushregionwise(stateData, regionwise.data);
       states=(stateData);
@@ -125,38 +128,19 @@ function Home(props) {
         //console.log(forPreprocessing[stateSheet].data);
         forPreprocessing[stateSheet] = preprocess(prettifyData(Papa.parse(forPreprocessing[stateSheet].data, {delimiter: ','})))
       }
-	  for(var i in states){
-		var x = 'https://visalist.io/api/public/emergency/stats?slug=' + states[i].slug
-		var j = states[i].statecode;
-		if(j != 'BA' && j != 'JB' && j != 'JI' && j != 'JK' && j != 'JT' && j != 'KT' && j != 'KU' && j != 'NB' && j != 'PA' && j != 'SB' && j != 'SN' && j != 'TT' && j != 'YO'){
-		  posdata[j] = [];
-		  continue;
-	    }
-		var final1 = [];
-		var [posd] = await Promise.all([
-		  axios.get(x),
-		]);
-		posd = posd.data.stats;
-		for(var y in posd){
-		  var data = {}
-		  data['date'] = new Date(posd[y].date);
-		  data['totalconfirmed'] = posd[y].confirmed;
-		  final1.unshift(data);
-		}
-		posdata[j] = final1;
-	  }
+	  const posdata = prettifyData1(Papa.parse(posData.data, {delimiter: ','}));
 	  //console.log(posdata)
       const finalData = processForChart(forPreprocessing, "Indonesia");
 	  //console.log(finalData)
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
-      var psValues = getpsValues(posdata);
-	  //console.log(psValues)
+      var psValues = getpsValues1(posdata);
       var wa1Values = getwa1Values(finalData);
 	  psValues['TT']=psValues['JK'];
 	  tfValues['TT']=tfValues['JK'];
 	  nfValues['TT']=nfValues['JK'];
 	  wa1Values['TT']=wa1Values['JK'];
+	  //console.log(psValues)
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
@@ -166,7 +150,7 @@ function Home(props) {
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setFetched(true);
-	  //console.log(psseries);
+	  console.log(psseries);
     } catch (err) {
       console.log(err);
     }

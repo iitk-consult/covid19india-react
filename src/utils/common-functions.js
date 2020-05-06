@@ -164,6 +164,13 @@ export const formatDate2 = (unformattedDate) => {
   return `${year}-${month}-${day}T${time}`;
 };
 
+export const formatDate3 = (unformattedDate) => {
+  const day = unformattedDate.split(/[/-]+/)[0];
+  const month = unformattedDate.split(/[/-]+/)[1];
+  const year = 2020;
+  return `${day}-${month}-${year}`;
+};
+
 export const formatDateAbsolute = (unformattedDate) => {
   const day = unformattedDate.slice(0, 2);
   const month = unformattedDate.slice(3, 5);
@@ -273,6 +280,61 @@ export const prettifyData = (data) => {
     return []
 };
 
+export const prettifyData1 = (data) => {
+  const parsedData = data.data
+  const header = parsedData.shift();
+  var newJSON = [];
+  for(var i=0, countValidDates=0; i<parsedData.length; i++) {
+    var rowData = parsedData[i];
+    var date_parsed = formatDate3(rowData[0]);
+    // console.log(rowData[0]);
+    if(rowData[0])
+    {
+      newJSON[countValidDates] = {
+        "date":new Date(date_parsed),
+        "AC": rowData[1],
+        "BA": rowData[2],
+		"BT": rowData[3],
+		"BB": rowData[4],
+		"BE": rowData[5],
+		"YO": rowData[6],
+		"JK": rowData[7],
+		"JA": rowData[8],
+		"JB": rowData[9],
+		"JT": rowData[10],
+		"JI": rowData[11],
+		"KB": rowData[12],
+		"KI": rowData[13],
+		"KT": rowData[14],
+		"KS": rowData[15],
+		"KU": rowData[16],
+		"KR": rowData[17],
+		"NB": rowData[18],
+		"SS": rowData[19],
+		"SB": rowData[20],
+		"SA": rowData[21],
+		"SU": rowData[22],
+		"SG": rowData[23],
+		"SN": rowData[24],
+		"ST": rowData[25],
+		"LA": rowData[26],
+		"RI": rowData[27],
+		"MU": rowData[28],
+		"MA": rowData[29],
+		"PB": rowData[30],
+		"PA": rowData[31],
+		"SR": rowData[32],
+		"NT": rowData[33],
+		"GO": rowData[34],
+      }
+      countValidDates++;
+    }
+  }
+  if (countValidDates>5)
+    return newJSON
+  else
+    return []
+};
 
 export const preprocessIndonesiaData = (data) => {
   const parsedData = data.data
@@ -334,6 +396,21 @@ export const getpsValues = (x) => {
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
 		arr.push([x[key][i]['date'], x[key][i]['totalconfirmed']]);
+	}
+    final[key]=arr;
+  };
+  return final;
+};
+
+export const getpsValues1 = (x) => {
+  var final = {};
+  for(var key in IndonesiaStateCodes){
+	if(key == 'TT'){
+		continue;
+	}
+	var arr = [];
+	for(var i = 0; i < x.length; i++){
+		arr.push([x[i]['date'], x[i][key]]);
 	}
     final[key]=arr;
   };
