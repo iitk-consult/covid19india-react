@@ -58,10 +58,6 @@ function Home(props) {
 
   const varToString = varObj => Object.keys(varObj)[0]
   
-  const getd = async(x, j) => {
-	
-  };
-  
   const getStates = async () => {
     try {
       var [
