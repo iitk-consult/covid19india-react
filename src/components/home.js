@@ -125,6 +125,7 @@ function Home(props) {
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
+	  //console.log(nfseries)
       setWa1series(wa1Values);
 	    setEventseries(eventdata());
       setLastUpdated(response.data.statewise[0].lastupdatedtime);

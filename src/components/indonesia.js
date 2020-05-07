@@ -136,7 +136,7 @@ function Home(props) {
 	  tfValues['TT']=tfValues['JK'];
 	  nfValues['TT']=nfValues['JK'];
 	  wa1Values['TT']=wa1Values['JK'];
-	  //console.log(psValues)
+	  //console.log(nfValues)
       setTfseries(tfValues);
       setPsseries(psValues);
       setNfseries(nfValues);
@@ -146,7 +146,7 @@ function Home(props) {
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setFetched(true);
-	  console.log(psseries);
+	  //console.log(nfseries);
     } catch (err) {
       console.log(err);
     }
@@ -168,6 +168,7 @@ function Home(props) {
   };
   
   const normalise = (nf, maxp) => {
+	//console.log(nf)
 	var max = 0;
 	for(var x=0; x < nf.length; x++){
 	  if(nf[x][1] > max){
@@ -256,7 +257,7 @@ function Home(props) {
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/>
         {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},  */}
                              {/* {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/> */}
 			  </div>
