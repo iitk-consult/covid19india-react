@@ -17,7 +17,7 @@ import {
   processForChart,
   eventdata,
   preprocessIndonesiaData,
-  getwa1Values
+  getwa1ValuesIndonesia
 } from '../utils/common-functions';
 
 import Papa from 'papaparse';
@@ -131,7 +131,7 @@ function Home(props) {
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getpsValues1(posdata);
-      var wa1Values = getwa1Values(finalData);
+      var wa1Values = getwa1ValuesIndonesia(finalData);
 	  psValues['TT']=psValues['JK'];
 	  tfValues['TT']=tfValues['JK'];
 	  nfValues['TT']=nfValues['JK'];

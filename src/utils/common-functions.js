@@ -456,6 +456,21 @@ export const getwa1Values = (x) => {
   return final;
 };
 
+export const getwa1ValuesIndonesia = (x) => {
+  var final = {};
+  for(var key in x){
+  var arr = [];
+  for(var i = 0; i < x[key].length; i++){
+    if (i<2)
+      arr.push([x[key][i]['date'], x[key][1]['colB']]);
+    else
+      arr.push([x[key][i]['date'], (x[key][i]['colB'] + x[key][i-1]['colB'] + x[key][i-2]['colB'])/3]);
+  }
+    final[key]=arr;
+  };
+  return final;
+};
+
 
 export const eventdata = () => {
   var arr=[];
