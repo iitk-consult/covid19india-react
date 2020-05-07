@@ -447,7 +447,7 @@ export const getwa1Values = (x) => {
 	var arr = [];
 	for(var i = 0; i < x[key].length; i++){
     if (i<4)
-      arr.push([x[key][i]['date'], x[key][0]['colB']]);
+      arr.push([x[key][i]['date'], x[key][1]['colB']]);
     else
 		  arr.push([x[key][i]['date'], (x[key][i]['colB'] + x[key][i-1]['colB'] + x[key][i-2]['colB'] + x[key][i-3]['colB'] + x[key][i-4]['colB'])/5]);
 	}
