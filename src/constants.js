@@ -3,5 +3,6 @@ export const MAP_TYPES = {
   STATE: 'state',
 };
 
-export const MAPS_DIR = '/maps';
-export const INDONESIA_MAPS_DIR = '/indonesia_maps'
+export const INDIA_MAPS_DIR = '/maps/india';
+export const INDONESIA_MAPS_DIR = '/maps/indonesia'
+export const BANGLADESH_MAPS_DIR = '/maps/bangladesh'

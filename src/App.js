@@ -31,18 +31,19 @@ function App() {
       displayName: 'Indonesia',
       animationDelayForNavbar: 0.3,
     },
+  {
+      pageLink: '/bangladesh',
+      view: Bangladesh,
+      displayName: 'Bangladesh',
+      animationDelayForNavbar: 0.4,
+    },
 	{
       pageLink: '/about',
       view: About,
       displayName: 'About',
       animationDelayForNavbar: 0.4,
     },
-	// {
-  //     pageLink: '/bangladesh',
-  //     view: Bangladesh,
-  //     displayName: 'Bangladesh',
-  //     animationDelayForNavbar: 0.4,
-  //   },
+	
   ];
 
   return (
