@@ -390,6 +390,13 @@ export const processForChart = (data, country) => {
   return final;
 };
 
+export const processForBangla = (data) => {
+  var final = {};
+  final['TT'] = data;
+  //console.log(final);
+  return final;
+};
+
 export const getpsValues = (x) => {
   var final = {};
   for(var key in x){
@@ -414,6 +421,16 @@ export const getpsValues1 = (x) => {
 	}
     final[key]=arr;
   };
+  return final;
+};
+
+export const getposdata = (x) => {
+  var final = {};
+  var arr = [];
+  for(var i = 0; i < x.length; i++){
+	arr.push([new Date(x[i]['Date']), x[i]['Confirmed']]);
+  }
+  final['TT'] = arr;
   return final;
 };
 

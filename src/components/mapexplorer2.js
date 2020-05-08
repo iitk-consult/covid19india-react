@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo, useCallback} from 'react';
-import ChoroplethMap from './choropleth';
+import ChoroplethMap from './choropleth_bangladesh';
 import {MAP_TYPES, BANGLADESH_MAPS_DIR} from '../constants';
 import {formatDate, formatDate2, formatDateAbsolute} from '../utils/common-functions';
 import {formatDistance, format, parse} from 'date-fns';
@@ -46,7 +46,7 @@ function MapExplorer({
     getRegionFromState(states[0])
   );
   const [testObj, setTestObj] = useState({});
-  const [currentMap, setCurrentMap] = useState(mapMeta.Indonesia);
+  const [currentMap, setCurrentMap] = useState(mapMeta.Bangladesh);
 
   const [statistic, currentMapData] = useMemo(() => {
     const statistic = {total: 0, maxConfirmed: 0};
@@ -126,7 +126,7 @@ function MapExplorer({
     }
     const isState = !('district' in regionHighlighted);
     if (isState) {
-      const newMap = mapMeta['Indonesia'];
+      const newMap = mapMeta['Bangladesh'];
       setCurrentMap(newMap);
       const region = getRegionFromState(regionHighlighted.state);
       setHoveredRegion(region.name, newMap);
@@ -181,13 +181,8 @@ function MapExplorer({
       style={{animationDelay: '1.5s'}}
       ref={forwardRef}
     >
-      <div className="header">
-        <h1>Indonesia</h1>
-        <h6>
-          {window.innerWidth <= 769 ? 'Tap' : 'Hover'} over a{' '}
-          {currentMap.mapType === MAP_TYPES.COUNTRY ? 'state/ut' : 'district'}{' '}
-          for more details
-        </h6>
+      <div className="header" style={{marginBottom: 10}}>
+        <h1>Bangladesh</h1>
       </div>
 
       <div className="map-stats">
@@ -236,33 +231,6 @@ function MapExplorer({
       </div>
 
       <div className="meta fadeInUp" style={{animationDelay: '2.4s'}}>
-        <h2>{name}</h2>
-        {lastupdatedtime && (
-          <div
-            className={`last-update ${
-              currentMap.mapType === MAP_TYPES.STATE
-                ? 'district-last-update'
-                : 'state-last-update'
-            }`}
-          >
-            <h6>Last Updated</h6>
-            <h3
-              title={
-                isNaN(Date.parse(formatDate2(lastupdatedtime)))
-                  ? ''
-                  : formatDateAbsolute(lastupdatedtime)
-              }
-            >
-              {isNaN(Date.parse(formatDate2(lastupdatedtime)))
-                ? ''
-                : formatDistance(
-                    new Date(formatDate2(lastupdatedtime)),
-                    new Date()
-                  ) + ' Ago'}
-            </h3>
-          </div>
-        )}
-
         {currentMap.mapType === MAP_TYPES.STATE ? (
           <h4 className="district-confirmed">
             Confirmed cases:{' '}
