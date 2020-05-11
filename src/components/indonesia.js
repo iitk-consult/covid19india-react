@@ -70,8 +70,8 @@ function Home(props) {
         aceh, bali, bbislands, banten, bengkulu, centralJava, centralKalimantan, centralSulawesi, eastJava, eastKalimantan, eastNusaTenggara, gorontalo, jakarta, jambi, lampung, maluku, northKalimantan, norhtMaluku, northSulawesi, northSumatra, papua, riau, riauIslands, southKalimantan, southSulawesi, southSumatra, southEastSulwesi, westJava, westKalimantan, westNusaTenggara, westPapua, westSulawesi, westSumatra, yogyakarta,
 		posData
       ] = await Promise.all([
-        axios.get('https://visalist.io/api/public/emergency/stats?slug=indonesia'),
-		    axios.get('https://visalist.io/api/public/emergency/places'),
+        axios.get('https://api.covid19api.com/dayone/country/indonesia'),
+		    axios.get('https://cors-anywhere.herokuapp.com/https://data.covid19.go.id/public/api/prov.json?_=1589190273771'),
         axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
         axios.get('https://api.covid19india.org/updatelog/log.json'),
@@ -114,7 +114,7 @@ function Home(props) {
 		
 		axios.get('https://docs.google.com/spreadsheets/d/15R0qe47lk-8hsBJrXa669WcPveIzLLBN8rG8h3ysKIU/export?format=csv&id=15R0qe47lk-8hsBJrXa669WcPveIzLLBN8rG8h3ysKIU&gid=0')
 	]);
-	    var stateData = getoveralldata(overall.data);
+	    var stateData = getoveralldata(overall.data.slice(-1)[0]);
       stateData = pushregionwise(stateData, regionwise.data);
       states=(stateData);
 	  //console.log(states)

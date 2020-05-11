@@ -17,40 +17,40 @@ const months = {
 };
 
 const ordered = {
-	'Jakarta': 'JK',
-	'West Java': 'JB',
-	'East Java': 'JI',
-	'Central Java': 'JT',
-	'South Sulawesi': 'SN',
-	'Banten': 'BT',
-	'West Nusa Tenggara': 'NB',
-	'Bali': 'BA',
-	'Papua': 'PA',
-	'South Kalimantan': 'KS',
-	'West Sumatra': 'SB',
-	'South Sumatra': 'SS',
-	'Central Kalimantan': 'KT',
-	'East Kalimantan': 'KI',
-	'North Sumatra': 'SU',
-	'Yogyakarta': 'YO',
-	'North Kalimantan': 'KU',
-	'Riau Islands': 'KR',
-	'West Kalimantan': 'KB',
-	'South East Sulawesi': 'SG',
-	'Lampung': 'LA',
-	'North Sulawesi': 'SA',
-	'Central Sulawesi': 'ST',
-	'Riau': 'RI',
-	'West Papua': 'PB',
-	'West Sulawesi': 'SR',
-	'Jambi': 'JA',
-	'North Maluku': 'MU',
-	'Maluku': 'MA',
-	'Gorontalo': 'GO',
-	'Bangka-Belitung': 'BB',
-	'Aceh': 'AC',
-	'Bengkulu': 'BE',
-	'East Nusa Tenggara': 'NT'
+	'DKI JAKARTA': 'JK',
+	'JAWA BARAT': 'JB',
+	'JAWA TIMUR': 'JI',
+	'JAWA TENGAH': 'JT',
+	'SULAWESI SELATAN': 'SN',
+	'BANTEN': 'BT',
+	'NUSA TENGGARA BARAT': 'NB',
+	'BALI': 'BA',
+	'PAPUA': 'PA',
+	'KALIMANTAN SELATAN': 'KS',
+	'SUMATERA BARAT': 'SB',
+	'SUMATERA SELATAN': 'SS',
+	'KALIMANTAN TENGAH': 'KT',
+	'KALIMANTAN TIMUR': 'KI',
+	'SUMATERA UTARA': 'SU',
+	'DAERAH ISTIMEWA YOGYAKARTA': 'YO',
+	'KALIMANTAN UTARA': 'KU',
+	'KEPULAUAN RIAU': 'KR',
+	'KALIMANTAN BARAT': 'KB',
+	'SULAWESI TENGGARA': 'SG',
+	'LAMPUNG': 'LA',
+	'SULAWESI UTARA': 'SA',
+	'SULAWESI TENGAH': 'ST',
+	'RIAU': 'RI',
+	'PAPUA BARAT': 'PB',
+	'SULAWESI BARAT': 'SR',
+	'JAMBI': 'JA',
+	'MALUKU UTARA': 'MU',
+	'MALUKU': 'MA',
+	'GORONTALO': 'GO',
+	'KEPULAUAN BANGKA BELITUNG': 'BB',
+	'ACEH': 'AC',
+	'BENGKULU': 'BE',
+	'NUSA TENGGARA TIMUR': 'NT'
 };
 
 const IndonesiaStateCodes = {
@@ -503,25 +503,19 @@ export const eventdata = () => {
 
 export const getoveralldata = (data) => {
 	var arr = [];
-	var ref = data.stats[0];
-	var obj = {'confirmed' : ref.confirmed, 'lastupdatedtime':ref.date, 'deaths': ref.fatal, 'active': ref.confirmed - ref.fatal - ref.recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': ref.recovered, 'slug': 'indonesia'};
+	var obj = {'confirmed' : data.Confirmed, 'lastupdatedtime':data.Date, 'deaths': data.Deaths, 'active': data.Confirmed - data.Deaths - data.Recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': data.Recovered};
 	arr.push(obj);
 	return arr;
 };
 
 export const pushregionwise = (a, data) => {
-	var relevant = []
-	for(var x in data){
-		var dat = data[x];
-		if(dat.parentId === "indonesia"){
-			relevant.push(dat);
-		}
-	}
+	//console.log(data)
+	var relevant = data.list_data;
 	//console.log(relevant)
 	for(var y in relevant){
-		var ref = relevant[y].report;
-		var name = ref.name;
-		var obj = {'confirmed' : ref.infected, 'lastupdatedtime':ref.lastUpdated, 'deaths': ref.dead, 'active': ref.sick, 'statecode': ordered[relevant[y].name], 'state': getStateName1(ordered[relevant[y].name]), 'recovered': ref.recovered, 'slug': relevant[y].areaId};
+		var ref = relevant[y];
+		var name = ref.key;
+		var obj = {'confirmed' : ref.jumlah_kasus, 'lastupdatedtime':data.last_date + 'T00:00:00Z', 'deaths': ref.jumlah_meninggal, 'active': ref.jumlah_dirawat, 'statecode': ordered[name], 'state': getStateName1(ordered[name]), 'recovered': ref.jumlah_sembuh};
 		a.push(obj);
 	}
 	//console.log(a)
