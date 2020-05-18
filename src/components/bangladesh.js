@@ -66,22 +66,24 @@ function Home(props) {
 		graphData,
 		posData,
         stateDistrictWiseResponse,
-        stateTestResponse
+        stateTestResponse,
+		testdata
       ] = await Promise.all([
         axios.get('https://api.covid19api.com/dayone/country/bangladesh'),
-		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQA16EVdkiVG8wVgZtHwT7bsIC47OyCJALR4cVewWxxNP5vkBdzKQSJ8BybcvN1ui1eMHL8uAB38Kt/pub?gid=0&single=true&output=csv'),
+		    axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQA16EVdkiVG8wVgZtHwT7bsIC47OyCJALR4cVewWxxNP5vkBdzKQSJ8BybcvN1ui1eMHL8uAB38Kt/pub?gid=0&single=true&output=csv'),
         axios.get('https://api.covid19api.com/dayone/country/bangladesh'),
-		axios.get('https://api.covid19india.org/state_district_wise.json'),
+		    axios.get('https://api.covid19india.org/state_district_wise.json'),
         axios.get('https://api.covid19india.org/state_test_data.json'),
+		
+		axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSfqz_npmh_X_C3yN_8tXgZOXrLRw_L8E6BruRAho4U7MsHuQRdDymSC-eBEHpd2GbSHpW6td9lT-YT/pub?gid=0&single=true&output=csv'),
 	]);
 	  var overalldata = getoveralldata(overall.data.slice(-1)[0]);
 	  states=(overalldata);
-	  //console.log(states)
+	  
 	  const Data = preprocess(prettifyData(Papa.parse(graphData.data, {delimiter: ','})))
-	  //console.log(Data)
+    
       const finalData = processForBangla(Data);
-	  //console.log(finalData)
-	  //console.log(posData.data)
+      
       var tfValues = gettfValues(finalData);
       var nfValues = getnfValues(finalData);
       var psValues = getposdata(posData.data);
