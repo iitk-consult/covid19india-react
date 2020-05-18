@@ -127,7 +127,7 @@ function Home(props) {
       setNfseries(nfValues);
 	  //console.log(nfseries)
       setWa1series(wa1Values);
-	    setEventseries(eventdata());
+	  setEventseries(eventdata());
       setLastUpdated(response.data.statewise[0].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);

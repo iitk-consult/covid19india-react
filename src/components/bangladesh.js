@@ -16,7 +16,7 @@ import {
   getpsValues,
   getStateName1,
   processForBangla,
-  eventdata,
+  banglaEventData,
   preprocessIndonesiaData,
   getwa1ValuesIndonesia
 } from '../utils/common-functions';
@@ -93,6 +93,7 @@ function Home(props) {
       setPsseries(psValues);
       setNfseries(nfValues);
       setWa1series(wa1Values);
+	  setEventseries(banglaEventData());
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
       setFetched(true);
@@ -178,13 +179,26 @@ function Home(props) {
 			  </div>
 			  <p />
         {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: 'Bangladesh', type:'area', data: tfseries[activeStateCode]},
-                                                                      {name: 'Bangladesh'+" (Moving Average)", type:'area', data: wa1series[activeStateCode]}]}/>}
+                                                                      {name: 'Bangladesh'+" (Moving Average)", type:'area', data: wa1series[activeStateCode]},
+																	  {name: 'First COVID case confirmed', type:'scatter', data: [eventseries[0]]}, 
+                                                                      {name: 'Provincial Lockdown announced', type:'scatter', data: [eventseries[1]]}, 
+                                                                      {name: '10-day Nationwide holiday', type:'scatter', data: [eventseries[2]]}, 
+                                                                      {name: 'Suspension of all flights', type:'scatter', data: [eventseries[3]]}, 
+                                                                      {name: '1 lakh people defied orders', type:'scatter', data: [eventseries[4]]},
+                                                                      {name: '10000 cases crossed', type:'scatter', data: [eventseries[5]]}]}/>}
 			  {/*tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName1(activeStateCode), data: tfseries[activeStateCode]}]}/>*/}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},
+								   {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]},
+								   {name: 'First COVID case confirmed', type:'scatter', data: [eventseries[0]]}, 
+                                   {name: 'Provincial Lockdown announced', type:'scatter', data: [eventseries[1]]}, 
+                                   {name: '10-day Nationwide holiday', type:'scatter', data: [eventseries[2]]}, 
+                                   {name: 'Suspension of all flights', type:'scatter', data: [eventseries[3]]}, 
+                                   {name: '1 lakh people defied orders', type:'scatter', data: [eventseries[4]]},
+                                   {name: '10000 cases crossed', type:'scatter', data: [eventseries[5]]}]}/>
         {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},  */}
                              {/* {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/> */}
 			  </div>

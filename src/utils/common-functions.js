@@ -501,6 +501,17 @@ export const eventdata = () => {
   return arr;
 };
 
+export const banglaEventData = () => {
+  var arr=[];
+  arr.push([new Date("03/08/2020").getTime(), 0]);
+  arr.push([new Date("03/19/2020").getTime(), 0]);
+  arr.push([new Date("03/23/2020").getTime(), 0]);
+  arr.push([new Date("03/27/2020").getTime(), 0]);
+  arr.push([new Date("04/18/2020").getTime(), 0]);
+  arr.push([new Date("05/04/2020").getTime(), 0]);
+  return arr;
+};
+
 export const getoveralldata = (data) => {
 	var arr = [];
 	var obj = {'confirmed' : data.Confirmed, 'lastupdatedtime':data.Date, 'deaths': data.Deaths, 'active': data.Confirmed - data.Deaths - data.Recovered, 'statecode': 'TT', 'state': 'Total', 'recovered': data.Recovered};
