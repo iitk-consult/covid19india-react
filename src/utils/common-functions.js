@@ -501,6 +501,20 @@ export const eventdata = () => {
   return arr;
 };
 
+export const indoEventData = () => {
+  var arr=[];
+  arr.push([new Date("03/02/2020").getTime(), 0]);
+  arr.push([new Date("03/11/2020").getTime(), 0]);
+  arr.push([new Date("03/12/2020").getTime(), 0]);
+  arr.push([new Date("03/17/2020").getTime(), 0]);
+  arr.push([new Date("03/23/2020").getTime(), 0]);
+  arr.push([new Date("03/31/2020").getTime(), 0]);
+  arr.push([new Date("04/14/2020").getTime(), 0]);
+  arr.push([new Date("04/21/2020").getTime(), 0]);
+  arr.push([new Date("04/22/2020").getTime(), 0]);
+  return arr;
+};
+
 export const banglaEventData = () => {
   var arr=[];
   arr.push([new Date("03/08/2020").getTime(), 0]);

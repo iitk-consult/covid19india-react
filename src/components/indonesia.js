@@ -15,7 +15,7 @@ import {
   getpsValues1,
   getStateName1,
   processForChart,
-  eventdata,
+  indoEventData,
   preprocessIndonesiaData,
   getwa1ValuesIndonesia
 } from '../utils/common-functions';
@@ -141,7 +141,7 @@ function Home(props) {
       setPsseries(psValues);
       setNfseries(nfValues);
       setWa1series(wa1Values);
-	  setEventseries(eventdata());
+	  setEventseries(indoEventData());
       setLastUpdated(states[1].lastupdatedtime);
       setStateTestData(stateTestResponse.data.states_tested_data.reverse());
       setStateDistrictWiseData(stateDistrictWiseResponse.data);
@@ -251,13 +251,32 @@ function Home(props) {
 			  </div>
 			  <p />
         {tfseries[activeStateCode].length != 0 && <ApexChart series={[{name: getStateName1(activeStateCode), type:'area', data: tfseries[activeStateCode]},
-                                                                      {name: getStateName1(activeStateCode)+" (Moving Average)", type:'area', data: wa1series[activeStateCode]}]}/>}
+                                                                      {name: getStateName1(activeStateCode)+" (Moving Average)", type:'area', data: wa1series[activeStateCode]},
+																	  {name: 'First two cases on national television', type:'scatter', data: [eventseries[0]]}, 
+                                                                      {name: 'First death confirmed', type:'scatter', data: [eventseries[1]]}, 
+                                                                      {name: 'Companies mandated to provide protection equipment to employees', type:'scatter', data: [eventseries[2]]}, 
+                                                                      {name: 'Announcement of state of emergency', type:'scatter', data: [eventseries[3]]}, 
+                                                                      {name: 'Inauguration of first COVID-19 makeshift hospital', type:'scatter', data: [eventseries[4]]},
+                                                                      {name: 'Declaration of police enforcement of large-scale social distancing', type:'scatter', data: [eventseries[5]]},
+																	  {name: 'First publication of number of COVID-19 suspects', type:'scatter', data: [eventseries[6]]}, 
+                                                                      {name: 'Announcement to ban Id Ul Fitr Mudik to prevent virus spread', type:'scatter', data: [eventseries[7]]},
+                                                                      {name: 'Large scale social restrictions extended by one month in Jakarta', type:'scatter', data: [eventseries[8]]}]}/>}
 			  {tfseries[activeStateCode].length == 0 && <ApexChart series={[{name: getStateName1(activeStateCode), data: tfseries[activeStateCode]}]}/>}
 			  <div className="pills">
 				<Modal />
 			  </div>
 			  <p />
-			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])}, {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/>
+			  <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},
+								   {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]},
+								   {name: 'First two cases on national television', type:'scatter', data: [eventseries[0]]}, 
+                                   {name: 'First death confirmed', type:'scatter', data: [eventseries[1]]}, 
+                                   {name: 'Companies mandated to provide protection equipment to employees', type:'scatter', data: [eventseries[2]]}, 
+                                   {name: 'Announcement of state of emergency', type:'scatter', data: [eventseries[3]]}, 
+                                   {name: 'Inauguration of first COVID-19 makeshift hospital', type:'scatter', data: [eventseries[4]]},
+                                   {name: 'Declaration of police enforcement of large-scale social distancing', type:'scatter', data: [eventseries[5]]},
+								   {name: 'First publication of number of COVID-19 suspects', type:'scatter', data: [eventseries[6]]}, 
+                                   {name: 'Announcement to ban Id Ul Fitr Mudik to prevent virus spread', type:'scatter', data: [eventseries[7]]},
+                                   {name: 'Large scale social restrictions extended by one month in Jakarta', type:'scatter', data: [eventseries[8]]}]}/>
         {/* <ApexChart1 series={[{name: 'Twitter Volume/Day', type:'area', data: normalise(nfseries[activeStateCode], psseries[activeStateCode].slice(-1)[0][1])},  */}
                              {/* {name: 'Positive Cases', type:'area', data: psseries[activeStateCode]}]}/> */}
 			  </div>

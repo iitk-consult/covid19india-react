@@ -10,6 +10,55 @@ export default class ApexChart extends React.Component {
 			
             series: [],
             options: {
+			  annotations: {
+				xaxis: [
+				  {
+					x: new Date("03/02/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("03/11/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("03/12/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("03/17/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("03/23/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("03/31/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("04/14/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("04/21/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				  {
+					x: new Date("04/22/2020").getTime(),
+					strokeDashArray: 0,
+					borderColor: "#775DD0",
+				  },
+				],
+			  },
               chart: {
                 type: 'area',
                 stacked: false,
@@ -22,7 +71,7 @@ export default class ApexChart extends React.Component {
                 enabled: false
               },
               markers: {
-                size: [1,1],
+                size: [1,1,8,8,8,8,8,8,8,8,8],
               },
 			  colors:['#E91E63', '#ffea00'],
               fill: {
